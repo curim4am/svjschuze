@@ -207,11 +207,8 @@ function renderMeeting(app){
   var ro=m.status!=="open"; // read-only
   document.getElementById("topActions").innerHTML='<button class="btn ghost" onclick="go(\'home\')">← Přehled schůzí</button>';
   var acts = ro
-    ? '<button class="btn" onclick="go(\'meeting\',\'protokol\')">📄 Protokol</button>'+
-      '<button class="btn ghost" onclick="reopenMeeting()">🔓 Odemknout</button>'
-    : '<button class="btn" onclick="go(\'meeting\',\'protokol\')">📄 Protokol</button>'+
-      '<span class="actsep"></span>'+
-      '<button class="btn end" onclick="endMeeting()">■ Ukončit schůzi</button>';
+    ? '<button class="btn ghost" onclick="reopenMeeting()">🔓 Odemknout</button>'
+    : '<button class="btn end" onclick="endMeeting()">■ Ukončit schůzi</button>';
   var head='<div class="card"><div class="row spread" style="gap:12px">'+
     '<div><h2>Schůze '+dateCz(m.date)+(m.time?' '+m.time:'')+'</h2>'+
     '<div class="small">'+escapeHtml(m.type||'')+' · zapisovatel: '+escapeHtml(m.zapisovatel||'—')+' · <span class="badge '+(ro?"closed":"open")+'">'+(ro?"uzavřená":"probíhá")+'</span></div></div>'+
@@ -313,9 +310,11 @@ function renderPrehled(m,ro){
   var votes= m.votes.length? '<div class="card"><h2>Usnesení a výsledky</h2>'+voteListHtml(m)+'</div>' : '<div class="card"><p class="small">Žádné hlasování.</p></div>';
   var actions;
   if(!ro){
-    actions='<div class="small" style="text-align:center;margin-top:2px">Protokol a ukončení schůze najdeš nahoře u názvu schůze.</div>';
+    actions='<div class="card"><button class="btn big" onclick="go(\'meeting\',\'protokol\')">📄 Náhled protokolu</button>'+
+      '<div class="small" style="margin-top:8px">Schůzi ukončíš tlačítkem nahoře u názvu schůze.</div></div>';
   }else{
-    actions='<div class="card"><div class="row"><button class="btn ghost" onclick="exportCSV()">Export CSV</button></div></div>';
+    actions='<div class="card"><div class="row"><button class="btn big green" onclick="go(\'meeting\',\'protokol\')">📄 Vytvořit protokol schůze</button>'+
+      '<button class="btn ghost" onclick="exportCSV()">Export CSV</button></div></div>';
   }
   return summary+votes+actions;
 }
