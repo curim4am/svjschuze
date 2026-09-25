@@ -67,6 +67,11 @@ tr.unvoted td{background:#fff9e6}
 .proto-switch input{width:auto;transform:scale(1.2)}
 #protokol .usn{margin:12px 0}
 #protokol .usn-t{margin:0 0 2px}
+.mact{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.actsep{width:1px;align-self:stretch;min-height:34px;background:var(--line);margin:0 3px}
+.btn.end{background:#fff;color:var(--red);border:2px solid var(--red);padding:8px 14px}
+.btn.end:hover{background:var(--red);color:#fff}
+.brand{text-align:center;color:var(--muted);font-size:.78rem;padding:20px 0 10px;opacity:.8;letter-spacing:.02em}
 @page{size:A4;margin:14mm 15mm}
 @media print{
   html,body{background:#fff}
@@ -96,6 +101,7 @@ tr.unvoted td{background:#fff9e6}
     <div class="row" id="topActions"></div>
   </div>
   <div id="app"></div>
+  <footer class="brand">© 2026 curim4am</footer>
 </div>
 
 <script>
@@ -200,8 +206,16 @@ function renderMeeting(app){
   var m=M();if(!m){go("home");return;}
   var ro=m.status!=="open"; // read-only
   document.getElementById("topActions").innerHTML='<button class="btn ghost" onclick="go(\'home\')">← Přehled schůzí</button>';
-  var head='<div class="card"><div class="row spread"><div><h2>Schůze '+dateCz(m.date)+(m.time?' '+m.time:'')+'</h2>'+
-    '<div class="small">'+escapeHtml(m.type||'')+' · zapisovatel: '+escapeHtml(m.zapisovatel||'—')+' · <span class="badge '+(ro?"closed":"open")+'">'+(ro?"uzavřená":"probíhá")+'</span></div></div></div></div>';
+  var acts = ro
+    ? '<button class="btn" onclick="go(\'meeting\',\'protokol\')">📄 Protokol</button>'+
+      '<button class="btn ghost" onclick="reopenMeeting()">🔓 Odemknout</button>'
+    : '<button class="btn" onclick="go(\'meeting\',\'protokol\')">📄 Protokol</button>'+
+      '<span class="actsep"></span>'+
+      '<button class="btn end" onclick="endMeeting()">■ Ukončit schůzi</button>';
+  var head='<div class="card"><div class="row spread" style="gap:12px">'+
+    '<div><h2>Schůze '+dateCz(m.date)+(m.time?' '+m.time:'')+'</h2>'+
+    '<div class="small">'+escapeHtml(m.type||'')+' · zapisovatel: '+escapeHtml(m.zapisovatel||'—')+' · <span class="badge '+(ro?"closed":"open")+'">'+(ro?"uzavřená":"probíhá")+'</span></div></div>'+
+    '<div class="mact">'+acts+'</div></div></div>';
   if(state.subtab==="protokol"){ app.innerHTML=renderProtokol(m); return; }
   var tabs='<div class="tabs">'+
     tabBtn("prezence","Prezence")+tabBtn("hlasovani","Hlasování")+tabBtn("prehled","Přehled a protokol")+'</div>';
@@ -299,13 +313,9 @@ function renderPrehled(m,ro){
   var votes= m.votes.length? '<div class="card"><h2>Usnesení a výsledky</h2>'+voteListHtml(m)+'</div>' : '<div class="card"><p class="small">Žádné hlasování.</p></div>';
   var actions;
   if(!ro){
-    actions='<div class="card"><div class="row"><button class="btn big danger" onclick="endMeeting()">■ UKONČIT SCHŮZI</button>'+
-      '<button class="btn ghost" onclick="go(\'meeting\',\'protokol\')">📄 Náhled protokolu</button></div>'+
-      '<div class="small" style="margin-top:8px">Po ukončení bude schůze uzamčena (jen ke čtení). Výsledky se tím zafixují.</div></div>';
+    actions='<div class="small" style="text-align:center;margin-top:2px">Protokol a ukončení schůze najdeš nahoře u názvu schůze.</div>';
   }else{
-    actions='<div class="card"><div class="row"><button class="btn big green" onclick="go(\'meeting\',\'protokol\')">📄 Vytvořit protokol schůze</button>'+
-      '<button class="btn ghost" onclick="exportCSV()">Export CSV</button>'+
-      '<button class="btn ghost danger" onclick="reopenMeeting()">🔓 Odemknout pro opravu</button></div></div>';
+    actions='<div class="card"><div class="row"><button class="btn ghost" onclick="exportCSV()">Export CSV</button></div></div>';
   }
   return summary+votes+actions;
 }
