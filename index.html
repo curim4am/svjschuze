@@ -292,9 +292,9 @@ function voteListHtml(m){
   return m.votes.map(function(v,i){var s=v.snap;
     var det='<table><thead><tr><th>Jedn.</th><th>Vlastník</th><th class="num">Podíl</th><th>Hlas</th></tr></thead><tbody>'+
       s.units.map(u=>'<tr><td>'+u.unit+'</td><td>'+(escapeHtml(u.owner)||'byt '+u.unit)+'</td><td class="num">'+fmt(u.podil)+' %</td><td><span class="badge '+bc(u.vote)+'">'+u.vote+'</span></td></tr>').join("")+'</tbody></table>';
-    return '<div class="card" style="border:1px solid var(--line)"><div class="row spread clickable" onclick="var d=document.getElementById(\'d'+i+'\');d.classList.toggle(\'hidden\')">'+
-      '<div><b>Hlasování č. '+v.num+' — '+escapeHtml(v.text||"(bez textu)")+'</b><div class="small">'+(v.time||'')+' · '+s.typeLabel+'</div></div>'+
-      '<div style="color:'+(v.result?'var(--green)':'var(--red)')+';font-weight:800">'+(v.result?'🟢 PŘIJATO':'🔴 NEPŘIJATO')+'</div></div>'+
+    return '<div class="card" style="border:1px solid var(--line)"><div class="clickable" onclick="var d=document.getElementById(\'d'+i+'\');d.classList.toggle(\'hidden\')">'+
+      '<b>Hlasování č. '+v.num+' — '+escapeHtml(v.text||"(bez textu)")+'</b><div class="small">'+(v.time||'')+' · '+s.typeLabel+'</div></div>'+
+      '<div style="color:'+(v.result?'var(--green)':'var(--red)')+';font-weight:800;margin-top:4px">'+(v.result?'🟢 PŘIJATO':'🔴 NEPŘIJATO')+'</div>'+
       '<div class="small" style="margin-top:6px">ANO '+s.cA+' ('+fmt(s.ano)+' %) · NE '+s.cN+' ('+fmt(s.ne)+' %) · ZDRŽEL '+s.cZ+' ('+fmt(s.zdr)+' %)'+(s.un?' · nehlasovalo '+s.un:'')+'</div>'+
       '<div id="d'+i+'" class="hidden" style="margin-top:10px">'+det+'</div></div>';}).join("");
 }
@@ -359,8 +359,8 @@ function renderProtokolFull(m){
   var presRows=m.roster.map(function(u){var a=m.att[u.id]||{};
     return '<tr><td>'+u.unit+'</td><td>'+(escapeHtml(u.owner)||'byt '+u.unit)+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td><td>'+(a.present?'Přítomen':'—')+'</td><td>'+escapeHtml(a.note||'')+'</td></tr>';}).join("");
   var presTot='<tr style="background:#f0f0f0"><td colspan="2"><b>Přítomno celkem</b></td><td style="text-align:right"><b>'+fmt(tot>0?pp/tot*100:0)+' %</b></td><td colspan="2"><b>'+presentUnits(m).length+' / '+m.roster.length+' jednotek</b></td></tr>';
-  var summ = m.votes.length ? '<table><thead><tr><th>Č.</th><th>Znění usnesení</th><th>Výsledek</th></tr></thead><tbody>'+
-      m.votes.map(v=>'<tr><td>'+v.num+'</td><td>'+escapeHtml(v.text||'(bez textu)')+'</td><td><b>'+(v.result?'PŘIJATO':'NEPŘIJATO')+'</b></td></tr>').join('')+'</tbody></table>'
+  var summ = m.votes.length ? '<table><thead><tr><th>Č.</th><th>Výsledek</th><th>Znění usnesení</th></tr></thead><tbody>'+
+      m.votes.map(v=>'<tr><td>'+v.num+'</td><td><b class="'+(v.result?'grn':'rd')+'">'+(v.result?'PŘIJATO':'NEPŘIJATO')+'</b></td><td>'+escapeHtml(v.text||'(bez textu)')+'</td></tr>').join('')+'</tbody></table>'
       : '<p>Na schůzi nebylo hlasováno o žádném usnesení.</p>';
   var det=m.votes.map(function(v){var s=v.snap;
     return '<div class="usn keep"><h3>Usnesení č. '+v.num+'</h3><p>'+escapeHtml(v.text||'(bez textu)')+'</p>'+
@@ -400,7 +400,7 @@ function renderProtokolSimple(m){
     protoSig(m)+'</div>';
 }
 function renderProtokol(m){
-  var variant=state.protoVariant||"full";
+  var variant=state.protoVariant||"simple";
   var doc = variant==="simple" ? renderProtokolSimple(m) : renderProtokolFull(m);
   var sw='<div class="proto-switch">'+
     '<span class="small" style="font-weight:700">Varianta:</span>'+
