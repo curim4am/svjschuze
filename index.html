@@ -62,12 +62,27 @@ tr.unvoted td{background:#fff9e6}
 #protokol .sig{margin-top:40px;display:flex;gap:40px;flex-wrap:wrap}
 #protokol .sig div{flex:1;min-width:200px;border-top:1px solid #111;padding-top:4px;font-size:.8rem}
 #protokol .foot{margin-top:24px;font-size:.72rem;color:#666;text-align:right}
+.proto-switch{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.proto-switch label{font-weight:700;color:var(--brand);cursor:pointer;display:flex;gap:6px;align-items:center}
+.proto-switch input{width:auto;transform:scale(1.2)}
+#protokol .usn{margin:12px 0}
+#protokol .usn-t{margin:0 0 2px}
+@page{size:A4;margin:14mm 15mm}
 @media print{
-  body{background:#fff}
+  html,body{background:#fff}
   body *{visibility:hidden}
   #protokol,#protokol *{visibility:visible}
-  #protokol{position:absolute;left:0;top:0;width:100%;max-width:none;border:none;border-radius:0;margin:0;padding:0}
-  .protobar{display:none!important}
+  #protokol{position:absolute;left:0;top:0;width:100%;max-width:none;border:none;border-radius:0;margin:0;padding:0;font-size:10.5pt;color:#000}
+  .protobar,.proto-switch{display:none!important}
+  #protokol h1{font-size:15pt}
+  #protokol h2{font-size:12pt;break-after:avoid;page-break-after:avoid}
+  #protokol h3{font-size:10.5pt;break-after:avoid;page-break-after:avoid}
+  #protokol table{page-break-inside:auto;margin:6px 0}
+  #protokol thead{display:table-header-group}
+  #protokol tfoot{display:table-footer-group}
+  #protokol tr{break-inside:avoid;page-break-inside:avoid}
+  #protokol .keep,#protokol .usn,#protokol .sig{break-inside:avoid;page-break-inside:avoid}
+  #protokol p{orphans:2;widows:2}
 }
 </style>
 </head>
@@ -323,38 +338,72 @@ function exportCSV(){var m=M();var L=[["Datum","Typ","Zapisovatel","Č. hlas.","
     L.push([dateCz(m.date),m.type,m.zapisovatel,v.num,v.text,s.typeLabel,v.result?"PŘIJATO":"NEPŘIJATO",fmt(s.ano),fmt(s.ne),fmt(s.zdr),u.unit,u.owner||("byt "+u.unit),fmt(u.podil),u.vote]);});});
   var csv="﻿"+L.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(";")).join("\n");
   download("schuze_"+(m.date||"")+".csv",csv,"text/csv");}
-function renderProtokol(m){
+function setProtoVariant(v){state.protoVariant=v;save();renderMeeting(document.getElementById("app"));}
+function protoHead(m){
+  return '<h1>Protokol o schůzi shromáždění společenství vlastníků</h1>'+
+    '<p class="center">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p>'+
+    '<p class="center">Datum: <b>'+dateCz(m.date)+(m.time?' '+m.time:'')+'</b> &nbsp;·&nbsp; '+escapeHtml(m.type||'')+' &nbsp;·&nbsp; Zapisovatel: '+escapeHtml(m.zapisovatel||'—')+'</p>'+
+    (m.reopened?'<p class="center rd">Pozn.: protokol byl dodatečně upraven ('+escapeHtml(m.reopened)+').</p>':'');
+}
+function protoSig(m){
+  return '<div class="sig"><div>Zapisovatel: '+escapeHtml(m.zapisovatel||'')+'</div><div>Předsedající</div><div>Ověřovatel(é)</div></div>'+
+    '<div class="foot">Vygenerováno '+new Date().toLocaleString('cs-CZ')+'.</div>';
+}
+function renderProtokolFull(m){
   var pp=presentPodil(m),tot=totalPodil(m),q=isQuorate(m);
   var presRows=m.roster.map(function(u){var a=m.att[u.id]||{};
     return '<tr><td>'+u.unit+'</td><td>'+(escapeHtml(u.owner)||'byt '+u.unit)+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td><td>'+(a.present?'Přítomen':'—')+'</td><td>'+escapeHtml(a.note||'')+'</td></tr>';}).join("");
   var presTot='<tr style="background:#f0f0f0"><td colspan="2"><b>Přítomno celkem</b></td><td style="text-align:right"><b>'+fmt(tot>0?pp/tot*100:0)+' %</b></td><td colspan="2"><b>'+presentUnits(m).length+' / '+m.roster.length+' jednotek</b></td></tr>';
-  var summ = m.votes.length ? '<table><tr><th>Č.</th><th>Znění usnesení</th><th>Výsledek</th></tr>'+
-      m.votes.map(v=>'<tr><td>'+v.num+'</td><td>'+escapeHtml(v.text||'(bez textu)')+'</td><td><b>'+(v.result?'PŘIJATO':'NEPŘIJATO')+'</b></td></tr>').join('')+'</table>'
+  var summ = m.votes.length ? '<table><thead><tr><th>Č.</th><th>Znění usnesení</th><th>Výsledek</th></tr></thead><tbody>'+
+      m.votes.map(v=>'<tr><td>'+v.num+'</td><td>'+escapeHtml(v.text||'(bez textu)')+'</td><td><b>'+(v.result?'PŘIJATO':'NEPŘIJATO')+'</b></td></tr>').join('')+'</tbody></table>'
       : '<p>Na schůzi nebylo hlasováno o žádném usnesení.</p>';
   var det=m.votes.map(function(v){var s=v.snap;
-    return '<h3>Usnesení č. '+v.num+'</h3><p>'+escapeHtml(v.text||'(bez textu)')+'</p>'+
+    return '<div class="usn keep"><h3>Usnesení č. '+v.num+'</h3><p>'+escapeHtml(v.text||'(bez textu)')+'</p>'+
       '<p style="font-size:.8rem;color:#555">Potřebná většina: '+s.typeLabel+(v.time?' · čas hlasování: '+v.time:'')+'</p>'+
       '<p class="rbig '+(v.result?'grn':'rd')+'">'+(v.result?'USNESENÍ PŘIJATO':'USNESENÍ NEBYLO PŘIJATO')+'</p>'+
       '<p>ANO: '+s.cA+' ('+fmt(s.ano)+' % podílů) &nbsp; NE: '+s.cN+' ('+fmt(s.ne)+' %) &nbsp; ZDRŽEL SE: '+s.cZ+' ('+fmt(s.zdr)+' %)'+(s.un?' &nbsp; nehlasovalo: '+s.un:'')+'</p>'+
-      '<table><tr><th>Jedn.</th><th>Vlastník</th><th>Podíl</th><th>Hlas</th></tr>'+
-      s.units.map(u=>'<tr><td>'+u.unit+'</td><td>'+(escapeHtml(u.owner)||'byt '+u.unit)+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td><td>'+u.vote+'</td></tr>').join('')+'</table>';}).join('');
-  var doc='<div id="protokol">'+
-    '<h1>Protokol o schůzi shromáždění společenství vlastníků</h1>'+
-    '<p class="center">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p>'+
-    '<p class="center">Datum: <b>'+dateCz(m.date)+(m.time?' '+m.time:'')+'</b> &nbsp;·&nbsp; '+escapeHtml(m.type||'')+' &nbsp;·&nbsp; Zapisovatel: '+escapeHtml(m.zapisovatel||'—')+'</p>'+
-    (m.reopened?'<p class="center rd">Pozn.: protokol byl dodatečně upraven ('+escapeHtml(m.reopened)+').</p>':'')+
+      '<table><thead><tr><th>Jedn.</th><th>Vlastník</th><th>Podíl</th><th>Hlas</th></tr></thead><tbody>'+
+      s.units.map(u=>'<tr><td>'+u.unit+'</td><td>'+(escapeHtml(u.owner)||'byt '+u.unit)+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td><td>'+u.vote+'</td></tr>').join('')+'</tbody></table></div>';}).join('');
+  return '<div id="protokol">'+protoHead(m)+
     '<h2>1. Účast a usnášeníschopnost</h2>'+
     '<p>Na schůzi bylo přítomno '+presentUnits(m).length+' z '+m.roster.length+' bytových jednotek, představujících '+fmt(tot>0?pp/tot*100:0)+' % vlastnických podílů. '+
     'Schůze <b>'+(q?'byla usnášeníschopná':'nebyla usnášeníschopná')+'</b> (usnášeníschopnost vyžaduje přítomnost více než 50 % vlastnických podílů).</p>'+
-    '<table><tr><th>Jedn.</th><th>Vlastník</th><th>Podíl</th><th>Účast</th><th>Zastoupení / pozn.</th></tr>'+presRows+presTot+'</table>'+
+    '<table><thead><tr><th>Jedn.</th><th>Vlastník</th><th>Podíl</th><th>Účast</th><th>Zastoupení / pozn.</th></tr></thead><tbody>'+presRows+presTot+'</tbody></table>'+
     '<h2>2. Přehled projednaných usnesení</h2>'+summ+
     '<h2>3. Jednotlivá usnesení a výsledky hlasování</h2>'+(det||'<p>Bez hlasování.</p>')+
-    '<div class="sig"><div>Zapisovatel: '+escapeHtml(m.zapisovatel||'')+'</div><div>Předsedající</div><div>Ověřovatel(é)</div></div>'+
-    '<div class="foot">Vygenerováno '+new Date().toLocaleString('cs-CZ')+'.</div></div>';
+    protoSig(m)+'</div>';
+}
+function renderProtokolSimple(m){
+  var pp=presentPodil(m),tot=totalPodil(m),q=isQuorate(m);
+  var pres=presentUnits(m);
+  var presRows=pres.map(function(u){
+    return '<tr><td>'+u.unit+'</td><td>'+(escapeHtml(u.owner)||'byt '+u.unit)+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td></tr>';}).join("");
+  var presTot='<tr style="background:#f0f0f0"><td colspan="2"><b>Přítomno celkem</b></td><td style="text-align:right"><b>'+fmt(tot>0?pp/tot*100:0)+' %</b></td></tr>';
+  var presTable = pres.length
+    ? '<table><thead><tr><th>Jednotka</th><th>Vlastník</th><th>Podíl</th></tr></thead><tbody>'+presRows+presTot+'</tbody></table>'
+    : '<p>Nebyl přítomen nikdo.</p>';
+  var usn = m.votes.length ? m.votes.map(function(v){var s=v.snap;
+    return '<div class="usn keep"><p class="usn-t"><b>Usnesení č. '+v.num+' – '+escapeHtml(v.text||'(bez textu)')+'</b></p>'+
+      '<p class="rbig '+(v.result?'grn':'rd')+'"><b>Výsledek: '+(v.result?'PŘIJATO':'NEPŘIJATO')+'</b></p>'+
+      '<p>ANO: '+s.cA+' ('+fmt(s.ano)+' % podílů)<br>NE: '+s.cN+' ('+fmt(s.ne)+' % podílů)<br>ZDRŽEL SE: '+s.cZ+' ('+fmt(s.zdr)+' % podílů)'+(s.un?'<br>nehlasovalo: '+s.un:'')+'</p></div>';}).join('')
+    : '<p>Na schůzi nebylo hlasováno o žádném usnesení.</p>';
+  return '<div id="protokol">'+protoHead(m)+
+    '<h2>1. Prezence</h2>'+
+    '<p>Přítomno '+pres.length+' z '+m.roster.length+' jednotek, '+fmt(tot>0?pp/tot*100:0)+' % vlastnických podílů — schůze <b>'+(q?'byla usnášeníschopná':'nebyla usnášeníschopná')+'</b>.</p>'+
+    presTable+
+    '<h2>2. Přehled usnesení a výsledky hlasování</h2>'+usn+
+    protoSig(m)+'</div>';
+}
+function renderProtokol(m){
+  var variant=state.protoVariant||"full";
+  var doc = variant==="simple" ? renderProtokolSimple(m) : renderProtokolFull(m);
+  var sw='<div class="proto-switch">'+
+    '<span class="small" style="font-weight:700">Varianta:</span>'+
+    '<label><input type="radio" name="pv" '+(variant!=="simple"?'checked':'')+' onclick="setProtoVariant(\'full\')"> Kompletní protokol</label>'+
+    '<label><input type="radio" name="pv" '+(variant==="simple"?'checked':'')+' onclick="setProtoVariant(\'simple\')"> Zjednodušený protokol</label></div>';
   var bar='<div class="protobar"><button class="btn ghost" onclick="go(\'meeting\',\'prehled\')">← Zpět</button>'+
-    '<button class="btn big" onclick="window.print()">🖨 Vytisknout / Uložit jako PDF</button>'+
-    '<button class="btn ghost" onclick="exportCSV()">Export CSV</button></div>';
-  return bar+doc;
+    '<button class="btn big" onclick="window.print()">🖨 Vytisknout / Uložit jako PDF</button></div>';
+  return bar+sw+doc;
 }
 function printProtokol(){var m=M(),pp=presentPodil(m),tot=totalPodil(m);
   var pres=presentUnits(m).map(u=>{var a=m.att[u.id]||{};return '<tr><td>'+u.unit+'</td><td>'+(u.owner||'byt '+u.unit)+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td><td>'+(a.proxy||a.note?'plná moc / '+ (a.note||''):'')+'</td></tr>';}).join("");
