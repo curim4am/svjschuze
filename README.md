@@ -1,50 +1,46 @@
-# Hlasování SVJ — aplikace pro schůze
+# SVJ Buková — schůze, usnesení, úkoly
 
-Jednoduchý nástroj pro vedení schůze shromáždění SVJ: prezence → usnášeníschopnost → hlasování → výsledky → protokol → archiv. Funguje **offline**, nic se neinstaluje, žádný účet ani internet nepotřebuje.
+Jednoduchý nástroj pro výbor SVJ: vedení schůze (prezence → hlasování), evidence usnesení a úkolů, které z nich vznikají. Funguje **offline**, nic se neinstaluje, nepotřebuje účet ani internet.
 
-## Co je v balíčku
+## Spuštění
 
-- **index.html** — samotná aplikace (jeden soubor)
-- **README.md** — tento návod
+Otevřete **index.html** v prohlížeči (Chrome, Edge, Firefox, Safari). Hotovo.
 
-## Jak ji spustit (nejjednodušší, na schůzi)
+## Jak je aplikace uspořádaná
 
-1. Rozbal ZIP.
-2. Poklepej na **index.html** — otevře se v prohlížeči (Chrome, Edge nebo Firefox).
-3. Hotovo. Funguje bez internetu.
+Nahoře je stálá navigace se čtyřmi oblastmi:
 
-Tip: dej si na `index.html` zástupce na plochu, ať ho máš na schůzi hned po ruce.
+- **Přehled** — co se právě děje: probíhající schůze, úkoly po termínu, co je potřeba udělat a poslední usnesení.
+- **Schůze** — seznam schůzí a založení nové. V detailu schůze pracujete během jednání.
+- **Usnesení** — všechna rozhodnutí shromáždění seřazená podle schůzí, s hledáním a tiskem.
+- **Úkoly** — co je potřeba udělat (z usnesení, podnětů vlastníků i zákonných povinností).
+- **Nastavení** — vlastníci a podíly, záloha dat.
 
-## Než ji poprvé použiješ
+## Před první schůzí
 
-1. Otevři **⚙ Nastavení** a zkontroluj/uprav **vlastnické podíly a jména** vlastníků. Podíly jsou předvyplněné jako rovné (1/24) — nastav je podle **prohlášení vlastníka**. Součet musí být 100 %.
-2. Udělej si **zkušební schůzi nanečisto** (založ schůzi, označ pár přítomných, zkus jedno hlasování), ať si osaháš ovládání.
+V **Nastavení** zkontrolujte jména vlastníků a **podíly podle prohlášení vlastníka**. Součet musí být 100 %.
 
-## Jak to funguje na schůzi
+## Průběh schůze
 
-1. **➕ Nová schůze** — vyplň datum, čas, typ a zapisovatele.
-2. **Prezence** — u přítomných klikni „PŘÍTOMEN". Nahoře se hned ukáže, zda je schůze usnášeníschopná.
-3. **Hlasování** — „Zahájit hlasování", napiš text usnesení, vyber potřebnou většinu. Všichni přítomní jsou přednastaveni na **ZDRŽEL SE** — ty jen proklikáš ty, co hlasovali **ANO** nebo **NE**. Výsledek se počítá živě podle podílů.
-4. **Uzavřít hlasování** — výsledek se uloží pod schůzi.
-5. **Přehled a protokol → UKONČIT SCHŮZI** — schůze se uzamkne.
-6. **📄 Vytvořit protokol schůze** → **🖨 Vytisknout / Uložit jako PDF** — vznikne hotový dokument k založení do dokumentace SVJ.
+1. **Schůze → + Nová schůze** → vyplňte datum, typ a zapisovatele → **Zahájit schůzi**.
+2. **Prezence** — u přítomných klikněte „Nepřítomen" → „✓ Přítomen". Nahoře se hned ukazuje, zda je schůze usnášeníschopná.
+3. **Hlasování** — napište návrh usnesení, zvolte potřebnou většinu, **Zahájit hlasování**. Všichni jsou předvyplnění na „Zdržel se"; proklikejte ANO/NE (nebo „Nastavit všem"). Výsledek se počítá živě podle podílů. **Uzavřít hlasování** usnesení uloží.
+4. **Úkoly** — u každého usnesení je „+ Úkol", úkol ale můžete přidat i bez vazby na usnesení.
+5. **Ukončit schůzi** — výsledky se uzamknou. **Protokol** vytisknete nebo uložíte jako PDF (zjednodušený / kompletní).
+
+## Úkoly
+
+Aktivní úkoly jsou rozdělené na *Po termínu*, *Termín do 14 dnů*, *Později* a *Bez termínu*. Kliknutím na úkol změníte stav (V řešení / Splněno / Zrušeno) a poznámku. Splněný úkol se uzamkne.
 
 ## Data a zálohy (důležité)
 
-- Schůze se ukládají **v prohlížeči** toho počítače (a té internetové adresy), kde aplikaci používáš. Nejsou nikde na internetu.
-- Pro přenos na jiný počítač nebo pro jistotu použij tlačítka **Záloha** (uloží soubor `.json`) a **Načíst**.
-- Doporučení: po každé důležité schůze si udělej Zálohu.
+Data jsou uložená **jen v tomto prohlížeči**. Po každé schůzi si v **Nastavení → Stáhnout zálohu** stáhněte soubor `.json` a uložte ho mimo počítač. Na Přehledu vás aplikace upozorní, když je záloha starší než 30 dní.
 
-## Volitelné: nahrání na web (GitHub Pages)
+## Nahrání na web (GitHub Pages) — volitelné
 
-Když chceš aplikaci otevírat přes odkaz z libovolného zařízení:
+Nahrajte do repozitáře **jen index.html** (Settings → Pages → branch `main`, složka `/root`).
 
-1. Založ repozitář na GitHubu a nahraj do něj **index.html** (název `index.html` je nutný, aby se stránka otevřela na hlavní adrese).
-2. Settings → Pages → Source „Deploy from a branch", branch `main`, složka `/root` → Save.
-3. Za chvíli běží na `https://tvojejmeno.github.io/nazev-repa/`.
+**Pozor (GDPR):** zálohu `.json` nikdy nenahrávejte na veřejný web — obsahuje jména vlastníků a podíly.
 
-**Pozor (GDPR):** na veřejný repozitář nahraj **jen index.html**. Nikdy tam nenahrávej zálohu `.json` — obsahuje jména vlastníků a podíly.
-
-## Poznámka k pravidlům
-
-Aplikace používá pravidla vašeho SVJ: usnášeníschopnost = přítomnost více než 50 % podílů; potřebné většiny — prostá většina přítomných, tříčtvrtinová přítomných, nadpoloviční všech vlastníků (volba výboru), souhlas všech. Hlasuje se podle vlastnických podílů. Usnášeníschopnost se zobrazuje, ale hlasování neblokuje — platnost usnesení posuď podle stanov.
+---
+© 2026 curim4am
