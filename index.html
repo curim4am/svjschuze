@@ -308,15 +308,11 @@ function renderPrehled(m,ro){
     '<div>Usnášeníschopná: <b style="color:'+(q?'var(--green)':'var(--red)')+'">'+(q?'ANO':'NE')+'</b></div><div>Hlasování: <b>'+m.votes.length+'</b></div></div>'+
     (m.reopened?'<div class="note" style="margin-top:10px">⚠ Schůze byla dodatečně odemčena pro opravu ('+m.reopened+').</div>':'')+'</div>';
   var votes= m.votes.length? '<div class="card"><h2>Usnesení a výsledky</h2>'+voteListHtml(m)+'</div>' : '<div class="card"><p class="small">Žádné hlasování.</p></div>';
-  var actions;
-  if(!ro){
-    actions='<div class="card"><button class="btn big" onclick="go(\'meeting\',\'protokol\')">📄 Náhled protokolu</button>'+
-      '<div class="small" style="margin-top:8px">Schůzi ukončíš tlačítkem nahoře u názvu schůze.</div></div>';
-  }else{
-    actions='<div class="card"><div class="row"><button class="btn big green" onclick="go(\'meeting\',\'protokol\')">📄 Vytvořit protokol schůze</button>'+
-      '<button class="btn ghost" onclick="exportCSV()">Export CSV</button></div></div>';
-  }
-  return summary+votes+actions;
+  var protoBtn='<div class="card"><button class="btn big" onclick="go(\'meeting\',\'protokol\')">🖨 Tisk protokolu</button></div>';
+  var actions = ro
+    ? '<div class="card"><div class="row"><button class="btn ghost" onclick="exportCSV()">Export CSV</button></div></div>'
+    : '';
+  return protoBtn+summary+votes+actions;
 }
 function endMeeting(){var m=M();
   if(m.current){alert("Nejdřív uzavři nebo zruš probíhající hlasování.");return;}
