@@ -196,6 +196,14 @@ textarea{resize:vertical;line-height:1.4}
 .seg button{border:none;background:transparent;padding:7px 12px;border-radius:8px;font-weight:650;font-size:.88rem;color:var(--ink2);cursor:pointer}
 .seg button.on{background:var(--surface);color:var(--brand);box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .seg .n{color:var(--muted);font-weight:600;margin-left:5px}
+.ztool{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}.zhelp{margin-left:6px}
+.zgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#zNotes{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86rem;min-height:360px}
+.zprev{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:#fafbfd;max-height:560px;overflow:auto}
+.znotes h3{font-size:.98rem;margin:12px 0 4px}.znotes h3:first-child{margin-top:0}.znotes ul{margin:0 0 8px 18px;padding:0}.znotes li{margin:0 0 3px}.znotes p{margin:0 0 8px}
+.zt{border:1px solid var(--line);background:#fff;color:var(--brand);border-radius:6px;font-size:.72rem;padding:0 6px;margin-left:4px;cursor:pointer;opacity:.8;font-weight:600}.zt:hover{opacity:1;border-color:var(--brand)}
+.tabs .n.ok{background:#e7f5ec;color:#177a39}
+@media(max-width:820px){.zgrid{grid-template-columns:1fr}.zhelp{display:block;margin:4px 0 0}}
 .callout{border-radius:10px;padding:10px 12px;font-size:.88rem;margin-bottom:12px;background:var(--amber-bg);color:#6f4200}
 .callout.info{background:var(--blue-bg);color:#1c4a8c}
 .callout.gray{background:var(--gray-bg);color:var(--ink2)}
@@ -233,6 +241,25 @@ table.edit td{padding:6px 10px}
 #protokol .usn{margin:12px 0}
 #protokol .sig{margin-top:40px;display:flex;gap:40px;flex-wrap:wrap}
 #protokol .sig div{flex:1;min-width:200px;border-top:1px solid #111;padding-top:4px;font-size:.8rem}
+#protokol table.pinfo{margin:10px auto 4px;width:auto}#protokol table.pinfo td{border:none;padding:1px 12px 1px 0;font-size:.86rem}#protokol td.pl{color:#555}
+#protokol .ptab{width:100%;border-collapse:collapse}#protokol .r{text-align:right}#protokol .nw{white-space:nowrap}#protokol .muted{color:#666;font-size:.75rem}#protokol tr.tot td{background:#f0f0f0}
+#protokol .pres{font-size:.8rem;color:#333}#protokol ol,#protokol .znotes ul{margin:4px 0 8px 20px;padding:0}#protokol .znotes h3{margin:10px 0 3px}#protokol .znotes p{margin:0 0 6px}
+#protokol h2.appx{margin-top:34px}
+#protokol{-webkit-print-color-adjust:exact;print-color-adjust:exact;line-height:1.45}
+#protokol h1{letter-spacing:-.2px}
+#protokol h2{font-size:1.02rem;color:#1f3864;border:none;border-bottom:1px solid #b9c3d3;margin:24px 0 8px;padding:0 0 4px}
+#protokol table.pinfo{width:auto;border:none;margin:12px auto 6px}
+#protokol .usn{margin:10px 0;padding:7px 12px 6px;border:1px solid #d9dee6;border-left:4px solid #136c2e;border-radius:6px;background:#fbfcfd}
+#protokol .usn.ko{border-left-color:#a5201d}
+#protokol .usn .uh{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#protokol .usn .ub{font-size:.74rem;font-weight:800;letter-spacing:.04em;padding:1px 8px;border-radius:10px;border:1px solid #136c2e;color:#136c2e;background:#eaf6ee;white-space:nowrap}
+#protokol .usn.ko .ub{border-color:#a5201d;color:#a5201d;background:#fbecea}
+#protokol .usn .ut{margin:3px 0 4px}
+#protokol .pres{color:#555}
+#protokol .ptab th{background:#eef1f5}
+#protokol .znotes h3{color:#1f3864;font-size:.92rem}
+#protokol .sig{margin-top:44px}
+
 #protokol .pfoot{margin-top:24px;font-size:.72rem;color:#666;text-align:right}
 #usnprint,#printbox{display:none}
 
@@ -250,6 +277,14 @@ table.edit td{padding:6px 10px}
   .vb{min-width:0;padding:10px 4px}
   .detail{padding-left:16px}
   #protokol{padding:20px 16px}
+  .tabs{flex-wrap:wrap}
+  .tabs button{padding:8px 10px}
+}
+@media(max-width:480px){
+  table.lv th:nth-child(3),table.lv td:nth-child(3){display:none}
+  table.lv th,table.lv td{padding:6px 5px}
+  .vote-btns{gap:4px}
+  .vb{font-size:.8rem;padding:9px 2px}
 }
 
 @page{size:A4;margin:14mm 15mm}
@@ -266,6 +301,9 @@ table.edit td{padding:6px 10px}
   #protokol tr,#usnprint tr,#printbox tr{break-inside:avoid;page-break-inside:avoid}
   #protokol .keep,#protokol .usn,#protokol .sig{break-inside:avoid;page-break-inside:avoid}
   #protokol p{orphans:2;widows:2}
+  #protokol h2.appx{break-before:page;page-break-before:always;margin-top:0}
+  #protokol table.pinfo td{font-size:10pt}
+  #protokol .pres{font-size:9pt}
   #usnprint{display:block;position:absolute;left:0;top:0;width:100%;color:#000;font-size:10pt}
   #printbox{display:block;position:absolute;left:0;top:0;width:100%;color:#000;font-size:10pt}
   #printbox h1{font-size:15pt;text-align:center;margin:0 0 2px}
@@ -282,6 +320,22 @@ table.edit td{padding:6px 10px}
   #printbox.onepage table{margin-top:5px}
   #printbox.onepage td{padding:2px 6px;vertical-align:middle}
   #printbox .psig div{flex:1;border-top:1px solid #000;padding-top:3px;font-size:9pt}
+  #printbox .zdoc{font-size:10.5pt;line-height:1.35}
+  #printbox .zdoc h1{font-size:15pt}
+  #printbox .zdoc h2{font-size:12pt;margin:12px 0 3px}
+  #printbox .zdoc h3{font-size:10.5pt;margin:8px 0 2px;break-after:avoid;page-break-after:avoid}
+  #printbox .zdoc p{margin:0 0 4px}
+  #printbox .zdoc ul,#printbox .zdoc ol{margin:0 0 5px 18px;padding:0}
+  #printbox .zdoc table.zinfo{width:auto;margin-top:6px}
+  #printbox .zdoc table.zinfo td{border:none;padding:1px 10px 1px 0;font-size:10pt}
+  #printbox .zdoc td.zl{color:#444}
+  #printbox .zdoc .zres{font-size:9.5pt;color:#222}
+  #printbox .zdoc .zusn{margin:0 0 6px;break-inside:avoid;page-break-inside:avoid}
+  #printbox .zdoc table.zsig{margin-top:26px;break-inside:avoid;page-break-inside:avoid}
+  #printbox .zdoc table.zsig td{border:none;border-top:1px solid #000;width:33%;padding:3px 12px 0 0;font-size:9.5pt}
+  #printbox .zdoc .r{text-align:right}
+  #printbox .zdoc .zpb{page-break-before:always;break-before:page}
+  #printbox .zdoc .zt{display:none}
   #usnprint h1{font-size:15pt;text-align:center;margin:0 0 2px}
   #usnprint table{width:100%;border-collapse:collapse;margin-top:8px}
   #usnprint th,#usnprint td{border:1px solid #999;padding:4px 6px;text-align:left;vertical-align:top;background:none;color:#000;text-transform:none;letter-spacing:0;font-size:9.5pt}
@@ -316,7 +370,8 @@ var MON=["led","úno","bře","dub","kvě","čvn","čvc","srp","zář","říj","l
 // ================= DATA =================
 function defaultRoster(){var a=[],p=100/24;for(var i=1;i<=24;i++)a.push({id:i,unit:String(i),owner:"",podil:p});return a;}
 function load(){try{var s=localStorage.getItem(KEY);return s?JSON.parse(s):null;}catch(e){return null;}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+var saveWarned=false;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){if(!saveWarned){saveWarned=true;alert("Pozor: data se nepodařilo uložit do prohlížeče (plné úložiště nebo anonymní okno). Stáhněte si hned zálohu v Nastavení.");}}}
 function initState(){
   var old=null;try{old=JSON.parse(localStorage.getItem("svj_hlas"));}catch(e){}
   return {roster:(old&&old.units)?old.units.map(function(u){return {id:u.id,unit:u.unit,owner:u.owner,podil:u.podil};}):defaultRoster(),
@@ -336,6 +391,7 @@ function normalize(){
     if(!Array.isArray(m.votes))m.votes=[];
     if(m.current===undefined)m.current=null;
     if(m.status!=="closed")m.status="open";
+    zOf(m);
   });
   state.tasks.forEach(function(t){
     if(!t.source)t.source=t.voteNum?"usneseni":"jine";
@@ -417,7 +473,7 @@ function scrollTop(){try{window.scrollTo(0,0);}catch(e){}}
 // ================= NAVIGACE =================
 var ui={newMeeting:false,newTask:false,taskTab:"active",taskQ:"",openTask:null,draft:null,usnQ:"",usnRes:"",usnYear:"",voteDetail:{},mtForm:null};
 
-function go(screen){state.screen=screen;ui.openTask=null;ui.draft=null;ui.newMeeting=false;ui.newTask=false;save();render();scrollTop();}
+function go(screen){state.screen=screen;ui.mtForm=null;ui.openTask=null;ui.draft=null;ui.newMeeting=false;ui.newTask=false;save();render();scrollTop();}
 function goTasks(tab){ui.taskTab=tab||"active";go("ukoly");}
 function defaultTab(m){return m.status==="open"?(m.current?"hlasovani":"prezence"):"vysledky";}
 function openMeeting(id,tab){
@@ -549,7 +605,7 @@ function createMeeting(){
 }
 
 // ================= DETAIL SCHŮZE =================
-function meetingTabs(m){return m.status==="open"?[["prezence","Prezence"],["hlasovani","Hlasování"],["ukoly","Úkoly"],["vysledky","Výsledky"]]:[["vysledky","Výsledky"],["prezence","Prezence"],["ukoly","Úkoly"]];}
+function meetingTabs(m){return m.status==="open"?[["prezence","Prezence"],["zapis","Zápis"],["hlasovani","Hlasování"],["ukoly","Úkoly"],["vysledky","Výsledky"]]:[["vysledky","Výsledky"],["zapis","Zápis"],["prezence","Prezence"],["ukoly","Úkoly"]];}
 function statusStrip(m){
   var q=isQuorate(m);
   return '<div class="strip"><span class="q '+(q?'ok':'no')+'">'+(q?'Usnášeníschopná':'Není usnášeníschopná')+'</span>'+
@@ -576,7 +632,7 @@ function viewMeeting(){
     if(t[0]==="hlasovani"&&m.current)ex='<span class="n live">● probíhá</span>';
     if(t[0]==="ukoly"&&tN)ex='<span class="n">'+tN+'</span>';
     return '<button class="'+(t[0]===tab?'on':'')+'" onclick="setTab(\''+t[0]+'\')">'+t[1]+ex+'</button>';}).join("")+'</div>';
-  h+=tab==="prezence"?tabPrezence(m):tab==="hlasovani"?tabHlasovani(m):tab==="ukoly"?tabUkoly(m):tabVysledky(m);
+  h+=tab==="prezence"?tabPrezence(m):tab==="hlasovani"?tabHlasovani(m):tab==="ukoly"?tabUkoly(m):tab==="zapis"?zTab(m):tabVysledky(m);
   return h;
 }
 
@@ -589,7 +645,7 @@ function tabPrezence(m){
       '<td>'+(ro?esc(a.note||''):'<input type="text" value="'+esc(a.note||'')+'" placeholder="plná moc / zmocněnec" oninput="setNote('+u.id+',this.value)">')+'</td></tr>';}).join("");
   var right=ro?'<span class="muted-s">jen ke čtení</span>':'<div class="row"><button class="btn sec sm" onclick="setAllPresent(true)">Označit všechny</button><button class="btn ghost sm" onclick="setAllPresent(false)">Zrušit vše</button></div>';
   var h=card("Prezenční listina",right,'<div class="tablewrap"><table><thead><tr><th>Jedn.</th><th>Vlastník</th><th class="num">Podíl</th><th>Účast</th><th>Plná moc / poznámka</th></tr></thead><tbody>'+rows+'</tbody></table></div>');
-  if(!ro)h+='<div class="nextbar"><span class="muted-s">Prezence zapsaná?</span><button class="btn" onclick="setTab(\'hlasovani\')">Pokračovat na hlasování →</button></div>';
+  if(!ro)h+='<div class="nextbar"><span class="muted-s">Prezence zapsaná?</span><button class="btn" onclick="setTab(\'zapis\')">Pokračovat na zápis →</button></div>';
   return h;
 }
 function togglePresent(id){var m=M();if(!m||m.status!=="open")return;m.att[id].present=!m.att[id].present;save();render();}
@@ -604,6 +660,8 @@ function tabHlasovani(m){
   var opts=Object.keys(TYPES).map(function(k){return '<option value="'+k+'">'+TYPES[k].label+'</option>';}).join("");
   var warn=!n?'<div class="callout">Nejdřív v <button class="linkbtn" onclick="setTab(\'prezence\')">prezenci</button> označte přítomné — hlasují jen přítomní.</div>'
     :(!q?'<div class="callout">⚠ Schůze teď není usnášeníschopná ('+fmt(pct(m))+' % podílů). Přijaté usnesení nemusí být platné.</div>':'');
+  var prog=zOf(m).program.split("\n").map(function(s){return s.replace(/^\s*\d+[.)]\s*/,"").trim();}).filter(Boolean);
+  if(prog.length)warn+='<div class="callout info"><b>Program podle pozvánky:</b> '+prog.map(function(p,i){return (i+1)+'. '+esc(p);}).join(' · ')+'<br><span class="muted-s">Hlasovat lze jen o bodech z pozvánky – o jiné věci jen za účasti a se souhlasem všech vlastníků.</span></div>';
   var h=card("Nové hlasování",'<span class="muted-s">usnesení č. '+(m.votes.length+1)+'</span>','<div class="card-b">'+warn+
     field("Návrh usnesení",'<textarea id="vText" rows="3" placeholder="Shromáždění schvaluje …"></textarea>','<div class="err" id="vErr"></div>')+
     '<div class="mb"></div>'+
@@ -634,7 +692,7 @@ function liveVote(m){
     '<div class="expl">Pro hlasuje '+fmt(share)+' % podílů '+baseTxt+' · potřeba '+need+' '+baseTxt+'.</div>'+
     '<div class="counts"><span><i class="dot a"></i>ANO <b>'+t.cA+'</b></span><span><i class="dot n"></i>NE <b>'+t.cN+'</b></span><span><i class="dot z"></i>Zdržel se <b>'+t.cZ+'</b></span></div></div>'+
     card("Hlasy přítomných",'<div class="row"><span class="muted-s">Nastavit všem:</span><button class="btn sec sm" onclick="setAllVotes(\'ANO\')">ANO</button><button class="btn sec sm" onclick="setAllVotes(\'NE\')">NE</button><button class="btn sec sm" onclick="setAllVotes(\'ZDR\')">Zdržel se</button></div>',
-      '<div class="tablewrap"><table><thead><tr><th>Jedn.</th><th>Vlastník</th><th class="num">Podíl</th><th>Hlas</th></tr></thead><tbody>'+rows+'</tbody></table></div>')+
+      '<div class="tablewrap"><table class="lv"><thead><tr><th>Jedn.</th><th>Vlastník</th><th class="num">Podíl</th><th>Hlas</th></tr></thead><tbody>'+rows+'</tbody></table></div>')+
     '<div class="nextbar"><button class="btn ghost" onclick="cancelVote()">Zrušit hlasování</button><button class="btn ok lg" onclick="closeVote()">✔ Uzavřít hlasování</button></div>';
 }
 function cast(id,x){var m=M();if(!m||!m.current)return;m.current.ballots[id]=x;save();render();}
@@ -692,44 +750,121 @@ function viewProtokol(){
   return '<span class="crumb" onclick="openMeeting('+m.id+')">← Zpět na schůzi</span>'+
     '<div class="ph"><div><h1>Protokol</h1><div class="phs">'+esc(m.type||"")+' · '+dateCz(m.date)+'</div></div><div class="row">'+seg([["simple","Zjednodušený"],["full","Kompletní"]],v,"setProtoVariant")+'<button class="btn" onclick="window.print()">🖨 Vytisknout / PDF</button></div></div>'+
     (m.status==="open"?'<div class="callout">Schůze ještě probíhá — protokol je zatím průběžný.</div>':'')+
-    '<div class="muted-s mb">'+(v==="simple"?'Zjednodušený protokol: seznam přítomných a souhrnné výsledky usnesení — vhodný k běžnému založení.':'Kompletní protokol: celá prezenční listina a hlasy jednotlivých jednotek u každého usnesení.')+'</div>'+
+    '<div class="muted-s mb">'+(v==="simple"?'Zjednodušený: zápis, usnesení s výsledky, úkoly a listina přítomných.':'Kompletní: navíc celá listina všech jednotek a jmenovité hlasování u každého usnesení.')+'</div>'+
     (v==="simple"?protoSimple(m):protoFull(m));
 }
 function setProtoVariant(v){state.protoVariant=v;save();render();}
-function protoHead(m){
-  return '<h1>Protokol o schůzi shromáždění společenství vlastníků</h1>'+
-    '<p class="center">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p>'+
-    '<p class="center">Datum: <b>'+dateCz(m.date)+(m.time?' '+esc(m.time):'')+'</b> &nbsp;·&nbsp; '+esc(m.type||'')+' &nbsp;·&nbsp; Zapisovatel: '+esc(m.zapisovatel||'—')+'</p>'+
-    (m.reopened?'<p class="center rd">Pozn.: protokol byl dodatečně upraven ('+esc(m.reopened)+').</p>':'');
-}
-function protoSig(m){return '<div class="sig"><div>Zapisovatel: '+esc(m.zapisovatel||'')+'</div><div>Předsedající</div><div>Ověřovatel(é)</div></div><div class="pfoot">Vygenerováno '+new Date().toLocaleString('cs-CZ')+'.</div>';}
-function protoSecs(m,secs){return '<div id="protokol">'+protoHead(m)+secs.map(function(s,i){return '<h2>'+(i+1)+'. '+s[0]+'</h2>'+s[1];}).join('')+protoSig(m)+'</div>';}
 function protoVote(x){return x==="ANO"||x==="NE"?x:"ZDRŽEL SE";}
-function protoSimple(m){
-  var pp=presentPodil(m),tot=totalPodil(m),q=isQuorate(m),pres=presentUnits(m);
-  var presTable=pres.length?'<table><thead><tr><th>Jednotka</th><th>Vlastník</th><th>Podíl</th></tr></thead><tbody>'+
-    pres.map(function(u){return '<tr><td>'+esc(u.unit)+'</td><td>'+(esc(u.owner)||'byt '+esc(u.unit))+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td></tr>';}).join("")+
-    '<tr style="background:#f0f0f0"><td colspan="2"><b>Přítomno celkem</b></td><td style="text-align:right"><b>'+fmt(tot>0?pp/tot*100:0)+' %</b></td></tr></tbody></table>':'<p>Nebyl přítomen nikdo.</p>';
-  var usn=m.votes.length?m.votes.map(function(v){var s=v.snap;
-    return '<div class="usn keep"><p><b>Usnesení č. '+v.num+' – '+esc(v.text||'(bez textu)')+'</b></p><p class="rbig '+(v.result?'grn':'rd')+'">Výsledek: '+(v.result?'PŘIJATO':'NEPŘIJATO')+'</p>'+
-      '<p>ANO: '+s.cA+' ('+fmt(s.ano)+' % podílů)<br>NE: '+s.cN+' ('+fmt(s.ne)+' % podílů)<br>ZDRŽEL SE: '+s.cZ+' ('+fmt(s.zdr)+' % podílů)</p></div>';}).join(''):'<p>Na schůzi nebylo hlasováno o žádném usnesení.</p>';
-  return protoSecs(m,[["Prezence",'<p>Přítomno '+pres.length+' z '+m.roster.length+' jednotek, '+fmt(tot>0?pp/tot*100:0)+' % vlastnických podílů — schůze <b>'+(q?'byla usnášeníschopná':'nebyla usnášeníschopná')+'</b>.</p>'+presTable],["Přehled usnesení a výsledky hlasování",usn]]);
+function protoUsn(v){var s=v.snap,pt=s.tot>0?s.pres/s.tot*100:0;
+  return '<div class="usn keep '+(v.result?'ok':'ko')+'"><div class="uh"><b>Usnesení č. '+v.num+'</b><span class="ub">'+(v.result?'✓ PŘIJATO':'✗ NEPŘIJATO')+'</span></div><p class="ut">'+esc(v.text||'(bez textu)')+'</p>'+
+    '<p class="pres">PRO '+s.cA+' ('+fmt(s.ano)+' % hlasů) · PROTI '+s.cN+' ('+fmt(s.ne)+' %) · ZDRŽEL SE '+s.cZ+' ('+fmt(s.zdr)+' %)<br>potřebná většina: '+esc(s.typeLabel)+' · přítomno '+fmt(pt)+' % hlasů'+(v.time?' · hlasováno v '+esc(v.time):'')+'</p></div>';}
+function protoDoc(m,full){
+  var z=zOf(m),tot=totalPodil(m),pp=presentPodil(m),q=isQuorate(m),pres=presentUnits(m),n=0;
+  function sec(t){n++;return '<h2>'+n+'. '+t+'</h2>';}
+  function row(l,v){return '<tr><td class="pl">'+l+'</td><td>'+v+'</td></tr>';}
+  var dots='………………………';
+  var H='<h1>Protokol ze shromáždění vlastníků jednotek</h1><p class="center">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p>'+
+    '<table class="pinfo">'+row("Datum a čas",dateCz(m.date)+(m.time?', '+esc(m.time):''))+row("Druh",esc(m.type||''))+(z.place?row("Místo",esc(z.place)):'')+row("Předsedající",esc(z.chair)||dots)+row("Zapisovatel",esc(m.zapisovatel)||dots)+row("Ověřovatel",esc(z.verifier)||dots)+'</table>'+
+    (m.reopened?'<p class="rd">Pozn.: protokol byl po ukončení schůze opraven ('+esc(m.reopened)+').</p>':'');
+  H+=sec("Prezence a usnášeníschopnost")+'<p>Přítomno <b>'+pres.length+' z '+m.roster.length+'</b> jednotek, tj. <b>'+fmt(tot>0?pp/tot*100:0)+' %</b> všech hlasů (podílů). Shromáždění <b>'+(q?'bylo usnášeníschopné':'nebylo usnášeníschopné')+'</b> (potřeba více než 50 % všech hlasů). Listina přítomných je na konci protokolu.</p>';
+  var prog=z.program.split("\n").map(function(s){return s.replace(/^\s*\d+[.)]\s*/,"").trim();}).filter(Boolean);
+  if(prog.length)H+=sec("Program podle pozvánky")+'<ol>'+prog.map(function(p){return '<li>'+inlineFmt(p)+'</li>';}).join("")+'</ol>';
+  var nh=notesHtml(z.notes,false);if(nh)H+=sec("Průběh jednání")+'<div class="znotes">'+nh+'</div>';
+  H+=sec("Usnesení a výsledky hlasování")+(m.votes.length?m.votes.map(protoUsn).join(''):'<p>Na shromáždění se nehlasovalo.</p>');
+  var tasks=state.tasks.filter(function(t){return t.meetingId===m.id;});
+  if(tasks.length)H+=sec("Nové úkoly ze shromáždění")+'<table class="ptab"><thead><tr><th>Úkol</th><th>Odpovídá</th><th>Termín</th></tr></thead><tbody>'+tasks.map(function(t){return '<tr><td>'+esc(t.text)+(t.voteNum?' <span class="muted">(usnesení č. '+t.voteNum+')</span>':'')+'</td><td class="nw">'+esc(t.owner||'—')+'</td><td class="nw">'+(t.due?dateCz(t.due):'—')+'</td></tr>';}).join("")+'</tbody></table>';
+  H+='<div class="sig"><div>Zapisovatel<br><b>'+esc(m.zapisovatel||'')+'</b></div><div>Předsedající<br><b>'+esc(z.chair)+'</b></div><div>Ověřovatel<br><b>'+esc(z.verifier)+'</b></div></div>';
+  // listina přítomných
+  var lst=full?m.roster:pres;
+  H+='<h2 class="appx">Listina přítomných</h2><table class="ptab"><thead><tr><th>Jedn.</th><th>Vlastník</th><th>Podíl</th>'+(full?'<th>Účast</th>':'')+'<th>Plná moc / pozn.</th></tr></thead><tbody>'+
+    lst.map(function(u){var a=m.att[u.id]||{};return '<tr><td>'+esc(u.unit)+'</td><td>'+(esc(u.owner)||'byt '+esc(u.unit))+'</td><td class="r">'+fmt(u.podil)+' %</td>'+(full?'<td>'+(a.present?'přítomen':'—')+'</td>':'')+'<td>'+esc(a.note||'')+'</td></tr>';}).join("")+
+    '<tr class="tot"><td colspan="2"><b>Přítomno '+pres.length+' z '+m.roster.length+'</b></td><td class="r"><b>'+fmt(tot>0?pp/tot*100:0)+' %</b></td><td'+(full?' colspan="2"':'')+'></td></tr></tbody></table>';
+  if(full&&m.votes.length){H+='<h2 class="appx">Jmenovité hlasování</h2>';
+    m.votes.forEach(function(v){H+='<h3>Usnesení č. '+v.num+' – '+(v.result?'přijato':'nepřijato')+'</h3><table class="ptab"><thead><tr><th>Jedn.</th><th>Vlastník</th><th>Podíl</th><th>Hlas</th></tr></thead><tbody>'+v.snap.units.map(function(u){return '<tr><td>'+esc(u.unit)+'</td><td>'+(esc(u.owner)||'byt '+esc(u.unit))+'</td><td class="r">'+fmt(u.podil)+' %</td><td>'+protoVote(u.vote)+'</td></tr>';}).join("")+'</tbody></table>';});}
+  H+='<div class="pfoot">Vygenerováno '+new Date().toLocaleString('cs-CZ')+'.</div>';
+  return '<div id="protokol">'+H+'</div>';
 }
-function protoFull(m){
-  var pp=presentPodil(m),tot=totalPodil(m),q=isQuorate(m);
-  var presRows=m.roster.map(function(u){var a=m.att[u.id]||{};return '<tr><td>'+esc(u.unit)+'</td><td>'+(esc(u.owner)||'byt '+esc(u.unit))+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td><td>'+(a.present?'Přítomen':'—')+'</td><td>'+esc(a.note||'')+'</td></tr>';}).join("");
-  var presTot='<tr style="background:#f0f0f0"><td colspan="2"><b>Přítomno celkem</b></td><td style="text-align:right"><b>'+fmt(tot>0?pp/tot*100:0)+' %</b></td><td colspan="2"><b>'+presentUnits(m).length+' / '+m.roster.length+' jednotek</b></td></tr>';
-  var summ=m.votes.length?'<table><thead><tr><th>Č.</th><th>Výsledek</th><th>Znění usnesení</th></tr></thead><tbody>'+m.votes.map(function(v){return '<tr><td>'+v.num+'</td><td><b class="'+(v.result?'grn':'rd')+'">'+(v.result?'PŘIJATO':'NEPŘIJATO')+'</b></td><td>'+esc(v.text||'(bez textu)')+'</td></tr>';}).join('')+'</tbody></table>':'<p>Na schůzi nebylo hlasováno o žádném usnesení.</p>';
-  var det=m.votes.map(function(v){var s=v.snap;
-    return '<div class="usn keep"><h3>Usnesení č. '+v.num+'</h3><p>'+esc(v.text||'(bez textu)')+'</p><p style="font-size:.8rem;color:#555">Potřebná většina: '+esc(s.typeLabel)+(v.time?' · čas hlasování: '+esc(v.time):'')+'</p>'+
-      '<p class="rbig '+(v.result?'grn':'rd')+'">'+(v.result?'USNESENÍ PŘIJATO':'USNESENÍ NEBYLO PŘIJATO')+'</p><p>ANO: '+s.cA+' ('+fmt(s.ano)+' % podílů) &nbsp; NE: '+s.cN+' ('+fmt(s.ne)+' %) &nbsp; ZDRŽEL SE: '+s.cZ+' ('+fmt(s.zdr)+' %)</p>'+
-      '<table><thead><tr><th>Jedn.</th><th>Vlastník</th><th>Podíl</th><th>Hlas</th></tr></thead><tbody>'+s.units.map(function(u){return '<tr><td>'+esc(u.unit)+'</td><td>'+(esc(u.owner)||'byt '+esc(u.unit))+'</td><td style="text-align:right">'+fmt(u.podil)+' %</td><td>'+protoVote(u.vote)+'</td></tr>';}).join('')+'</tbody></table></div>';}).join('');
-  return protoSecs(m,[
-    ["Účast a usnášeníschopnost",'<p>Na schůzi bylo přítomno '+presentUnits(m).length+' z '+m.roster.length+' bytových jednotek, představujících '+fmt(tot>0?pp/tot*100:0)+' % vlastnických podílů. Schůze <b>'+(q?'byla usnášeníschopná':'nebyla usnášeníschopná')+'</b> (usnášeníschopnost vyžaduje přítomnost více než 50 % vlastnických podílů).</p>'+
-      '<table><thead><tr><th>Jedn.</th><th>Vlastník</th><th>Podíl</th><th>Účast</th><th>Zastoupení / pozn.</th></tr></thead><tbody>'+presRows+presTot+'</tbody></table>'],
-    ["Přehled projednaných usnesení",summ],
-    ["Jednotlivá usnesení a výsledky hlasování",det||'<p>Bez hlasování.</p>']]);
+function protoSimple(m){return protoDoc(m,false);}
+function protoFull(m){return protoDoc(m,true);}
+
+// ================= ZÁPIS =================
+function zOf(m){if(!m.zapis||typeof m.zapis!=="object")m.zapis={};var z=m.zapis;
+  ["place","chair","verifier","program","notes"].forEach(function(k){if(typeof z[k]!=="string")z[k]="";});
+  delete z.status;delete z.file;if(z.prefilled===undefined)z.prefilled=false;return z;}
+function inlineFmt(s){return esc(s).replace(/\*([^*\n]+)\*/g,"<b>$1</b>");}
+function plainLine(s){return String(s||"").replace(/^\s*(#|-)\s*/,"").replace(/\*([^*\n]+)\*/g,"$1").trim();}
+// rozbor poznámek: # nadpis, - odrážka, prázdný řádek = nový odstavec, *tučně*
+function parseNotes(txt){
+  var lines=String(txt||"").replace(/\r/g,"").split("\n"),out=[],sec="";
+  lines.forEach(function(l,i){var t=l.trim();
+    if(/^#\s*/.test(t)&&t.replace(/^#\s*/,"")){sec=t.replace(/^#\s*/,"");out.push({k:"h",t:sec,i:i});}
+    else if(/^-(\s|$)/.test(t)){var x=t.replace(/^-\s*/,"").replace(/\s+[–-]\s*$/,"");if(x)out.push({k:"li",t:x,i:i,sec:sec});}
+    else if(!t)out.push({k:"br",i:i});
+    else out.push({k:"p",t:t.replace(/\s+[–-]\s*$/,""),i:i,sec:sec});});
+  // nadpisy bez obsahu vynechat
+  return out.filter(function(b,idx){if(b.k!=="h")return true;for(var j=idx+1;j<out.length;j++){if(out[j].k==="h")return false;if(out[j].k!=="br")return true;}return false;});
 }
+function notesHtml(txt,withTaskBtn){
+  var b=parseNotes(txt),h="",inUl=false,inP=false;
+  function close(){if(inUl){h+="</ul>";inUl=false;}if(inP){h+="</p>";inP=false;}}
+  b.forEach(function(x){
+    if(x.k==="h"){close();h+='<h3>'+inlineFmt(x.t)+'</h3>';}
+    else if(x.k==="li"){if(inP){h+="</p>";inP=false;}if(!inUl){h+="<ul>";inUl=true;}
+      var btn=withTaskBtn&&!/^kontrola/i.test(norm(x.sec))&&x.t.indexOf("→ úkol")<0?' <button class="zt" onclick="zTask('+x.i+')" title="Vytvořit z řádku úkol">+ úkol</button>':'';
+      h+='<li>'+inlineFmt(x.t)+btn+'</li>';}
+    else if(x.k==="p"){if(inUl){h+="</ul>";inUl=false;}h+=inP?'<br>'+inlineFmt(x.t):'<p>'+inlineFmt(x.t);inP=true;}
+    else close();});
+  close();return h;
+}
+function lastMeetingBefore(m){var prev=state.meetings.filter(function(x){return x.id!==m.id&&(x.date||"")<(m.date||"");}).sort(byDateDesc);return prev[0]||null;}
+function prefillNotes(m){
+  var prev=lastMeetingBefore(m),since=prev?prev.date:"";
+  function before(t){if(t.meetingId===m.id)return false;var tm=t.meetingId?byId(t.meetingId):null;return tm?(tm.date||"")<(m.date||""):String(t.created||"").slice(0,10)<=(m.date||"9999");}
+  var open=state.tasks.filter(function(t){return t.status==="open"&&before(t);}).sort(taskSortActive);
+  var done=state.tasks.filter(function(t){return t.status==="done"&&before(t)&&since&&(t.doneAt||"")>=since;});
+  function ln(t,extra){var p=[t.owner||"",extra||(t.due?"do "+dateCz(t.due):"")].filter(Boolean).join(", ");return "- *"+t.text.replace(/\*/g,"")+"*"+(p?" ("+p+")":"")+" – "+(t.note?t.note.replace(/\n/g," "):"");}
+  var L=["# Kontrola úkolů z minula"];
+  open.forEach(function(t){L.push(ln(t));});
+  done.forEach(function(t){L.push(ln(t,"splněno"+(t.doneAt?" "+dateCz(t.doneAt):"")));});
+  if(!open.length&&!done.length)L.push("- Žádné otevřené úkoly.");
+  L.push("","# Informace výboru","- ","","# Různé","- ");
+  return L.join("\n");
+}
+function isVolba(v){var t=norm(v.text||"");return /(volb|zvol|voli )/.test(t)&&/(vybor|clen|predsed)/.test(t);}
+// předvyplnit jen u probíhající schůze nebo u poslední schůze z posledních 30 dnů (ne u historických)
+function canPrefill(m){if(m.status==="open"&&!m.reopened)return true;var last=state.meetings.slice().sort(byDateDesc)[0];return last===m&&!!m.date&&daysTo(m.date)>=-30;}
+function zTab(m){
+  var z=zOf(m);
+  if(!z.notes&&!z.prefilled&&canPrefill(m)){z.notes=prefillNotes(m);z.prefilled=true;save();}
+  var volba=m.votes.some(isVolba);
+  var tb='<div class="ztool"><button class="btn sec sm" onclick="zLine(\'# \')" title="Nadpis bodu"><b>Nadpis</b></button><button class="btn sec sm" onclick="zLine(\'- \')" title="Odrážka">• Odrážka</button><button class="btn sec sm" onclick="zBold()" title="Tučně – označte text"><b>B</b> Tučně</button>'+
+    '<span class="muted-s zhelp"># nadpis · - odrážka · *tučně* · prázdný řádek = nový odstavec</span></div>';
+  var h='';
+  if(volba)h+='<div class="callout">Na schůzi se volil výbor – do zápisu uveďte <b>jména a funkce</b> zvolených členů (předseda, členové). Stanovy čl. VII A odst. 1.</div>';
+  h+=card("Údaje k zápisu",'<span class="muted-s">zapisovatel: '+esc(m.zapisovatel||'—')+'</span>','<div class="card-b">'+
+    '<div class="fields">'+field("Předsedající",'<input type="text" value="'+esc(z.chair)+'" oninput="setZ(\'chair\',this.value)" placeholder="jméno">')+field("Ověřovatel",'<input type="text" value="'+esc(z.verifier)+'" oninput="setZ(\'verifier\',this.value)" placeholder="jméno">')+field("Místo",'<input type="text" value="'+esc(z.place)+'" oninput="setZ(\'place\',this.value)" placeholder="např. velká sušárna">')+'</div>'+
+    field('Program podle pozvánky <span class="muted-n">(nepovinné – každý bod na nový řádek)</span>','<textarea rows="3" oninput="setZ(\'program\',this.value)" placeholder="Informace výboru&#10;Účetní závěrka 2025&#10;Různé">'+esc(z.program)+'</textarea>')+'</div>');
+  h+=card("Průběh a poznámky",'<span class="muted-s">ukládá se samo</span>','<div class="card-b">'+tb+
+    '<div class="zgrid"><textarea id="zNotes" rows="18" oninput="setZ(\'notes\',this.value)">'+esc(z.notes)+'</textarea>'+
+    '<div class="zprev"><div class="muted-s" style="margin-bottom:4px">Náhled · u odrážky <b>+ úkol</b> vytvoří úkol</div><div id="zPrev" class="znotes">'+notesHtml(z.notes,true)+'</div></div></div>'+
+    '<div class="muted-s" style="margin-top:8px">Usnesení s výsledky, úkoly ze schůze, usnášeníschopnost a listinu přítomných doplní aplikace do zápisu sama – nepište je sem.</div></div>');
+  h+='<div class="nextbar"><span class="muted-s">Vše ze záložky Zápis se propíše do protokolu – spolu s usnesením, úkoly a listinou přítomných.</span><button class="btn" onclick="openProtokol()">🖨 Protokol</button></div>';
+  return h;
+}
+function setZ(k,v){var m=M();if(!m)return;zOf(m)[k]=v;save();if(k==="notes"){var p=document.getElementById("zPrev");if(p)p.innerHTML=notesHtml(v,true);}}
+function zArea(){return document.getElementById("zNotes");}
+function zApply(ta,val,s,e){ta.value=val;setZ("notes",val);try{ta.focus();ta.setSelectionRange(s,e);}catch(x){}}
+function zLine(pre){var ta=zArea();if(!ta)return;var v=ta.value,s=ta.selectionStart||0,e=ta.selectionEnd||s;
+  var a=v.lastIndexOf("\n",s-1)+1,b=v.indexOf("\n",e);if(b<0)b=v.length;
+  var seg0=v.slice(a,b).split("\n"),all=seg0.every(function(l){return l.indexOf(pre)===0;});
+  var nl=seg0.map(function(l){l=l.replace(/^(# |- )/,"");return all?l:pre+l;}).join("\n");
+  var nv=v.slice(0,a)+nl+v.slice(b);zApply(ta,nv,s===e?a+nl.length:a,a+nl.length);}
+function zBold(){var ta=zArea();if(!ta)return;var v=ta.value,s=ta.selectionStart||0,e=ta.selectionEnd||s;
+  if(s===e){var nv=v.slice(0,s)+"**"+v.slice(e);zApply(ta,nv,s+1,s+1);return;}
+  var sel=v.slice(s,e);if(/^\*[^*]+\*$/.test(sel)){var un=sel.slice(1,-1);zApply(ta,v.slice(0,s)+un+v.slice(e),s,s+un.length);return;}
+  zApply(ta,v.slice(0,s)+"*"+sel+"*"+v.slice(e),s,e+2);}
+function zTask(i){var m=M();if(!m)return;var L=zOf(m).notes.replace(/\r/g,"").split("\n");if(!L[i])return;
+  ui.mtForm={voteNum:null,prefill:plainLine(L[i]).replace(/\s*[–-]\s*$/,""),fromLine:i,back:"zapis"};ui.openTask=null;ui.draft=null;state.subtab="ukoly";save();render();scrollTop();focusEl("tOwner");}
 
 // ================= UKONČENÍ / ODEMČENÍ / SMAZÁNÍ =================
 function endMeeting(){
@@ -800,18 +935,20 @@ function taskForm(m){
   var vn=(m&&ui.mtForm)?ui.mtForm.voteNum:null,v=vn?m.votes.filter(function(x){return x.num===vn;})[0]:null;
   var srcSel='<select id="tSrc">'+["podnet","zakon","jine"].map(function(k){return '<option value="'+k+'"'+(k==="jine"?' selected':'')+'>'+SRC[k]+'</option>';}).join("")+'</select>';
   return (v?'<div class="callout info">Úkol k usnesení č. '+v.num+': <i>'+esc(clip(v.text,220))+'</i></div>':'')+
-    field("Co je potřeba udělat",'<textarea id="tText" rows="3" placeholder="Popis úkolu"></textarea>','<div class="err" id="tErr"></div>')+
+    (m&&ui.mtForm&&ui.mtForm.back==="zapis"?'<div class="callout info">Úkol z řádku zápisu. Po uložení se řádek v zápisu označí „→ úkol“.</div>':'')+field("Co je potřeba udělat",'<textarea id="tText" rows="3" placeholder="Popis úkolu">'+esc(m&&ui.mtForm&&ui.mtForm.prefill||'')+'</textarea>','<div class="err" id="tErr"></div>')+
     '<div class="fields" style="margin-top:12px">'+(v?'':field("Zdroj",srcSel))+field("Odpovídá",'<input type="text" id="tOwner" placeholder="jméno">')+field("Termín",'<input type="date" id="tDue">')+'</div>'+
     field('Poznámka <span class="muted-n">(nepovinné)</span>','<input type="text" id="tNote">')+
     '<div class="form-actions" style="margin-top:14px"><button class="btn" onclick="saveNewTask('+(m?m.id:0)+')">Přidat úkol</button><button class="btn ghost" onclick="closeTaskForm()">Zrušit</button></div>';
 }
-function closeTaskForm(){ui.mtForm=null;ui.newTask=false;render();}
+function closeTaskForm(){if(ui.mtForm&&ui.mtForm.back==="zapis")state.subtab="zapis";ui.mtForm=null;ui.newTask=false;save();render();}
 function saveNewTask(mid){
   var text=gv("tText").trim();
   if(!text){setErr("tErr","Napište, co je potřeba udělat.");focusEl("tText");return;}
   var vn=(mid&&ui.mtForm)?ui.mtForm.voteNum:null;
   state.tasks.push({id:Date.now(),text:text,source:vn?"usneseni":(gv("tSrc")||"jine"),owner:gv("tOwner").trim(),due:gv("tDue"),note:gv("tNote").trim(),
     status:"open",created:todayISO(),meetingId:mid||null,voteNum:vn||null});
+  var fm=ui.mtForm;
+  if(fm&&fm.back==="zapis"){var mm=byId(mid);if(mm){var z=zOf(mm),L=z.notes.replace(/\r/g,"").split("\n");if(L[fm.fromLine]!==undefined&&L[fm.fromLine].indexOf("→ úkol")<0){L[fm.fromLine]=L[fm.fromLine].replace(/\s+$/,"")+" → úkol";z.notes=L.join("\n");}}state.subtab="zapis";}
   ui.mtForm=null;ui.newTask=false;save();toast("Úkol přidán");render();
 }
 function taskItem(t,inMeeting){
@@ -913,6 +1050,7 @@ function restore(ev){
   r.onload=function(){
     try{var s=JSON.parse(r.result);if(!s||!Array.isArray(s.meetings)||!Array.isArray(s.roster))throw new Error("format");
       if(!confirm("Obnovit data ze zálohy?\n\nSoučasná data v tomto prohlížeči budou nahrazena obsahem souboru."))return;
+      delete s.files;
       state=s;state.screen="prehled";normalize();save();toast("Data obnovena ze zálohy");render();
     }catch(e){alert("Soubor se nepodařilo načíst. Vyberte zálohu staženou z této aplikace (soubor .json).");}
   };

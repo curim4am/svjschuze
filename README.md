@@ -28,13 +28,27 @@ V **Nastavení** zkontrolujte jména vlastníků a **podíly podle prohlášení
 4. **Úkoly** — u každého usnesení je „+ Úkol", úkol ale můžete přidat i bez vazby na usnesení.
 5. **Ukončit schůzi** — výsledky se uzamknou a **automaticky se stáhne záloha dat**. **Protokol** vytisknete nebo uložíte jako PDF (zjednodušený / kompletní).
 
+## Zápis ze schůze
+
+Záložka **Zápis** (lze vyplňovat i po ukončení schůze):
+
+- **Údaje** – předsedající, ověřovatel, místo, program podle pozvánky (nepovinné; zobrazí se pak jako připomínka u hlasování).
+- **Průběh a poznámky** – volný text; předvyplní se kontrola úkolů z minula. Formátování: `# nadpis`, `- odrážka`, `*tučně*` (tlačítka nad polem). U odrážky v náhledu tlačítko **+ úkol** vytvoří úkol.
+- Vše se propíše do **protokolu**: údaje, usnášeníschopnost, program, průběh, usnesení s výsledky, úkoly ze schůze, podpisy a listina přítomných (kompletní verze navíc jmenovité hlasování). Protokol vytisknete, podepíšete a založíte.
+
 ## Úkoly
 
 Aktivní úkoly jsou rozdělené na *Po termínu*, *Termín do 14 dnů*, *Později* a *Bez termínu*. Kliknutím na úkol změníte stav (V řešení / Splněno / Zrušeno) a poznámku. Splněný úkol se uzamkne. Tlačítkem **🖨 Tisk přehledu** vytisknete stav úkolů k dnešnímu dni (po termínu, v řešení, splněné za posledních 12 měsíců) — hodí se k referování na shromáždění.
 
+## Vyzkoušení s ukázkovými daty
+
+Soubor **svj_demo_zaloha.json** obsahuje vymyšlená data (6 schůzí, usnesení, úkoly a zápisy). Nahrajete ho přes **Nastavení → Obnovit ze zálohy**. Pozor: nahradí data v prohlížeči – před tím si stáhněte zálohu svých skutečných dat, nebo ukázku zkoušejte v jiném prohlížeči.
+
 ## Data a zálohy (důležité)
 
 Data jsou uložená **jen v tomto prohlížeči**. Po každé schůzi si v **Nastavení → Stáhnout zálohu** stáhněte soubor `.json` a uložte ho mimo počítač. Na Přehledu vás aplikace upozorní, když je záloha starší než 30 dní.
+
+**Tip:** aplikaci mějte otevřenou jen v jednom okně/záložce prohlížeče – dvě otevřená okna by si mohla navzájem přepsat data. Nepoužívejte anonymní (inkognito) okno, data by se po zavření smazala.
 
 ## Nahrání na web (GitHub Pages) — volitelné
 

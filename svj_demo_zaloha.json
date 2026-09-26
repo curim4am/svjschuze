@@ -1,0 +1,4960 @@
+{
+ "roster": [
+  {
+   "id": 1,
+   "unit": "1",
+   "owner": "Jan Novák",
+   "podil": 4.6617
+  },
+  {
+   "id": 2,
+   "unit": "2",
+   "owner": "Petra Svobodová",
+   "podil": 3.609
+  },
+  {
+   "id": 3,
+   "unit": "3",
+   "owner": "Martin Dvořák",
+   "podil": 5.3383
+  },
+  {
+   "id": 4,
+   "unit": "4",
+   "owner": "Eva Černá",
+   "podil": 3.3835
+  },
+  {
+   "id": 5,
+   "unit": "5",
+   "owner": "Tomáš Procházka",
+   "podil": 4.3609
+  },
+  {
+   "id": 6,
+   "unit": "6",
+   "owner": "Jana Kučerová",
+   "podil": 3.6842
+  },
+  {
+   "id": 7,
+   "unit": "7",
+   "owner": "Pavel Veselý",
+   "podil": 4.9624
+  },
+  {
+   "id": 8,
+   "unit": "8",
+   "owner": "Lucie Horáková",
+   "podil": 3.5338
+  },
+  {
+   "id": 9,
+   "unit": "9",
+   "owner": "Josef Němec",
+   "podil": 4.5113
+  },
+  {
+   "id": 10,
+   "unit": "10",
+   "owner": "Marie Marková",
+   "podil": 3.3083
+  },
+  {
+   "id": 11,
+   "unit": "11",
+   "owner": "Jiří Pokorný",
+   "podil": 5.188
+  },
+  {
+   "id": 12,
+   "unit": "12",
+   "owner": "Hana Pospíšilová",
+   "podil": 3.4586
+  },
+  {
+   "id": 13,
+   "unit": "13",
+   "owner": "Karel Hájek",
+   "podil": 4.7368
+  },
+  {
+   "id": 14,
+   "unit": "14",
+   "owner": "Věra Jelínková",
+   "podil": 3.7594
+  },
+  {
+   "id": 15,
+   "unit": "15",
+   "owner": "Milan Král",
+   "podil": 4.2857
+  },
+  {
+   "id": 16,
+   "unit": "16",
+   "owner": "Alena Růžičová",
+   "podil": 3.609
+  },
+  {
+   "id": 17,
+   "unit": "17",
+   "owner": "Roman Beneš",
+   "podil": 5.2632
+  },
+  {
+   "id": 18,
+   "unit": "18",
+   "owner": "Zuzana Fialová",
+   "podil": 3.3835
+  },
+  {
+   "id": 19,
+   "unit": "19",
+   "owner": "David Sedláček",
+   "podil": 4.5865
+  },
+  {
+   "id": 20,
+   "unit": "20",
+   "owner": "Kateřina Doležalová",
+   "podil": 3.6842
+  },
+  {
+   "id": 21,
+   "unit": "21",
+   "owner": "Ondřej Zeman",
+   "podil": 4.812
+  },
+  {
+   "id": 22,
+   "unit": "22",
+   "owner": "Barbora Kolářová",
+   "podil": 3.5338
+  },
+  {
+   "id": 23,
+   "unit": "23",
+   "owner": "Filip Urban",
+   "podil": 4.4361
+  },
+  {
+   "id": 24,
+   "unit": "24",
+   "owner": "Tereza Marešová",
+   "podil": 3.9098
+  }
+ ],
+ "meetings": [
+  {
+   "id": 1713456000001,
+   "date": "2024-04-18",
+   "time": "18:00",
+   "type": "Řádné shromáždění",
+   "zapisovatel": "Petra Svobodová",
+   "status": "closed",
+   "reopened": null,
+   "roster": [
+    {
+     "id": 1,
+     "unit": "1",
+     "owner": "Jan Novák",
+     "podil": 4.6617
+    },
+    {
+     "id": 2,
+     "unit": "2",
+     "owner": "Petra Svobodová",
+     "podil": 3.609
+    },
+    {
+     "id": 3,
+     "unit": "3",
+     "owner": "Martin Dvořák",
+     "podil": 5.3383
+    },
+    {
+     "id": 4,
+     "unit": "4",
+     "owner": "Eva Černá",
+     "podil": 3.3835
+    },
+    {
+     "id": 5,
+     "unit": "5",
+     "owner": "Tomáš Procházka",
+     "podil": 4.3609
+    },
+    {
+     "id": 6,
+     "unit": "6",
+     "owner": "Jana Kučerová",
+     "podil": 3.6842
+    },
+    {
+     "id": 7,
+     "unit": "7",
+     "owner": "Pavel Veselý",
+     "podil": 4.9624
+    },
+    {
+     "id": 8,
+     "unit": "8",
+     "owner": "Lucie Horáková",
+     "podil": 3.5338
+    },
+    {
+     "id": 9,
+     "unit": "9",
+     "owner": "Josef Němec",
+     "podil": 4.5113
+    },
+    {
+     "id": 10,
+     "unit": "10",
+     "owner": "Marie Marková",
+     "podil": 3.3083
+    },
+    {
+     "id": 11,
+     "unit": "11",
+     "owner": "Jiří Pokorný",
+     "podil": 5.188
+    },
+    {
+     "id": 12,
+     "unit": "12",
+     "owner": "Hana Pospíšilová",
+     "podil": 3.4586
+    },
+    {
+     "id": 13,
+     "unit": "13",
+     "owner": "Karel Hájek",
+     "podil": 4.7368
+    },
+    {
+     "id": 14,
+     "unit": "14",
+     "owner": "Věra Jelínková",
+     "podil": 3.7594
+    },
+    {
+     "id": 15,
+     "unit": "15",
+     "owner": "Milan Král",
+     "podil": 4.2857
+    },
+    {
+     "id": 16,
+     "unit": "16",
+     "owner": "Alena Růžičová",
+     "podil": 3.609
+    },
+    {
+     "id": 17,
+     "unit": "17",
+     "owner": "Roman Beneš",
+     "podil": 5.2632
+    },
+    {
+     "id": 18,
+     "unit": "18",
+     "owner": "Zuzana Fialová",
+     "podil": 3.3835
+    },
+    {
+     "id": 19,
+     "unit": "19",
+     "owner": "David Sedláček",
+     "podil": 4.5865
+    },
+    {
+     "id": 20,
+     "unit": "20",
+     "owner": "Kateřina Doležalová",
+     "podil": 3.6842
+    },
+    {
+     "id": 21,
+     "unit": "21",
+     "owner": "Ondřej Zeman",
+     "podil": 4.812
+    },
+    {
+     "id": 22,
+     "unit": "22",
+     "owner": "Barbora Kolářová",
+     "podil": 3.5338
+    },
+    {
+     "id": 23,
+     "unit": "23",
+     "owner": "Filip Urban",
+     "podil": 4.4361
+    },
+    {
+     "id": 24,
+     "unit": "24",
+     "owner": "Tereza Marešová",
+     "podil": 3.9098
+    }
+   ],
+   "att": {
+    "1": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "2": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "3": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "4": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "5": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "6": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "7": {
+     "present": true,
+     "proxy": false,
+     "note": "plná moc – p. Veselý zastoupen dcerou"
+    },
+    "8": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "9": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "10": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "11": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "12": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "13": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "14": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "15": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "16": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "17": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "18": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "19": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "20": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "21": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "22": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "23": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "24": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    }
+   },
+   "votes": [
+    {
+     "num": 1,
+     "text": "Shromáždění schvaluje řádnou účetní závěrku SVJ za rok 2023 a zprávu výboru o hospodaření.",
+     "type": "prosta",
+     "time": "18:20",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "ANO",
+      "18": "ZDR",
+      "19": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 17,
+      "cN": 0,
+      "cZ": 2,
+      "un": 0,
+      "ano": 71.6541,
+      "ne": 0,
+      "zdr": 7.970000000000001,
+      "tot": 100,
+      "pres": 79.6241,
+      "base": 79.6241,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ANO"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 2,
+     "text": "Shromáždění volí na další funkční období členy výboru: Jan Novák (předseda), Martin Dvořák, Eva Černá.",
+     "type": "nadpvse",
+     "time": "18:45",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "ANO",
+      "18": "NE",
+      "19": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 17,
+      "cN": 1,
+      "cZ": 1,
+      "un": 0,
+      "ano": 71.6541,
+      "ne": 3.3835,
+      "zdr": 4.5865,
+      "tot": 100,
+      "pres": 79.6241,
+      "base": 100,
+      "typeLabel": "Nadpoloviční většina VŠECH vlastníků (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ANO"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "NE"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 3,
+     "text": "Shromáždění schvaluje plán oprav na rok 2024: revize a oprava hromosvodu, výměna osvětlení v suterénu za LED se senzory.",
+     "type": "prosta",
+     "time": "19:05",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "NE",
+      "17": "NE",
+      "18": "ZDR",
+      "19": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 15,
+      "cN": 2,
+      "cZ": 2,
+      "un": 0,
+      "ano": 62.7819,
+      "ne": 8.8722,
+      "zdr": 7.970000000000001,
+      "tot": 100,
+      "pres": 79.6241,
+      "base": 79.6241,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "NE"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "NE"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 4,
+     "text": "Shromáždění pověřuje výbor zajistit nabídky na novou smlouvu o správě domu a předložit je na příští schůzi.",
+     "type": "prosta",
+     "time": "19:20",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "NE",
+      "16": "NE",
+      "17": "NE",
+      "18": "ZDR",
+      "19": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 14,
+      "cN": 3,
+      "cZ": 2,
+      "un": 0,
+      "ano": 58.4962,
+      "ne": 13.157900000000001,
+      "zdr": 7.970000000000001,
+      "tot": 100,
+      "pres": 79.6241,
+      "base": 79.6241,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "NE"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "NE"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "NE"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    }
+   ],
+   "current": null,
+   "zapis": {
+    "place": "velká sušárna",
+    "chair": "Jan Novák",
+    "verifier": "Martin Dvořák",
+    "program": "Zpráva výboru o hospodaření a účetní závěrka 2023\nVolba výboru\nPlán oprav na rok 2024\nSpráva domu – nabídky\nRůzné",
+    "notes": "# Kontrola úkolů z minula\n- Úkoly z minulého období jsou splněny. Evidence úkolů se v aplikaci vede od této schůze.\n\n# Zpráva výboru\n- Hospodaření 2023 skončilo přebytkem *18 450 Kč*, stav fondu oprav k 31. 12. 2023 byl *1 245 000 Kč*.\n- Revize hromosvodu upozornila na korozi svodů – výbor navrhl opravu do plánu oprav.\n\n# Volba výboru\nZvoleni byli: *Jan Novák – předseda výboru*, *Martin Dvořák – člen výboru*, *Eva Černá – členka výboru*.\n\n# Různé\n- Upozornění na odkládání velkoobjemového odpadu u popelnic – patří do sběrného dvora.\n- Dotaz na možnost parkování kol v kolárně – výbor připraví návrh na příští schůzi.",
+    "prefilled": true
+   }
+  },
+  {
+   "id": 1730995200002,
+   "date": "2024-11-07",
+   "time": "18:30",
+   "type": "Mimořádné shromáždění",
+   "zapisovatel": "Martin Dvořák",
+   "status": "closed",
+   "reopened": null,
+   "roster": [
+    {
+     "id": 1,
+     "unit": "1",
+     "owner": "Jan Novák",
+     "podil": 4.6617
+    },
+    {
+     "id": 2,
+     "unit": "2",
+     "owner": "Petra Svobodová",
+     "podil": 3.609
+    },
+    {
+     "id": 3,
+     "unit": "3",
+     "owner": "Martin Dvořák",
+     "podil": 5.3383
+    },
+    {
+     "id": 4,
+     "unit": "4",
+     "owner": "Eva Černá",
+     "podil": 3.3835
+    },
+    {
+     "id": 5,
+     "unit": "5",
+     "owner": "Tomáš Procházka",
+     "podil": 4.3609
+    },
+    {
+     "id": 6,
+     "unit": "6",
+     "owner": "Jana Kučerová",
+     "podil": 3.6842
+    },
+    {
+     "id": 7,
+     "unit": "7",
+     "owner": "Pavel Veselý",
+     "podil": 4.9624
+    },
+    {
+     "id": 8,
+     "unit": "8",
+     "owner": "Lucie Horáková",
+     "podil": 3.5338
+    },
+    {
+     "id": 9,
+     "unit": "9",
+     "owner": "Josef Němec",
+     "podil": 4.5113
+    },
+    {
+     "id": 10,
+     "unit": "10",
+     "owner": "Marie Marková",
+     "podil": 3.3083
+    },
+    {
+     "id": 11,
+     "unit": "11",
+     "owner": "Jiří Pokorný",
+     "podil": 5.188
+    },
+    {
+     "id": 12,
+     "unit": "12",
+     "owner": "Hana Pospíšilová",
+     "podil": 3.4586
+    },
+    {
+     "id": 13,
+     "unit": "13",
+     "owner": "Karel Hájek",
+     "podil": 4.7368
+    },
+    {
+     "id": 14,
+     "unit": "14",
+     "owner": "Věra Jelínková",
+     "podil": 3.7594
+    },
+    {
+     "id": 15,
+     "unit": "15",
+     "owner": "Milan Král",
+     "podil": 4.2857
+    },
+    {
+     "id": 16,
+     "unit": "16",
+     "owner": "Alena Růžičová",
+     "podil": 3.609
+    },
+    {
+     "id": 17,
+     "unit": "17",
+     "owner": "Roman Beneš",
+     "podil": 5.2632
+    },
+    {
+     "id": 18,
+     "unit": "18",
+     "owner": "Zuzana Fialová",
+     "podil": 3.3835
+    },
+    {
+     "id": 19,
+     "unit": "19",
+     "owner": "David Sedláček",
+     "podil": 4.5865
+    },
+    {
+     "id": 20,
+     "unit": "20",
+     "owner": "Kateřina Doležalová",
+     "podil": 3.6842
+    },
+    {
+     "id": 21,
+     "unit": "21",
+     "owner": "Ondřej Zeman",
+     "podil": 4.812
+    },
+    {
+     "id": 22,
+     "unit": "22",
+     "owner": "Barbora Kolářová",
+     "podil": 3.5338
+    },
+    {
+     "id": 23,
+     "unit": "23",
+     "owner": "Filip Urban",
+     "podil": 4.4361
+    },
+    {
+     "id": 24,
+     "unit": "24",
+     "owner": "Tereza Marešová",
+     "podil": 3.9098
+    }
+   ],
+   "att": {
+    "1": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "2": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "3": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "4": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "5": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "6": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "7": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "8": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "9": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "10": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "11": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "12": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "13": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "14": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "15": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "16": {
+     "present": true,
+     "proxy": false,
+     "note": "plná moc – p. Beneš"
+    },
+    "17": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "18": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "19": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "20": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "21": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "22": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "23": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "24": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    }
+   },
+   "votes": [
+    {
+     "num": 1,
+     "text": "Shromáždění schvaluje uzavření smlouvy o správě domu se společností Správa domů Žižkov s.r.o. od 1. 1. 2025 za 290 Kč/jednotku měsíčně.",
+     "type": "prosta",
+     "time": "18:50",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "NE",
+      "18": "ZDR",
+      "21": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 15,
+      "cN": 1,
+      "cZ": 2,
+      "un": 0,
+      "ano": 62.6315,
+      "ne": 5.2632,
+      "zdr": 8.195500000000001,
+      "tot": 100,
+      "pres": 76.0902,
+      "base": 76.0902,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "NE"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "21",
+        "owner": "Ondřej Zeman",
+        "podil": 4.812,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 2,
+     "text": "Shromáždění souhlasí s umístěním stojanu na kola v kolárně a schvaluje provozní řád kolárny včetně příspěvku uživatelů 100 Kč/rok.",
+     "type": "ctvrt",
+     "time": "19:15",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "ANO",
+      "18": "NE",
+      "21": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 16,
+      "cN": 1,
+      "cZ": 1,
+      "un": 0,
+      "ano": 67.8947,
+      "ne": 3.3835,
+      "zdr": 4.812,
+      "tot": 100,
+      "pres": 76.0902,
+      "base": 76.0902,
+      "typeLabel": "Tříčtvrtinová většina přítomných (≥ 75 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ANO"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "NE"
+       },
+       {
+        "unit": "21",
+        "owner": "Ondřej Zeman",
+        "podil": 4.812,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 3,
+     "text": "Shromáždění schvaluje pronájem nevyužívané sušárny třetí osobě jako skladu.",
+     "type": "prosta",
+     "time": "19:35",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "NE",
+      "8": "NE",
+      "9": "NE",
+      "10": "NE",
+      "11": "NE",
+      "12": "NE",
+      "13": "NE",
+      "15": "NE",
+      "16": "NE",
+      "17": "NE",
+      "18": "ZDR",
+      "21": "ZDR"
+     },
+     "result": false,
+     "snap": {
+      "cA": 6,
+      "cN": 10,
+      "cZ": 2,
+      "un": 0,
+      "ano": 25.0376,
+      "ne": 42.857099999999996,
+      "zdr": 8.195500000000001,
+      "tot": 100,
+      "pres": 76.0902,
+      "base": 76.0902,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "NE"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "NE"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "NE"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "NE"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "NE"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "NE"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "NE"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "NE"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "NE"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "NE"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "21",
+        "owner": "Ondřej Zeman",
+        "podil": 4.812,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    }
+   ],
+   "current": null,
+   "zapis": {
+    "place": "velká sušárna",
+    "chair": "Jan Novák",
+    "verifier": "Eva Černá",
+    "program": "Smlouva o správě domu\nKolárna – stojan na kola a provozní řád\nVyužití sušárny\nRůzné",
+    "notes": "# Kontrola úkolů z minula\n- *Objednat revizi a opravu hromosvodu* (Martin Dvořák, splněno 12. 7. 2024) – hotovo, 18 400 Kč.\n- *Vyměnit osvětlení v suterénu za LED* (Jan Novák, splněno 2. 9. 2024) – instalováno 14 svítidel.\n- *Poptat 3 nabídky na správu domu* (Eva Černá, splněno 10. 10. 2024) – srovnání rozesláno před schůzí.\n\n# Správa domu\n- Výbor představil 3 nabídky. Doporučena *Správa domů Žižkov s.r.o.* – nejnižší cena a reference z okolních domů.\n\n# Využití sušárny\n- Diskuse k pronájmu sušárny jako skladu. Část vlastníků chce sušárnu zachovat pro sušení prádla – návrh nebyl přijat.\n\n# Různé\n- Nepořádek v prostoru garáží – výbor osloví dotčené vlastníky.",
+    "prefilled": true
+   }
+  },
+  {
+   "id": 1742428800003,
+   "date": "2025-03-20",
+   "time": "18:00",
+   "type": "Řádné shromáždění",
+   "zapisovatel": "Petra Svobodová",
+   "status": "closed",
+   "reopened": null,
+   "roster": [
+    {
+     "id": 1,
+     "unit": "1",
+     "owner": "Jan Novák",
+     "podil": 4.6617
+    },
+    {
+     "id": 2,
+     "unit": "2",
+     "owner": "Petra Svobodová",
+     "podil": 3.609
+    },
+    {
+     "id": 3,
+     "unit": "3",
+     "owner": "Martin Dvořák",
+     "podil": 5.3383
+    },
+    {
+     "id": 4,
+     "unit": "4",
+     "owner": "Eva Černá",
+     "podil": 3.3835
+    },
+    {
+     "id": 5,
+     "unit": "5",
+     "owner": "Tomáš Procházka",
+     "podil": 4.3609
+    },
+    {
+     "id": 6,
+     "unit": "6",
+     "owner": "Jana Kučerová",
+     "podil": 3.6842
+    },
+    {
+     "id": 7,
+     "unit": "7",
+     "owner": "Pavel Veselý",
+     "podil": 4.9624
+    },
+    {
+     "id": 8,
+     "unit": "8",
+     "owner": "Lucie Horáková",
+     "podil": 3.5338
+    },
+    {
+     "id": 9,
+     "unit": "9",
+     "owner": "Josef Němec",
+     "podil": 4.5113
+    },
+    {
+     "id": 10,
+     "unit": "10",
+     "owner": "Marie Marková",
+     "podil": 3.3083
+    },
+    {
+     "id": 11,
+     "unit": "11",
+     "owner": "Jiří Pokorný",
+     "podil": 5.188
+    },
+    {
+     "id": 12,
+     "unit": "12",
+     "owner": "Hana Pospíšilová",
+     "podil": 3.4586
+    },
+    {
+     "id": 13,
+     "unit": "13",
+     "owner": "Karel Hájek",
+     "podil": 4.7368
+    },
+    {
+     "id": 14,
+     "unit": "14",
+     "owner": "Věra Jelínková",
+     "podil": 3.7594
+    },
+    {
+     "id": 15,
+     "unit": "15",
+     "owner": "Milan Král",
+     "podil": 4.2857
+    },
+    {
+     "id": 16,
+     "unit": "16",
+     "owner": "Alena Růžičová",
+     "podil": 3.609
+    },
+    {
+     "id": 17,
+     "unit": "17",
+     "owner": "Roman Beneš",
+     "podil": 5.2632
+    },
+    {
+     "id": 18,
+     "unit": "18",
+     "owner": "Zuzana Fialová",
+     "podil": 3.3835
+    },
+    {
+     "id": 19,
+     "unit": "19",
+     "owner": "David Sedláček",
+     "podil": 4.5865
+    },
+    {
+     "id": 20,
+     "unit": "20",
+     "owner": "Kateřina Doležalová",
+     "podil": 3.6842
+    },
+    {
+     "id": 21,
+     "unit": "21",
+     "owner": "Ondřej Zeman",
+     "podil": 4.812
+    },
+    {
+     "id": 22,
+     "unit": "22",
+     "owner": "Barbora Kolářová",
+     "podil": 3.5338
+    },
+    {
+     "id": 23,
+     "unit": "23",
+     "owner": "Filip Urban",
+     "podil": 4.4361
+    },
+    {
+     "id": 24,
+     "unit": "24",
+     "owner": "Tereza Marešová",
+     "podil": 3.9098
+    }
+   ],
+   "att": {
+    "1": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "2": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "3": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "4": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "5": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "6": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "7": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "8": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "9": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "10": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "11": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "12": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "13": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "14": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "15": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "16": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "17": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "18": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "19": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "20": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "21": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "22": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "23": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "24": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    }
+   },
+   "votes": [
+    {
+     "num": 1,
+     "text": "Shromáždění schvaluje účetní závěrku a zprávu o hospodaření SVJ za rok 2024.",
+     "type": "prosta",
+     "time": "18:22",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "NE",
+      "18": "NE",
+      "19": "ZDR",
+      "20": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 16,
+      "cN": 2,
+      "cZ": 2,
+      "un": 0,
+      "ano": 66.3909,
+      "ne": 8.646700000000001,
+      "zdr": 8.2707,
+      "tot": 100,
+      "pres": 83.3083,
+      "base": 83.3083,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "NE"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "NE"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "20",
+        "owner": "Kateřina Doležalová",
+        "podil": 3.6842,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 2,
+     "text": "Shromáždění schvaluje plán oprav na rok 2025 a čerpání fondu oprav na rekonstrukci elektroinstalace ve společných prostorách do výše 480 000 Kč.",
+     "type": "ctvrt",
+     "time": "18:41",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "ANO",
+      "18": "NE",
+      "19": "NE",
+      "20": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 17,
+      "cN": 2,
+      "cZ": 1,
+      "un": 0,
+      "ano": 71.6541,
+      "ne": 7.970000000000001,
+      "zdr": 3.6842,
+      "tot": 100,
+      "pres": 83.3083,
+      "base": 83.3083,
+      "typeLabel": "Tříčtvrtinová většina přítomných (≥ 75 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ANO"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "NE"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "NE"
+       },
+       {
+        "unit": "20",
+        "owner": "Kateřina Doležalová",
+        "podil": 3.6842,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 3,
+     "text": "Shromáždění schvaluje instalaci kamerového systému ve společných prostorách domu.",
+     "type": "prosta",
+     "time": "19:05",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "NE",
+      "9": "NE",
+      "10": "NE",
+      "11": "NE",
+      "12": "NE",
+      "13": "NE",
+      "14": "NE",
+      "15": "NE",
+      "16": "NE",
+      "17": "NE",
+      "18": "NE",
+      "19": "NE",
+      "20": "NE"
+     },
+     "result": false,
+     "snap": {
+      "cA": 7,
+      "cN": 13,
+      "cZ": 0,
+      "un": 0,
+      "ano": 30,
+      "ne": 53.308299999999996,
+      "zdr": 0,
+      "tot": 100,
+      "pres": 83.3083,
+      "base": 83.3083,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "NE"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "NE"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "NE"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "NE"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "NE"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "NE"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "NE"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "NE"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "NE"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "NE"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "NE"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "NE"
+       },
+       {
+        "unit": "20",
+        "owner": "Kateřina Doležalová",
+        "podil": 3.6842,
+        "vote": "NE"
+       }
+      ]
+     }
+    }
+   ],
+   "current": null,
+   "zapis": {
+    "place": "velká sušárna",
+    "chair": "Jan Novák",
+    "verifier": "Martin Dvořák",
+    "program": "Účetní závěrka a zpráva o hospodaření 2024\nPlán oprav 2025 – elektroinstalace\nKamerový systém\nRůzné",
+    "notes": "# Kontrola úkolů z minula\n- *Podepsat smlouvu se správcem* (Jan Novák, splněno 16. 12. 2024) – předávací protokol založen.\n- *Stojan na kola a provozní řád kolárny* (Martin Dvořák, splněno 20. 1. 2025) – příspěvek zaplatilo 8 uživatelů.\n\n# Elektroinstalace\n- Rozvody ve společných prostorách jsou původní hliníkové. Revizní technik doporučil výměnu, odhad *420–480 tis. Kč*.\n\n# Kamerový systém\n- Diskuse o ochraně soukromí a ceně (cca 85 000 Kč). Návrh nebyl přijat.\n\n# Různé\n- Výbor připomněl povinnost hlásit změny počtu osob v bytě (vyúčtování služeb).",
+    "prefilled": true
+   }
+  },
+  {
+   "id": 1757894400004,
+   "date": "2025-09-15",
+   "time": "18:30",
+   "type": "Mimořádné shromáždění",
+   "zapisovatel": "Martin Dvořák",
+   "status": "closed",
+   "reopened": null,
+   "roster": [
+    {
+     "id": 1,
+     "unit": "1",
+     "owner": "Jan Novák",
+     "podil": 4.6617
+    },
+    {
+     "id": 2,
+     "unit": "2",
+     "owner": "Petra Svobodová",
+     "podil": 3.609
+    },
+    {
+     "id": 3,
+     "unit": "3",
+     "owner": "Martin Dvořák",
+     "podil": 5.3383
+    },
+    {
+     "id": 4,
+     "unit": "4",
+     "owner": "Eva Černá",
+     "podil": 3.3835
+    },
+    {
+     "id": 5,
+     "unit": "5",
+     "owner": "Tomáš Procházka",
+     "podil": 4.3609
+    },
+    {
+     "id": 6,
+     "unit": "6",
+     "owner": "Jana Kučerová",
+     "podil": 3.6842
+    },
+    {
+     "id": 7,
+     "unit": "7",
+     "owner": "Pavel Veselý",
+     "podil": 4.9624
+    },
+    {
+     "id": 8,
+     "unit": "8",
+     "owner": "Lucie Horáková",
+     "podil": 3.5338
+    },
+    {
+     "id": 9,
+     "unit": "9",
+     "owner": "Josef Němec",
+     "podil": 4.5113
+    },
+    {
+     "id": 10,
+     "unit": "10",
+     "owner": "Marie Marková",
+     "podil": 3.3083
+    },
+    {
+     "id": 11,
+     "unit": "11",
+     "owner": "Jiří Pokorný",
+     "podil": 5.188
+    },
+    {
+     "id": 12,
+     "unit": "12",
+     "owner": "Hana Pospíšilová",
+     "podil": 3.4586
+    },
+    {
+     "id": 13,
+     "unit": "13",
+     "owner": "Karel Hájek",
+     "podil": 4.7368
+    },
+    {
+     "id": 14,
+     "unit": "14",
+     "owner": "Věra Jelínková",
+     "podil": 3.7594
+    },
+    {
+     "id": 15,
+     "unit": "15",
+     "owner": "Milan Král",
+     "podil": 4.2857
+    },
+    {
+     "id": 16,
+     "unit": "16",
+     "owner": "Alena Růžičová",
+     "podil": 3.609
+    },
+    {
+     "id": 17,
+     "unit": "17",
+     "owner": "Roman Beneš",
+     "podil": 5.2632
+    },
+    {
+     "id": 18,
+     "unit": "18",
+     "owner": "Zuzana Fialová",
+     "podil": 3.3835
+    },
+    {
+     "id": 19,
+     "unit": "19",
+     "owner": "David Sedláček",
+     "podil": 4.5865
+    },
+    {
+     "id": 20,
+     "unit": "20",
+     "owner": "Kateřina Doležalová",
+     "podil": 3.6842
+    },
+    {
+     "id": 21,
+     "unit": "21",
+     "owner": "Ondřej Zeman",
+     "podil": 4.812
+    },
+    {
+     "id": 22,
+     "unit": "22",
+     "owner": "Barbora Kolářová",
+     "podil": 3.5338
+    },
+    {
+     "id": 23,
+     "unit": "23",
+     "owner": "Filip Urban",
+     "podil": 4.4361
+    },
+    {
+     "id": 24,
+     "unit": "24",
+     "owner": "Tereza Marešová",
+     "podil": 3.9098
+    }
+   ],
+   "att": {
+    "1": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "2": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "3": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "4": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "5": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "6": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "7": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "8": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "9": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "10": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "11": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "12": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "13": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "14": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "15": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "16": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "17": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "18": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "19": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "20": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "21": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "22": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "23": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "24": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    }
+   },
+   "votes": [
+    {
+     "num": 1,
+     "text": "Shromáždění schvaluje výběr zhotovitele opravy střechy – Střechy Praha s.r.o. za 312 000 Kč vč. DPH – dle předložené nabídky.",
+     "type": "prosta",
+     "time": "18:47",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "NE",
+      "13": "NE",
+      "14": "ZDR",
+      "21": "ZDR",
+      "22": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 11,
+      "cN": 2,
+      "cZ": 3,
+      "un": 0,
+      "ano": 46.5414,
+      "ne": 8.1954,
+      "zdr": 12.1052,
+      "tot": 100,
+      "pres": 66.842,
+      "base": 66.842,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "NE"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "NE"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "21",
+        "owner": "Ondřej Zeman",
+        "podil": 4.812,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "22",
+        "owner": "Barbora Kolářová",
+        "podil": 3.5338,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 2,
+     "text": "Shromáždění schvaluje zvýšení měsíčního příspěvku do fondu oprav o 25 % od 1. 1. 2026.",
+     "type": "ctvrt",
+     "time": "19:10",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "NE",
+      "8": "NE",
+      "9": "NE",
+      "10": "NE",
+      "11": "NE",
+      "12": "NE",
+      "13": "NE",
+      "14": "NE",
+      "21": "ZDR",
+      "22": "ZDR"
+     },
+     "result": false,
+     "snap": {
+      "cA": 6,
+      "cN": 8,
+      "cZ": 2,
+      "un": 0,
+      "ano": 25.0376,
+      "ne": 33.4586,
+      "zdr": 8.3458,
+      "tot": 100,
+      "pres": 66.842,
+      "base": 66.842,
+      "typeLabel": "Tříčtvrtinová většina přítomných (≥ 75 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "NE"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "NE"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "NE"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "NE"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "NE"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "NE"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "NE"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "NE"
+       },
+       {
+        "unit": "21",
+        "owner": "Ondřej Zeman",
+        "podil": 4.812,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "22",
+        "owner": "Barbora Kolářová",
+        "podil": 3.5338,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    }
+   ],
+   "current": null,
+   "zapis": {
+    "place": "velká sušárna",
+    "chair": "Jan Novák",
+    "verifier": "Eva Černá",
+    "program": "Oprava střechy – výběr zhotovitele\nZvýšení příspěvku do fondu oprav",
+    "notes": "# Kontrola úkolů z minula\n- *Vybrat zhotovitele rekonstrukce elektroinstalace* (Martin Dvořák, splněno 18. 6. 2025) – Elektro Beneš, 456 000 Kč.\n- *Dohlédnout na rekonstrukci elektroinstalace* (Martin Dvořák) – práce zahájeny v 1. vchodu.\n\n# Oprava střechy\n- Po přívalových deštích zatéká do bytu č. 23. Posudek doporučil výměnu oplechování a opravu hydroizolace.\n- Porovnány 3 nabídky: *312 000*, 338 000 a 365 000 Kč vč. DPH.\n\n# Fond oprav\n- Výbor navrhl zvýšit příspěvek o 25 %. Část vlastníků chce nejdřív dlouhodobý plán oprav – návrh nebyl přijat.",
+    "prefilled": true
+   }
+  },
+  {
+   "id": 1776297600005,
+   "date": "2026-04-16",
+   "time": "18:00",
+   "type": "Řádné shromáždění",
+   "zapisovatel": "Eva Černá",
+   "status": "closed",
+   "reopened": null,
+   "roster": [
+    {
+     "id": 1,
+     "unit": "1",
+     "owner": "Jan Novák",
+     "podil": 4.6617
+    },
+    {
+     "id": 2,
+     "unit": "2",
+     "owner": "Petra Svobodová",
+     "podil": 3.609
+    },
+    {
+     "id": 3,
+     "unit": "3",
+     "owner": "Martin Dvořák",
+     "podil": 5.3383
+    },
+    {
+     "id": 4,
+     "unit": "4",
+     "owner": "Eva Černá",
+     "podil": 3.3835
+    },
+    {
+     "id": 5,
+     "unit": "5",
+     "owner": "Tomáš Procházka",
+     "podil": 4.3609
+    },
+    {
+     "id": 6,
+     "unit": "6",
+     "owner": "Jana Kučerová",
+     "podil": 3.6842
+    },
+    {
+     "id": 7,
+     "unit": "7",
+     "owner": "Pavel Veselý",
+     "podil": 4.9624
+    },
+    {
+     "id": 8,
+     "unit": "8",
+     "owner": "Lucie Horáková",
+     "podil": 3.5338
+    },
+    {
+     "id": 9,
+     "unit": "9",
+     "owner": "Josef Němec",
+     "podil": 4.5113
+    },
+    {
+     "id": 10,
+     "unit": "10",
+     "owner": "Marie Marková",
+     "podil": 3.3083
+    },
+    {
+     "id": 11,
+     "unit": "11",
+     "owner": "Jiří Pokorný",
+     "podil": 5.188
+    },
+    {
+     "id": 12,
+     "unit": "12",
+     "owner": "Hana Pospíšilová",
+     "podil": 3.4586
+    },
+    {
+     "id": 13,
+     "unit": "13",
+     "owner": "Karel Hájek",
+     "podil": 4.7368
+    },
+    {
+     "id": 14,
+     "unit": "14",
+     "owner": "Věra Jelínková",
+     "podil": 3.7594
+    },
+    {
+     "id": 15,
+     "unit": "15",
+     "owner": "Milan Král",
+     "podil": 4.2857
+    },
+    {
+     "id": 16,
+     "unit": "16",
+     "owner": "Alena Růžičová",
+     "podil": 3.609
+    },
+    {
+     "id": 17,
+     "unit": "17",
+     "owner": "Roman Beneš",
+     "podil": 5.2632
+    },
+    {
+     "id": 18,
+     "unit": "18",
+     "owner": "Zuzana Fialová",
+     "podil": 3.3835
+    },
+    {
+     "id": 19,
+     "unit": "19",
+     "owner": "David Sedláček",
+     "podil": 4.5865
+    },
+    {
+     "id": 20,
+     "unit": "20",
+     "owner": "Kateřina Doležalová",
+     "podil": 3.6842
+    },
+    {
+     "id": 21,
+     "unit": "21",
+     "owner": "Ondřej Zeman",
+     "podil": 4.812
+    },
+    {
+     "id": 22,
+     "unit": "22",
+     "owner": "Barbora Kolářová",
+     "podil": 3.5338
+    },
+    {
+     "id": 23,
+     "unit": "23",
+     "owner": "Filip Urban",
+     "podil": 4.4361
+    },
+    {
+     "id": 24,
+     "unit": "24",
+     "owner": "Tereza Marešová",
+     "podil": 3.9098
+    }
+   ],
+   "att": {
+    "1": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "2": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "3": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "4": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "5": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "6": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "7": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "8": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "9": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "10": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "11": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "12": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "13": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "14": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "15": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "16": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "17": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "18": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "19": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "20": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "21": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "22": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "23": {
+     "present": true,
+     "proxy": false,
+     "note": "plná moc – p. Urban"
+    },
+    "24": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    }
+   },
+   "votes": [
+    {
+     "num": 1,
+     "text": "Shromáždění schvaluje účetní závěrku a zprávu o hospodaření SVJ za rok 2025.",
+     "type": "prosta",
+     "time": "18:15",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "ANO",
+      "18": "ANO",
+      "19": "ANO",
+      "20": "ZDR",
+      "23": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 19,
+      "cN": 0,
+      "cZ": 2,
+      "un": 0,
+      "ano": 79.6241,
+      "ne": 0,
+      "zdr": 8.1203,
+      "tot": 100,
+      "pres": 87.7444,
+      "base": 87.7444,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ANO"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "ANO"
+       },
+       {
+        "unit": "20",
+        "owner": "Kateřina Doležalová",
+        "podil": 3.6842,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "23",
+        "owner": "Filip Urban",
+        "podil": 4.4361,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 2,
+     "text": "Shromáždění schvaluje výměnu vchodových dveří obou vchodů a nových zvonkových tabel s videotelefonem, čerpání fondu oprav do 260 000 Kč.",
+     "type": "ctvrt",
+     "time": "18:40",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "ANO",
+      "18": "ANO",
+      "19": "NE",
+      "20": "NE",
+      "23": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 18,
+      "cN": 2,
+      "cZ": 1,
+      "un": 0,
+      "ano": 75.0376,
+      "ne": 8.2707,
+      "zdr": 4.4361,
+      "tot": 100,
+      "pres": 87.7444,
+      "base": 87.7444,
+      "typeLabel": "Tříčtvrtinová většina přítomných (≥ 75 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ANO"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "NE"
+       },
+       {
+        "unit": "20",
+        "owner": "Kateřina Doležalová",
+        "podil": 3.6842,
+        "vote": "NE"
+       },
+       {
+        "unit": "23",
+        "owner": "Filip Urban",
+        "podil": 4.4361,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 3,
+     "text": "Shromáždění schvaluje malování schodišť a chodeb v obou vchodech v létě 2026.",
+     "type": "prosta",
+     "time": "19:00",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "ANO",
+      "18": "NE",
+      "19": "NE",
+      "20": "ZDR",
+      "23": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 17,
+      "cN": 2,
+      "cZ": 2,
+      "un": 0,
+      "ano": 71.6541,
+      "ne": 7.970000000000001,
+      "zdr": 8.1203,
+      "tot": 100,
+      "pres": 87.7444,
+      "base": 87.7444,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ANO"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "NE"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "NE"
+       },
+       {
+        "unit": "20",
+        "owner": "Kateřina Doležalová",
+        "podil": 3.6842,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "23",
+        "owner": "Filip Urban",
+        "podil": 4.4361,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 4,
+     "text": "Shromáždění schvaluje změnu domovního řádu – pravidla užívání kolárny, sušárny a nočního klidu.",
+     "type": "ctvrt",
+     "time": "19:25",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "ANO",
+      "17": "ANO",
+      "18": "ANO",
+      "19": "NE",
+      "20": "NE",
+      "23": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 18,
+      "cN": 2,
+      "cZ": 1,
+      "un": 0,
+      "ano": 75.0376,
+      "ne": 8.2707,
+      "zdr": 4.4361,
+      "tot": 100,
+      "pres": 87.7444,
+      "base": 87.7444,
+      "typeLabel": "Tříčtvrtinová většina přítomných (≥ 75 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ANO"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "19",
+        "owner": "David Sedláček",
+        "podil": 4.5865,
+        "vote": "NE"
+       },
+       {
+        "unit": "20",
+        "owner": "Kateřina Doležalová",
+        "podil": 3.6842,
+        "vote": "NE"
+       },
+       {
+        "unit": "23",
+        "owner": "Filip Urban",
+        "podil": 4.4361,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    }
+   ],
+   "current": null,
+   "zapis": {
+    "place": "velká sušárna",
+    "chair": "Jan Novák",
+    "verifier": "Martin Dvořák",
+    "program": "Účetní závěrka a zpráva o hospodaření 2025\nVýměna vchodových dveří a zvonkových tabel\nMalování schodišť a chodeb\nZměna domovního řádu\nRůzné",
+    "notes": "# Kontrola úkolů z minula\n- *Dohlédnout na rekonstrukci elektroinstalace* (Martin Dvořák) – hotovo 1. vchod, 2. vchod rozpracován.\n- *Zkontrolovat a převzít opravu střechy* (Jan Novák) – zhotovitel posunul dokončení kvůli počasí.\n\n# Vchodové dveře\n- Tři nabídky: 238 000 / 251 000 / 274 000 Kč. Výbor vybere podle referencí a termínu montáže.\n\n# Domovní řád\n- Nová pravidla: kolárna jen pro kola a koloběžky, v sušárně noční klid od 22 h, zákaz kouření ve všech společných prostorách.\n\n# Různé\n- Výbor připomněl roční revizi hasicích přístrojů a hydrantů.\n- Chybí kontakty pro havarijní situace u několika jednotek.",
+    "prefilled": true
+   }
+  },
+  {
+   "id": 1790697600006,
+   "date": "2026-09-24",
+   "time": "18:00",
+   "type": "Řádné shromáždění",
+   "zapisovatel": "Eva Černá",
+   "status": "closed",
+   "reopened": null,
+   "roster": [
+    {
+     "id": 1,
+     "unit": "1",
+     "owner": "Jan Novák",
+     "podil": 4.6617
+    },
+    {
+     "id": 2,
+     "unit": "2",
+     "owner": "Petra Svobodová",
+     "podil": 3.609
+    },
+    {
+     "id": 3,
+     "unit": "3",
+     "owner": "Martin Dvořák",
+     "podil": 5.3383
+    },
+    {
+     "id": 4,
+     "unit": "4",
+     "owner": "Eva Černá",
+     "podil": 3.3835
+    },
+    {
+     "id": 5,
+     "unit": "5",
+     "owner": "Tomáš Procházka",
+     "podil": 4.3609
+    },
+    {
+     "id": 6,
+     "unit": "6",
+     "owner": "Jana Kučerová",
+     "podil": 3.6842
+    },
+    {
+     "id": 7,
+     "unit": "7",
+     "owner": "Pavel Veselý",
+     "podil": 4.9624
+    },
+    {
+     "id": 8,
+     "unit": "8",
+     "owner": "Lucie Horáková",
+     "podil": 3.5338
+    },
+    {
+     "id": 9,
+     "unit": "9",
+     "owner": "Josef Němec",
+     "podil": 4.5113
+    },
+    {
+     "id": 10,
+     "unit": "10",
+     "owner": "Marie Marková",
+     "podil": 3.3083
+    },
+    {
+     "id": 11,
+     "unit": "11",
+     "owner": "Jiří Pokorný",
+     "podil": 5.188
+    },
+    {
+     "id": 12,
+     "unit": "12",
+     "owner": "Hana Pospíšilová",
+     "podil": 3.4586
+    },
+    {
+     "id": 13,
+     "unit": "13",
+     "owner": "Karel Hájek",
+     "podil": 4.7368
+    },
+    {
+     "id": 14,
+     "unit": "14",
+     "owner": "Věra Jelínková",
+     "podil": 3.7594
+    },
+    {
+     "id": 15,
+     "unit": "15",
+     "owner": "Milan Král",
+     "podil": 4.2857
+    },
+    {
+     "id": 16,
+     "unit": "16",
+     "owner": "Alena Růžičová",
+     "podil": 3.609
+    },
+    {
+     "id": 17,
+     "unit": "17",
+     "owner": "Roman Beneš",
+     "podil": 5.2632
+    },
+    {
+     "id": 18,
+     "unit": "18",
+     "owner": "Zuzana Fialová",
+     "podil": 3.3835
+    },
+    {
+     "id": 19,
+     "unit": "19",
+     "owner": "David Sedláček",
+     "podil": 4.5865
+    },
+    {
+     "id": 20,
+     "unit": "20",
+     "owner": "Kateřina Doležalová",
+     "podil": 3.6842
+    },
+    {
+     "id": 21,
+     "unit": "21",
+     "owner": "Ondřej Zeman",
+     "podil": 4.812
+    },
+    {
+     "id": 22,
+     "unit": "22",
+     "owner": "Barbora Kolářová",
+     "podil": 3.5338
+    },
+    {
+     "id": 23,
+     "unit": "23",
+     "owner": "Filip Urban",
+     "podil": 4.4361
+    },
+    {
+     "id": 24,
+     "unit": "24",
+     "owner": "Tereza Marešová",
+     "podil": 3.9098
+    }
+   ],
+   "att": {
+    "1": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "2": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "3": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "4": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "5": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "6": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "7": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "8": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "9": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "10": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "11": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "12": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "13": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "14": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "15": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "16": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "17": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "18": {
+     "present": true,
+     "proxy": false,
+     "note": ""
+    },
+    "19": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "20": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "21": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "22": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "23": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    },
+    "24": {
+     "present": false,
+     "proxy": false,
+     "note": ""
+    }
+   },
+   "votes": [
+    {
+     "num": 1,
+     "text": "Shromáždění ukládá výboru připravit dlouhodobý plán oprav a investic v pořadí priorit: 1) elektroinstalace, 2) vnitřní prostory, 3) plášť domu, a předložit jej ke schválení na příští schůzi.",
+     "type": "prosta",
+     "time": "18:25",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "NE",
+      "16": "NE",
+      "17": "ZDR",
+      "18": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 14,
+      "cN": 2,
+      "cZ": 2,
+      "un": 0,
+      "ano": 58.4962,
+      "ne": 7.8947,
+      "zdr": 8.646700000000001,
+      "tot": 100,
+      "pres": 75.0376,
+      "base": 75.0376,
+      "typeLabel": "Prostá většina přítomných (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "NE"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "NE"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    },
+    {
+     "num": 2,
+     "text": "Shromáždění volí pana Filipa Urbana novým členem výboru.",
+     "type": "nadpvse",
+     "time": "18:44",
+     "ballots": {
+      "1": "ANO",
+      "2": "ANO",
+      "3": "ANO",
+      "4": "ANO",
+      "5": "ANO",
+      "6": "ANO",
+      "7": "ANO",
+      "8": "ANO",
+      "9": "ANO",
+      "10": "ANO",
+      "11": "ANO",
+      "12": "ANO",
+      "13": "ANO",
+      "14": "ANO",
+      "15": "ANO",
+      "16": "NE",
+      "17": "ZDR",
+      "18": "ZDR"
+     },
+     "result": true,
+     "snap": {
+      "cA": 15,
+      "cN": 1,
+      "cZ": 2,
+      "un": 0,
+      "ano": 62.7819,
+      "ne": 3.609,
+      "zdr": 8.646700000000001,
+      "tot": 100,
+      "pres": 75.0376,
+      "base": 100,
+      "typeLabel": "Nadpoloviční většina VŠECH vlastníků (> 50 %)",
+      "units": [
+       {
+        "unit": "1",
+        "owner": "Jan Novák",
+        "podil": 4.6617,
+        "vote": "ANO"
+       },
+       {
+        "unit": "2",
+        "owner": "Petra Svobodová",
+        "podil": 3.609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "3",
+        "owner": "Martin Dvořák",
+        "podil": 5.3383,
+        "vote": "ANO"
+       },
+       {
+        "unit": "4",
+        "owner": "Eva Černá",
+        "podil": 3.3835,
+        "vote": "ANO"
+       },
+       {
+        "unit": "5",
+        "owner": "Tomáš Procházka",
+        "podil": 4.3609,
+        "vote": "ANO"
+       },
+       {
+        "unit": "6",
+        "owner": "Jana Kučerová",
+        "podil": 3.6842,
+        "vote": "ANO"
+       },
+       {
+        "unit": "7",
+        "owner": "Pavel Veselý",
+        "podil": 4.9624,
+        "vote": "ANO"
+       },
+       {
+        "unit": "8",
+        "owner": "Lucie Horáková",
+        "podil": 3.5338,
+        "vote": "ANO"
+       },
+       {
+        "unit": "9",
+        "owner": "Josef Němec",
+        "podil": 4.5113,
+        "vote": "ANO"
+       },
+       {
+        "unit": "10",
+        "owner": "Marie Marková",
+        "podil": 3.3083,
+        "vote": "ANO"
+       },
+       {
+        "unit": "11",
+        "owner": "Jiří Pokorný",
+        "podil": 5.188,
+        "vote": "ANO"
+       },
+       {
+        "unit": "12",
+        "owner": "Hana Pospíšilová",
+        "podil": 3.4586,
+        "vote": "ANO"
+       },
+       {
+        "unit": "13",
+        "owner": "Karel Hájek",
+        "podil": 4.7368,
+        "vote": "ANO"
+       },
+       {
+        "unit": "14",
+        "owner": "Věra Jelínková",
+        "podil": 3.7594,
+        "vote": "ANO"
+       },
+       {
+        "unit": "15",
+        "owner": "Milan Král",
+        "podil": 4.2857,
+        "vote": "ANO"
+       },
+       {
+        "unit": "16",
+        "owner": "Alena Růžičová",
+        "podil": 3.609,
+        "vote": "NE"
+       },
+       {
+        "unit": "17",
+        "owner": "Roman Beneš",
+        "podil": 5.2632,
+        "vote": "ZDR"
+       },
+       {
+        "unit": "18",
+        "owner": "Zuzana Fialová",
+        "podil": 3.3835,
+        "vote": "ZDR"
+       }
+      ]
+     }
+    }
+   ],
+   "current": null,
+   "zapis": {
+    "place": "velká sušárna",
+    "chair": "Jan Novák",
+    "verifier": "Eva Černá",
+    "program": "Plán oprav a investic\nDoplnění výboru – volba člena\nRůzné",
+    "notes": "# Kontrola úkolů z minula\n- *Dohlédnout na rekonstrukci elektroinstalace* (Martin Dvořák, do 20. 10. 2026) – hotovo 1. vchod, 2. vchod rozpracován.\n- *Zkontrolovat a převzít opravu střechy* (Jan Novák, do 20. 9. 2026) – termín posunut, výbor urguje zhotovitele.\n- *Objednat výměnu vchodových dveří* (Filip Urban, do 31. 10. 2026) – čeká se na termín montáže.\n- *Zajistit malování schodišť a chodeb* (Eva Černá, splněno 22. 8. 2026) – 86 500 Kč.\n- *Vyvěsit nový domovní řád* (Eva Černá, splněno 4. 5. 2026) – vyvěšeno v obou vchodech.\n- *Založit účetní závěrku 2025 do sbírky listin* (Petra Svobodová, splněno 10. 6. 2026).\n\n# Plán oprav a investic\n- Výbor předložil přehled stavu domu. Pořadí priorit viz usnesení č. 1.\n\n# Doplnění výboru\nMartin Dvořák odstoupil z funkce člena výboru k 31. 8. 2026. Novým členem výboru byl zvolen *Filip Urban*. Předseda *Jan Novák* a členka *Eva Černá* pokračují beze změny.\n\n# Různé\n- Zatékání v suterénu u 2. vchodu – podnět p. Kolářové (byt 22) → úkol\n- Doplnit kontakty vlastníků pro havarijní situace → úkol\n- Návrh na výsadbu zeleně před domem – zařadit na program příští schůze.",
+    "prefilled": true
+   }
+  }
+ ],
+ "tasks": [
+  {
+   "id": 3000,
+   "note": "Hotovo, revizní zpráva založena. Cena 18 400 Kč.",
+   "status": "done",
+   "meetingId": 1713456000001,
+   "voteNum": 3,
+   "text": "Objednat revizi a opravu hromosvodu",
+   "source": "usneseni",
+   "owner": "Martin Dvořák",
+   "due": "2024-07-31",
+   "created": "2024-04-19",
+   "doneAt": "2024-07-12"
+  },
+  {
+   "id": 3001,
+   "note": "Instalováno 14 svítidel, 23 600 Kč. Spotřeba v suterénu klesla zhruba o 60 %.",
+   "status": "done",
+   "meetingId": 1713456000001,
+   "voteNum": 3,
+   "text": "Vyměnit osvětlení v suterénu za LED se senzory pohybu",
+   "source": "usneseni",
+   "owner": "Jan Novák",
+   "due": "2024-09-30",
+   "created": "2024-04-19",
+   "doneAt": "2024-09-02"
+  },
+  {
+   "id": 3002,
+   "note": "Srovnání 3 nabídek rozesláno vlastníkům před schůzí.",
+   "status": "done",
+   "meetingId": 1713456000001,
+   "voteNum": 4,
+   "text": "Poptat 3 nabídky na správu domu a připravit srovnání",
+   "source": "usneseni",
+   "owner": "Eva Černá",
+   "due": "2024-10-15",
+   "created": "2024-04-19",
+   "doneAt": "2024-10-10"
+  },
+  {
+   "id": 3003,
+   "note": "Smlouva podepsána, předávací protokol založen.",
+   "status": "done",
+   "meetingId": 1730995200002,
+   "voteNum": 1,
+   "text": "Podepsat smlouvu se správcem a předat mu dokumentaci",
+   "source": "usneseni",
+   "owner": "Jan Novák",
+   "due": "2024-12-20",
+   "created": "2024-11-08",
+   "doneAt": "2024-12-16"
+  },
+  {
+   "id": 3004,
+   "note": "Stojan na 10 kol, 6 900 Kč. Příspěvek zatím zaplatilo 8 uživatelů.",
+   "status": "done",
+   "meetingId": 1730995200002,
+   "voteNum": 2,
+   "text": "Koupit a namontovat stojan na kola, vyvěsit provozní řád kolárny",
+   "source": "usneseni",
+   "owner": "Martin Dvořák",
+   "due": "2025-01-31",
+   "created": "2024-11-08",
+   "doneAt": "2025-01-20"
+  },
+  {
+   "id": 3005,
+   "note": "Vybrána firma Elektro Beneš, nabídka 456 000 Kč.",
+   "status": "done",
+   "meetingId": 1742428800003,
+   "voteNum": 2,
+   "text": "Vybrat zhotovitele rekonstrukce elektroinstalace a připravit smlouvu",
+   "source": "usneseni",
+   "owner": "Martin Dvořák",
+   "due": "2025-06-30",
+   "created": "2025-03-21",
+   "doneAt": "2025-06-18"
+  },
+  {
+   "id": 3006,
+   "note": "Hotovo 1. vchod, 2. vchod rozpracován.",
+   "status": "open",
+   "meetingId": 1742428800003,
+   "voteNum": 2,
+   "text": "Dohlédnout na rekonstrukci elektroinstalace a převzít dílo",
+   "source": "usneseni",
+   "owner": "Martin Dvořák",
+   "due": "2026-10-20",
+   "created": "2025-06-18"
+  },
+  {
+   "id": 3007,
+   "note": "Zhotovitel posunul dokončení kvůli počasí.",
+   "status": "open",
+   "meetingId": 1757894400004,
+   "voteNum": 1,
+   "text": "Zkontrolovat provedení a převzít opravu střechy",
+   "source": "usneseni",
+   "owner": "Jan Novák",
+   "due": "2026-09-20",
+   "created": "2025-09-16"
+  },
+  {
+   "id": 3008,
+   "note": "Usnesení nebylo schváleno – neřeší se.",
+   "status": "cancelled",
+   "meetingId": 1742428800003,
+   "voteNum": 3,
+   "text": "Instalace kamerového systému",
+   "source": "usneseni",
+   "owner": "",
+   "due": "",
+   "created": "2025-03-21"
+  },
+  {
+   "id": 3009,
+   "note": "Nabídky: 238 000 / 251 000 / 274 000 Kč. Čeká se na termín montáže.",
+   "status": "open",
+   "meetingId": 1776297600005,
+   "voteNum": 2,
+   "text": "Objednat výměnu vchodových dveří a zvonkových tabel s videotelefonem",
+   "source": "usneseni",
+   "owner": "Filip Urban",
+   "due": "2026-10-31",
+   "created": "2026-04-17"
+  },
+  {
+   "id": 3010,
+   "note": "Vymalováno, 86 500 Kč. Drobné opravy omítek v ceně.",
+   "status": "done",
+   "meetingId": 1776297600005,
+   "voteNum": 3,
+   "text": "Zajistit malování schodišť a chodeb",
+   "source": "usneseni",
+   "owner": "Eva Černá",
+   "due": "2026-08-31",
+   "created": "2026-04-17",
+   "doneAt": "2026-08-22"
+  },
+  {
+   "id": 3011,
+   "note": "Vyvěšeno v obou vchodech, rozesláno e-mailem.",
+   "status": "done",
+   "meetingId": 1776297600005,
+   "voteNum": 4,
+   "text": "Vyvěsit nový domovní řád na nástěnky a rozeslat vlastníkům",
+   "source": "usneseni",
+   "owner": "Eva Černá",
+   "due": "2026-05-15",
+   "created": "2026-04-17",
+   "doneAt": "2026-05-04"
+  },
+  {
+   "id": 3012,
+   "note": "Podáno přes datovou schránku.",
+   "status": "done",
+   "meetingId": null,
+   "voteNum": null,
+   "text": "Založit účetní závěrku 2025 do sbírky listin",
+   "source": "zakon",
+   "owner": "Petra Svobodová",
+   "due": "2026-06-30",
+   "created": "2026-04-17",
+   "doneAt": "2026-06-10"
+  },
+  {
+   "id": 3013,
+   "note": "Podklady: pasport domu, stav fondu oprav.",
+   "status": "open",
+   "meetingId": 1790697600006,
+   "voteNum": 1,
+   "text": "Připravit dlouhodobý plán oprav a investic včetně financování",
+   "source": "usneseni",
+   "owner": "Jan Novák",
+   "due": "2027-03-31",
+   "created": "2026-09-24"
+  },
+  {
+   "id": 3014,
+   "note": "Do 30 dnů od volby.",
+   "status": "open",
+   "meetingId": 1790697600006,
+   "voteNum": 2,
+   "text": "Aktualizovat zápis členů výboru ve veřejném rejstříku",
+   "source": "usneseni",
+   "owner": "Jan Novák",
+   "due": "2026-10-24",
+   "created": "2026-09-24"
+  },
+  {
+   "id": 3015,
+   "note": "Roční revize – objednat u firmy Požár servis.",
+   "status": "open",
+   "meetingId": null,
+   "voteNum": null,
+   "text": "Revize hasicích přístrojů a hydrantů",
+   "source": "zakon",
+   "owner": "Martin Dvořák",
+   "due": "2026-09-10",
+   "created": "2026-01-05"
+  },
+  {
+   "id": 3016,
+   "note": "",
+   "status": "open",
+   "meetingId": null,
+   "voteNum": null,
+   "text": "Pravidelná revize elektroinstalace ve společných prostorách",
+   "source": "zakon",
+   "owner": "Martin Dvořák",
+   "due": "2027-02-28",
+   "created": "2026-01-05"
+  },
+  {
+   "id": 3017,
+   "note": "Nahlásila p. Kolářová (byt 22).",
+   "status": "open",
+   "meetingId": 1790697600006,
+   "voteNum": null,
+   "text": "Prověřit podnět vlastníka na zatékání v suterénu u 2. vchodu",
+   "source": "podnet",
+   "owner": "Filip Urban",
+   "due": "2026-10-05",
+   "created": "2026-09-24"
+  },
+  {
+   "id": 3018,
+   "note": "Vyřešeno domovním řádem, samostatně se neřeší.",
+   "status": "cancelled",
+   "meetingId": null,
+   "voteNum": null,
+   "text": "Vyřešit hluk z otevřených oken sušárny v noci",
+   "source": "podnet",
+   "owner": "Eva Černá",
+   "due": "",
+   "created": "2026-06-02"
+  },
+  {
+   "id": 3019,
+   "note": "Chybí kontakty u 5 jednotek.",
+   "status": "open",
+   "meetingId": 1790697600006,
+   "voteNum": null,
+   "text": "Doplnit kontakty vlastníků pro havarijní situace",
+   "source": "jine",
+   "owner": "Petra Svobodová",
+   "due": "",
+   "created": "2026-09-24"
+  }
+ ],
+ "screen": "prehled",
+ "viewId": null,
+ "subtab": null,
+ "protoVariant": "simple",
+ "lastBackup": "2026-09-26 20:00"
+}
