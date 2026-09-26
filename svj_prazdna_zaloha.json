@@ -1,0 +1,155 @@
+{
+ "roster": [
+  {
+   "id": 1,
+   "unit": "1",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 2,
+   "unit": "2",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 3,
+   "unit": "3",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 4,
+   "unit": "4",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 5,
+   "unit": "5",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 6,
+   "unit": "6",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 7,
+   "unit": "7",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 8,
+   "unit": "8",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 9,
+   "unit": "9",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 10,
+   "unit": "10",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 11,
+   "unit": "11",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 12,
+   "unit": "12",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 13,
+   "unit": "13",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 14,
+   "unit": "14",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 15,
+   "unit": "15",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 16,
+   "unit": "16",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 17,
+   "unit": "17",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 18,
+   "unit": "18",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 19,
+   "unit": "19",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 20,
+   "unit": "20",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 21,
+   "unit": "21",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 22,
+   "unit": "22",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 23,
+   "unit": "23",
+   "owner": "",
+   "podil": 4.1667
+  },
+  {
+   "id": 24,
+   "unit": "24",
+   "owner": "",
+   "podil": 4.1667
+  }
+ ],
+ "meetings": [],
+ "tasks": [],
+ "screen": "prehled",
+ "viewId": null,
+ "subtab": null,
+ "protoVariant": "simple",
+ "lastBackup": null
+}
