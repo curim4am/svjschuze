@@ -18,7 +18,7 @@ Nahoře je stálá navigace se čtyřmi oblastmi:
 
 ## Před první schůzí
 
-V **Nastavení** zkontrolujte jména vlastníků a **podíly podle prohlášení vlastníka**. Součet musí být 100 %.
+V **Nastavení** zkontrolujte jména vlastníků a **podíly podle prohlášení vlastníka**. Součet musí být 100 %. Tamtéž tlačítkem **🖨 Listina k podpisu** vytisknete prezenční listinu (jména, podíly, sloupec pro podpis a plnou moc) — celá se vejde na jednu A4.
 
 ## Průběh schůze
 
@@ -26,11 +26,11 @@ V **Nastavení** zkontrolujte jména vlastníků a **podíly podle prohlášení
 2. **Prezence** — u přítomných klikněte „Nepřítomen" → „✓ Přítomen". Nahoře se hned ukazuje, zda je schůze usnášeníschopná.
 3. **Hlasování** — napište návrh usnesení, zvolte potřebnou většinu, **Zahájit hlasování**. Všichni jsou předvyplnění na „Zdržel se"; proklikejte ANO/NE (nebo „Nastavit všem"). Výsledek se počítá živě podle podílů. **Uzavřít hlasování** usnesení uloží.
 4. **Úkoly** — u každého usnesení je „+ Úkol", úkol ale můžete přidat i bez vazby na usnesení.
-5. **Ukončit schůzi** — výsledky se uzamknou. **Protokol** vytisknete nebo uložíte jako PDF (zjednodušený / kompletní).
+5. **Ukončit schůzi** — výsledky se uzamknou a **automaticky se stáhne záloha dat**. **Protokol** vytisknete nebo uložíte jako PDF (zjednodušený / kompletní).
 
 ## Úkoly
 
-Aktivní úkoly jsou rozdělené na *Po termínu*, *Termín do 14 dnů*, *Později* a *Bez termínu*. Kliknutím na úkol změníte stav (V řešení / Splněno / Zrušeno) a poznámku. Splněný úkol se uzamkne.
+Aktivní úkoly jsou rozdělené na *Po termínu*, *Termín do 14 dnů*, *Později* a *Bez termínu*. Kliknutím na úkol změníte stav (V řešení / Splněno / Zrušeno) a poznámku. Splněný úkol se uzamkne. Tlačítkem **🖨 Tisk přehledu** vytisknete stav úkolů k dnešnímu dni (po termínu, v řešení, splněné za posledních 12 měsíců) — hodí se k referování na shromáždění.
 
 ## Data a zálohy (důležité)
 

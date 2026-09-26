@@ -234,7 +234,7 @@ table.edit td{padding:6px 10px}
 #protokol .sig{margin-top:40px;display:flex;gap:40px;flex-wrap:wrap}
 #protokol .sig div{flex:1;min-width:200px;border-top:1px solid #111;padding-top:4px;font-size:.8rem}
 #protokol .pfoot{margin-top:24px;font-size:.72rem;color:#666;text-align:right}
-#usnprint{display:none}
+#usnprint,#printbox{display:none}
 
 @media(max-width:760px){
   .kpis{grid-template-columns:repeat(2,1fr)}
@@ -256,17 +256,32 @@ table.edit td{padding:6px 10px}
 @media print{
   html,body{background:#fff}
   body *{visibility:hidden}
-  #protokol,#protokol *,#usnprint,#usnprint *{visibility:visible}
+  #protokol,#protokol *,#usnprint,#usnprint *,#printbox,#printbox *{visibility:visible}
   #protokol{position:absolute;left:0;top:0;width:100%;max-width:none;border:none;border-radius:0;box-shadow:none;margin:0;padding:0;font-size:10.5pt;color:#000}
   #protokol h1{font-size:15pt}
   #protokol h2{font-size:12pt;break-after:avoid;page-break-after:avoid}
   #protokol h3{font-size:10.5pt;break-after:avoid;page-break-after:avoid}
   #protokol table{page-break-inside:auto}
-  #protokol thead,#usnprint thead{display:table-header-group}
-  #protokol tr,#usnprint tr{break-inside:avoid;page-break-inside:avoid}
+  #protokol thead,#usnprint thead,#printbox thead{display:table-header-group}
+  #protokol tr,#usnprint tr,#printbox tr{break-inside:avoid;page-break-inside:avoid}
   #protokol .keep,#protokol .usn,#protokol .sig{break-inside:avoid;page-break-inside:avoid}
   #protokol p{orphans:2;widows:2}
   #usnprint{display:block;position:absolute;left:0;top:0;width:100%;color:#000;font-size:10pt}
+  #printbox{display:block;position:absolute;left:0;top:0;width:100%;color:#000;font-size:10pt}
+  #printbox h1{font-size:15pt;text-align:center;margin:0 0 2px}
+  #printbox h2{font-size:11.5pt;margin:14px 0 4px;break-after:avoid;page-break-after:avoid}
+  #printbox .pc{text-align:center;margin:0 0 2px}
+  #printbox .pn{font-size:9pt;color:#333;margin:6px 0}
+  #printbox table{width:100%;border-collapse:collapse;margin-top:8px}
+  #printbox th,#printbox td{border:1px solid #777;padding:4px 6px;text-align:left;vertical-align:top;background:none;color:#000;text-transform:none;letter-spacing:0;font-size:9.5pt}
+  #printbox .psig{display:flex;gap:40px;margin-top:16px}
+  body.pb>*{display:none!important}
+  body.pb>#printbox{display:block!important;position:static!important}
+  #printbox table.fix{table-layout:fixed}
+  #printbox .nw{white-space:nowrap}
+  #printbox.onepage table{margin-top:5px}
+  #printbox.onepage td{padding:2px 6px;vertical-align:middle}
+  #printbox .psig div{flex:1;border-top:1px solid #000;padding-top:3px;font-size:9pt}
   #usnprint h1{font-size:15pt;text-align:center;margin:0 0 2px}
   #usnprint table{width:100%;border-collapse:collapse;margin-top:8px}
   #usnprint th,#usnprint td{border:1px solid #999;padding:4px 6px;text-align:left;vertical-align:top;background:none;color:#000;text-transform:none;letter-spacing:0;font-size:9.5pt}
@@ -281,6 +296,7 @@ table.edit td{padding:6px 10px}
 <main class="wrap" id="app"></main>
 <footer class="foot">Vytvořeno pro SVJ Buková 2553 a 2554 · © 2026 curim4am</footer>
 <div id="toast"></div>
+<div id="printbox"></div>
 
 <script>
 // ================= PRAVIDLA SVJ (stanovy čl. VI) =================
@@ -355,6 +371,7 @@ function tally(m,v){
   return {ano:ano,ne:ne,zdr:zdr,cA:cA,cN:cN,cZ:cZ,un:0,tot:tot,pres:pres,base:base,ratio:ratio,passed:pass(T.op,ratio,T.thr),T:T};
 }
 function rosterSum(){return state.roster.reduce(function(a,u){return a+(+u.podil||0);},0);}
+
 function allUsn(){var out=[];state.meetings.forEach(function(m){m.votes.forEach(function(v){out.push({m:m,v:v,mid:m.id,date:m.date||"",num:v.num,text:v.text||"",result:v.result});});});return out;}
 function usnSortDesc(a,b){if(a.date!==b.date)return a.date<b.date?1:-1;return b.num-a.num;}
 function isOverdue(t){return t.status==="open"&&!!t.due&&daysTo(t.due)<0;}
@@ -718,8 +735,8 @@ function protoFull(m){
 function endMeeting(){
   var m=M();if(!m)return;
   if(m.current){alert("Nejdřív uzavřete nebo zrušte probíhající hlasování.");setTab("hlasovani");return;}
-  if(!confirm("Ukončit schůzi?\n\nPrezence a výsledky se uzamknou. Později je lze odemknout pro opravu (v protokolu to bude uvedeno)."))return;
-  m.status="closed";state.subtab="vysledky";save();toast("Schůze ukončena");render();scrollTop();
+  if(!confirm("Ukončit schůzi?\n\nPrezence a výsledky se uzamknou (později je lze odemknout pro opravu). Zároveň se automaticky stáhne záloha dat."))return;
+  m.status="closed";state.subtab="vysledky";save();render();scrollTop();backup("Schůze ukončena · záloha stažena");
 }
 function reopenMeeting(){
   var m=M();if(!m)return;
@@ -841,7 +858,7 @@ function clearTaskQ(){ui.taskQ="";render();}
 function taskMatches(t,q){var m=t.meetingId?byId(t.meetingId):null,v=voteOf(t);return norm([t.text,t.owner,t.note,SRC[t.source],m?dateCz(m.date):"",v?v.text:""].join(" ")).indexOf(q)>=0;}
 function viewUkoly(){
   var c={active:0,done:0,cancelled:0};state.tasks.forEach(function(t){c[t.status==="open"?"active":t.status]++;});
-  var h=pageHead("Úkoly","Co je potřeba udělat — z usnesení, podnětů vlastníků i zákonných povinností",ui.newTask?'':'<button class="btn" onclick="newTaskGlobal()">+ Nový úkol</button>');
+  var h=pageHead("Úkoly","Co je potřeba udělat — z usnesení, podnětů vlastníků i zákonných povinností",(state.tasks.length?'<button class="btn sec" onclick="printTasks()">🖨 Tisk přehledu</button>':'')+(ui.newTask?'':'<button class="btn" onclick="newTaskGlobal()">+ Nový úkol</button>'));
   if(ui.newTask)h+=card("Nový úkol","",'<div class="card-b">'+taskForm(null)+'</div>','hl');
   if(!state.tasks.length){
     if(!ui.newTask)h+=card("","",empty("☐","Zatím žádné úkoly","Úkoly vznikají na schůzi (i z konkrétního usnesení), nebo je přidáte tady — třeba podnět vlastníka nebo zákonnou povinnost.",'<button class="btn" onclick="newTaskGlobal()">+ Nový úkol</button>'));
@@ -879,7 +896,7 @@ function viewNastaveni(){
     '<td style="width:150px"><input type="number" step="0.0001" min="0" value="'+(+u.podil||0)+'" oninput="setPodil('+u.id+',this.value)"></td></tr>';}).join("");
   var lb=state.lastBackup;
   return pageHead("Nastavení","Vlastníci, podíly a záloha dat")+
-    card("Vlastníci a podíly",'<span id="sumB">'+sumBadge(rosterSum())+'</span>','<div class="card-b" style="padding-bottom:4px"><div class="callout gray">Podíly vyplňte podle prohlášení vlastníka — součet musí být 100 %. Změny se projeví jen u nově založených schůzí; proběhlé schůze mají uložený vlastní snímek.</div></div>'+
+    card("Vlastníci a podíly",'<div class="row"><button class="btn sec sm" onclick="printListina()">🖨 Listina k podpisu</button><span id="sumB">'+sumBadge(rosterSum())+'</span></div>','<div class="card-b" style="padding-bottom:4px"><div class="callout gray">Podíly vyplňte podle prohlášení vlastníka — součet musí být 100 %. Změny se projeví jen u nově založených schůzí; proběhlé schůze mají uložený vlastní snímek.</div></div>'+
       '<div class="tablewrap"><table class="edit"><thead><tr><th>Jednotka</th><th>Vlastník</th><th>Podíl (%)</th></tr></thead><tbody>'+rows+'</tbody></table></div>')+
     card("Záloha dat","",'<div class="card-b"><p class="mb">Všechna data jsou uložená <b>jen v tomto prohlížeči</b>. Po každé schůzi si stáhněte zálohu a uložte ji mimo počítač.</p>'+
       '<p class="muted-s mb">Poslední záloha: '+(lb?dateCz(String(lb).slice(0,10))+(String(lb).length>10?' '+String(lb).slice(11):''):'zatím nikdy')+'</p>'+
@@ -889,7 +906,7 @@ function viewNastaveni(){
 function setR(id,f,v){var u=state.roster.filter(function(x){return x.id===id;})[0];if(u){u[f]=v;save();}}
 function setPodil(id,v){var u=state.roster.filter(function(x){return x.id===id;})[0];if(!u)return;u.podil=parseFloat(String(v).replace(",","."))||0;save();var e=document.getElementById("sumB");if(e)e.innerHTML=sumBadge(rosterSum());}
 function download(n,c,t){var b=new Blob([c],{type:t});var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=n;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);}
-function backup(){var d=new Date();state.lastBackup=todayISO()+" "+pad(d.getHours())+":"+pad(d.getMinutes());save();download("svj_zaloha_"+todayISO()+".json",JSON.stringify(state,null,2),"application/json");toast("Záloha stažena");render();}
+function backup(msg){var d=new Date();state.lastBackup=todayISO()+" "+pad(d.getHours())+":"+pad(d.getMinutes());save();download("svj_zaloha_"+todayISO()+"_"+pad(d.getHours())+pad(d.getMinutes())+".json",JSON.stringify(state,null,2),"application/json");toast(typeof msg==="string"?msg:"Záloha stažena");render();}
 function pickRestore(){var e=document.getElementById("restoreFile");if(e)e.click();}
 function restore(ev){
   var f=ev.target.files[0];if(!f)return;var r=new FileReader();
@@ -900,6 +917,37 @@ function restore(ev){
     }catch(e){alert("Soubor se nepodařilo načíst. Vyberte zálohu staženou z této aplikace (soubor .json).");}
   };
   r.readAsText(f);ev.target.value="";
+}
+
+// ================= TISKY (prezenční listina, přehled úkolů) =================
+function printBox(html,onePage){var p=document.getElementById("printbox");if(!p)return;p.className=onePage?"onepage":"";p.innerHTML=html;try{document.body.classList.add("pb");}catch(e){}window.print();}
+try{window.addEventListener("afterprint",function(){var p=document.getElementById("printbox");if(p)p.innerHTML="";try{document.body.classList.remove("pb");}catch(e){}});}catch(e){}
+function printListina(){
+  var R=state.roster;
+  var rh=Math.max(5.5,Math.min(10,195/Math.max(1,R.length))).toFixed(1);
+  var rows=R.map(function(u){return '<tr style="height:'+rh+'mm"><td>'+esc(u.unit)+'</td><td>'+esc(u.owner||'')+'</td><td style="text-align:right">'+fmt(+u.podil||0)+' %</td><td></td><td></td></tr>';}).join("");
+  printBox('<h1>Prezenční listina</h1><p class="pc">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p>'+
+    '<p class="pc">Schůze: ..................................................... &nbsp; Datum: ..........................</p>'+
+    '<table><thead><tr><th style="width:12mm">Jedn.</th><th>Vlastník</th><th style="width:20mm">Podíl</th><th style="width:46mm">Podpis</th><th style="width:46mm">Plná moc / zmocněnec</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+    '<p class="pn">Celkem '+R.length+' jednotek · součet podílů '+fmt(rosterSum())+' %. Zmocněnec předloží písemnou plnou moc; jeden zmocněnec může zastupovat jen jednoho vlastníka.</p>'+
+    '<div class="psig"><div>Zapisovatel</div><div>Předsedající</div></div>',true);
+}
+function printTasks(){
+  var today=todayISO(),open=state.tasks.filter(function(t){return t.status==="open";});
+  var over=open.filter(isOverdue).sort(taskSortActive),rest=open.filter(function(t){return !isOverdue(t);}).sort(taskSortActive);
+  var d=new Date();d.setFullYear(d.getFullYear()-1);var yearAgo=d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  var done=state.tasks.filter(function(t){return t.status==="done"&&(t.doneAt||t.created||"")>=yearAgo;}).sort(function(a,b){return (a.doneAt||"")<(b.doneAt||"")?1:-1;});
+  var canc=state.tasks.filter(function(t){return t.status==="cancelled";}).length;
+  function src(t){var m=t.meetingId?byId(t.meetingId):null;return (t.source==="usneseni"&&m&&t.voteNum)?'Usnesení č. '+t.voteNum+' ('+dateCz(m.date)+')':(SRC[t.source]||"Jiné");}
+  function tbl(list,doneCol){
+    if(!list.length)return '<p class="pn">Žádné.</p>';
+    return '<table class="fix"><thead><tr><th style="width:34%">Úkol</th><th style="width:17%">Zdroj</th><th style="width:13%">Odpovídá</th><th style="width:13%">'+(doneCol?'Splněno':'Termín')+'</th><th style="width:23%">Poznámka</th></tr></thead><tbody>'+
+      list.map(function(t){return '<tr><td>'+esc(t.text)+'</td><td>'+src(t)+'</td><td>'+esc(t.owner||'—')+'</td><td class="nw">'+(doneCol?dateCz(t.doneAt||''):(t.due?dateCz(t.due):'—'))+'</td><td>'+esc(t.note||'')+'</td></tr>';}).join("")+'</tbody></table>';
+  }
+  printBox('<h1>Přehled úkolů SVJ</h1><p class="pc">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3 · stav k '+dateCz(today)+'</p>'+
+    '<p class="pc">V řešení: <b>'+open.length+'</b> (z toho po termínu <b>'+over.length+'</b>) · splněno za posledních 12 měsíců: <b>'+done.length+'</b>'+(canc?' · zrušeno: '+canc:'')+'</p>'+
+    '<h2>Po termínu</h2>'+tbl(over)+'<h2>V řešení</h2>'+tbl(rest)+'<h2>Splněno za posledních 12 měsíců</h2>'+tbl(done,true)+
+    '<p class="pn" style="text-align:right">Vygenerováno '+new Date().toLocaleString("cs-CZ")+'.</p>');
 }
 
 render();
