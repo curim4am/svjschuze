@@ -18,7 +18,7 @@ Nahoře je stálá navigace se čtyřmi oblastmi:
 
 ## Před první schůzí
 
-V **Nastavení** zkontrolujte jména vlastníků a **podíly podle prohlášení vlastníka**. Součet musí být 100 %. Tamtéž tlačítkem **🖨 Listina k podpisu** vytisknete prezenční listinu (jména, podíly, sloupec pro podpis a plnou moc) — celá se vejde na jednu A4.
+V **Nastavení** doplňte jména vlastníků. **Jednotky a podíly jsou pevně nastavené podle prohlášení vlastníka** (25 jednotek: 24 bytů a garáž 2554/13, jmenovatel 13193) a nelze je měnit. Za garáž hlasuje společný zástupce jejích spoluvlastníků. Tamtéž tlačítkem **🖨 Listina k podpisu** vytisknete prezenční listinu – celá se vejde na jednu A4.
 
 ## Průběh schůze
 
@@ -40,9 +40,13 @@ Záložka **Zápis** (lze vyplňovat i po ukončení schůze):
 
 Aktivní úkoly jsou rozdělené na *Po termínu*, *Termín do 14 dnů*, *Později* a *Bez termínu*. Kliknutím na úkol změníte stav (V řešení / Splněno / Zrušeno) a poznámku. Splněný úkol se uzamkne. Tlačítkem **🖨 Tisk přehledu** vytisknete stav úkolů k dnešnímu dni (po termínu, v řešení, splněné za posledních 12 měsíců) — hodí se k referování na shromáždění.
 
-## Vyzkoušení s ukázkovými daty
+## Soubory v balíčku
 
-Soubor **svj_demo_zaloha.json** obsahuje vymyšlená data (6 schůzí, usnesení, úkoly a zápisy). Nahrajete ho přes **Nastavení → Obnovit ze zálohy**. Pozor: nahradí data v prohlížeči – před tím si stáhněte zálohu svých skutečných dat, nebo ukázku zkoušejte v jiném prohlížeči.
+- **index.html** – aplikace.
+- **svjdemo.json** – ukázková data (vymyšlená jména, 6 schůzí, usnesení, úkoly, zápisy). Nahrajete přes **Nastavení → Obnovit ze zálohy**.
+- **svjprazdna.json** – prázdná data pro **začátek načisto**: 25 jednotek s podíly podle prohlášení, bez jmen, schůzí a úkolů. Nahrajete stejně přes **Obnovit ze zálohy**.
+
+Pozor: obnovení ze zálohy vždy **nahradí** data v prohlížeči – případná vlastní data si předtím stáhněte jako zálohu.
 
 ## Data a zálohy (důležité)
 
