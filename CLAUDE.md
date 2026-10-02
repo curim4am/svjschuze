@@ -5,8 +5,9 @@ Repozitář: https://github.com/curim4am/svjschuze
 
 ## Soubory
 - `index.html` – celá aplikace (HTML + CSS + JS v jednom souboru, bez knihoven, funguje offline).
-- `svjdemo.json` – ukázková data (vymyšlená jména).
-- `svjprazdna.json` – prázdná data: 25 jednotek s podíly, bez jmen.
+- `svjdemo.json` – ukázková data (vymyšlená jména): SJM, podílové spoluvlastnictví, garáž; 1 ukončená schůze (16. 4. 2026) + 1 naplánovaná (12. 11. 2026); 7 úkolů.
+- `demo.zip` – demo verze (index.html se zabudovanými daty ze svjdemo.json, vlastní klíč `svj_schuze_demo`).
+- `svjprazdna.json` – prázdná data v aktuálním formátu: 25 jednotek s podíly, `people:[]`, prázdný výbor, žádné schůze ani úkoly.
 - `README.md` – návod pro uživatele.
 - `_puvodni/` – předchozí verze (neupravovat).
 - `.claude/launch.json` – lokální server: `python3 -m http.server 8765`.
@@ -14,10 +15,11 @@ Repozitář: https://github.com/curim4am/svjschuze
 ## Pevná pravidla
 - **Měnit jen to, o co je výslovně požádáno. NIC JINÉHO NEMĚNIT** (vzhled, texty, strukturu dat).
 - Jeden soubor `index.html`, žádné externí knihovny ani CDN, žádný backend, žádný účet.
-- Data jen v `localStorage` (klíč `svj_schuze`); zálohy jako `.json`.
+- Data jen v `localStorage` (klíč `svj_schuze`, demo `svj_schuze_demo`); zálohy jako `.json`.
+- Demo verze se sestavuje skriptem z `index.html` + `svjdemo.json` (vloží data, změní klíč, přidá lištu „Demo verze“ a skryje „Začít načisto“).
 - **GDPR:** zálohy `.json` nikdy nezveřejňovat ani nenahrávat na GitHub (obsahují jména a podíly). Na GitHub Pages jen `index.html`.
 - Patička: `© 2026 curim4am`.
-- Jednotky a podíly jsou pevné podle prohlášení vlastníka: 25 jednotek (24 bytů + garáž 2554/13), jmenovatel **13 193**. Garáž hlasuje společným zástupcem.
+- Jednotky a podíly jsou pevné podle prohlášení vlastníka: 25 jednotek (24 bytů + garáž 2554/13), jmenovatel **13 193**. Za garáž (4 spoluvlastníci) hlasuje jeden z nich – vybírá se v Prezenci.
 - Před předáním změn: kontrola syntaxe JS (`node --check`) a funkční test (např. jsdom: načíst `svjdemo.json`, otevřít schůzi, vygenerovat protokol).
 
 ## Právní rámec, ze kterého aplikace vychází
@@ -33,8 +35,9 @@ Detail schůze – záložky: neukončená **Příprava → Prezence → Hlasov�
 - **Snímek**: neukončená schůze bere jména vlastníků i výbor z Nastavení; při ukončení si je uloží. Staré schůze (i po odemčení) se nedoplňují.
 - **První usnesení** se předvyplní z Přípravy (volba předsedajícího, zapisovatele, ověřovatele, se skloňováním).
 - **Nastavení → Vlastníci a podíly**: u jednotky seznam vlastníků `people:[{name,share}]` (share = podíl nebo „SJM“); `owner` = odvozený popisek („SJM: A a B“, „A (1/2), B (1/2)“). Starší data (`owner` + text `owners`) se převedou automaticky. Výběr osob a výbor pracují s každým vlastníkem zvlášť.
-- **Prezence**: u přítomné jednotky se vybírá, kdo hlasuje (`att.who`, `att.pm` = plná moc); jediný vlastník se doplní sám. Ukládá se i do snímku hlasování (`snap.units[].who/pm`). Protokol: listina přítomných Jednotka · Vlastníci · Podíl (zlomek + % v závorce) · Hlasoval(a) – u zmocněnce „(plná moc)“ u jména, samostatný sloupec Plná moc není; jmenovité hlasování (kompletní verze): u každého usnesení celé znění a výsledky (stejný rámeček jako v části Usnesení) a pod ním tabulka Jednotka · Hlasoval(a) · Podíl · Hlas.
+- **Prezence**: u přítomné jednotky se vybírá, kdo hlasuje (`att.who`, `att.pm` = plná moc); jediný vlastník se doplní sám. Ukládá se i do snímku hlasování (`snap.units[].who/pm`). Protokol: listina přítomných (zjednodušený i kompletní: jen přítomné jednotky) Jednotka · Vlastníci · Podíl (zlomek + % v závorce) · Hlasoval(a) – u zmocněnce „(plná moc)“ u jména, samostatný sloupec Plná moc není; jmenovité hlasování (kompletní verze): u každého usnesení celé znění a výsledky (stejný rámeček jako v části Usnesení) a pod ním tabulka Jednotka · Hlasoval(a) · Podíl · Hlas.
 - **Listina k podpisu**: Jednotka · Vlastník · Podíl · Zástupce · Podpis (spoluvlastníci každý na svém řádku); vždy na jednu A4 (ověřeno tiskem do PDF).
+- **Nastavení → Data a záloha → Začít načisto**: potvrzení slovem SMAZAT, nejdřív `backup()`, pak smaže `meetings` a `tasks`; roster a výbor zůstanou (v demo verzi skryto).
 - **Úkoly**: rychlé termíny za měsíc / půl roku / rok. Splněný úkol je uzamčený, lze jen „Doplnit poznámku“ (s datem, zápis do historie); znovu otevřít ani upravit nejde.
 
 ## Protokol
@@ -45,4 +48,4 @@ Hlavička (IČO, sídlo, S 3907 MS v Praze), datum a čas včetně ukončení, d
 - Stanovy jsou ve složce i jako `stanovy.txt`. Per rollam (čl. VI E) a náhradní shromáždění aplikace neřeší.
 
 ## Rozhodnuto neřešit
-Souběh rolí (zapisovatel = ověřovatel), pořadí a číslování příloh, propsání volby výboru do Nastavení, rovnost hlasů, upozornění na vývěsku, mobilní tabulka v Nastavení, skloňování zvláštních jmen, výběr výboru ze seznamu vlastníků, aktualizace demo dat.
+Souběh rolí (zapisovatel = ověřovatel), pořadí a číslování příloh, propsání volby výboru do Nastavení, rovnost hlasů, upozornění na vývěsku, mobilní tabulka v Nastavení, skloňování zvláštních jmen, výběr výboru ze seznamu vlastníků.

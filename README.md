@@ -45,13 +45,14 @@ Záložka **Zápis** (lze vyplňovat i po ukončení schůze; u ukončené schů
 - **Průběh a poznámky** – volný text; předvyplní se kontrola úkolů z minula. Formátování: `# nadpis`, `- odrážka`, `*tučně*` (tlačítka nad polem). U odrážky v náhledu tlačítko **+ úkol** vytvoří úkol.
 - **Ukončení zasedání** – čas ukončení (vyplní se sám při „Ukončit schůzi“, lze ho upravit); propíše se do protokolu.
 - **Námitky a přílohy** – námitky na žádost účastníka; přílohy zaškrtnete (pozvánka s programem, listina přítomných, plné moci, písemné podklady) a další dopíšete po řádcích.
-- Vše se propíše do **protokolu**: údaje, usnášeníschopnost, program, průběh, usnesení s výsledky, úkoly ze schůze, podpisy a listina přítomných (kompletní verze navíc jmenovité hlasování). Protokol vytisknete, podepíšete a založíte.
+- Vše se propíše do **protokolu**: údaje, usnášeníschopnost, průběh, usnesení s výsledky, úkoly ze schůze, námitky, přílohy, podpisy a listina přítomných (jen přítomné jednotky; kdo za jednotku hlasoval, u zmocněnce „(plná moc)“). Kompletní verze má navíc jmenovité hlasování – u každého usnesení jeho znění, výsledek a kdo jak hlasoval. Protokol vytisknete, podepíšete a založíte.
 
 ## Úkoly
 
 Aktivní úkoly jsou rozdělené na *Po termínu*, *Termín do 14 dnů*, *Později* a *Bez termínu*. Filtrovat je můžete i podle odpovědné osoby.
 
 - Kroužkem vlevo úkol **jedním klikem splníte** (6 sekund jde akce vrátit).
+- Při zakládání úkolu nastavíte termín i rychlou volbou **Za měsíc / Za půl roku / Za rok**.
 - Kliknutím na úkol otevřete detail: upravíte popis, odpovědnou osobu, termín, poznámku i stav (V řešení / Splněno / Zrušeno). Každá změna se zapíše do **historie** úkolu.
 - Splněný úkol se uzamkne – lze k němu jen doplnit poznámku (uloží se s datem a zapíše do historie).
 - **🖨 Tisk přehledu** vytiskne stav úkolů k dnešnímu dni (po termínu, v řešení, splněné za posledních 12 měsíců) – hodí se k referování na shromáždění.
@@ -59,10 +60,13 @@ Aktivní úkoly jsou rozdělené na *Po termínu*, *Termín do 14 dnů*, *Pozdě
 ## Soubory v balíčku
 
 - **index.html** – aplikace.
-- **svjdemo.json** – ukázková data (vymyšlená jména, 6 proběhlých schůzí s usneseními, úkoly a zápisy a 1 naplánovaná schůze – na ní si vyzkoušíte celý průběh od prezence po protokol). Nahrajete přes **Nastavení → Obnovit ze zálohy**.
-- **svjprazdna.json** – prázdná data pro **začátek načisto**: 25 jednotek s podíly podle prohlášení, bez jmen, schůzí a úkolů. Nahrajete stejně přes **Obnovit ze zálohy**.
+- **svjdemo.json** – ukázková data (vymyšlená jména): vlastníci ve SJM, v podílovém spoluvlastnictví i garáž se čtyřmi spoluvlastníky; 1 proběhlá schůze (5 usnesení, z toho 1 zamítnuté, hlasování zmocněnce na plnou moc, zápis, námitka) a 1 naplánovaná schůze, na které si vyzkoušíte celý průběh; 7 úkolů (po termínu, v řešení, splněné, zrušený). Nahrajete přes **Nastavení → Obnovit ze zálohy**. Stejná data obsahuje i `demo.zip` (spustí se rovnou).
+- **svjprazdna.json** – prázdná data pro **začátek načisto**: 25 jednotek s podíly podle prohlášení, bez vlastníků, výboru, schůzí a úkolů. Nahrajete stejně přes **Obnovit ze zálohy**.
+- **demo.zip** – demo verze k vyzkoušení nebo ukázání: po rozbalení otevřete `demo/index.html`, spustí se rovnou s ukázkovými daty. Ukládá pod vlastním klíčem, takže nepřepíše skutečná data; tlačítkem „Obnovit demo data“ ji vrátíte do původního stavu. Obsahuje jen vymyšlená jména, lze ji sdílet.
 
 Pozor: obnovení ze zálohy vždy **nahradí** data v prohlížeči – případná vlastní data si předtím stáhněte jako zálohu.
+
+**Začít načisto** (Nastavení → Data a záloha) smaže všechny schůze, usnesení, zápisy a úkoly; vlastníci, podíly a výbor zůstanou. Potvrzuje se napsáním slova SMAZAT a před smazáním se automaticky stáhne záloha.
 
 ## Data a zálohy (důležité)
 

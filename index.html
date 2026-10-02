@@ -549,6 +549,9 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 .check:has(input:focus-visible){box-shadow:var(--ring)}
 .check:has(input:disabled){opacity:.6;cursor:not-allowed}
 .pick-other{margin-top:6px}
+.dzone{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:20px;padding-top:16px;border-top:1px solid var(--border-2)}
+.dzone b{font-size:14px;color:var(--danger)}
+.dzone p{margin-top:2px;max-width:560px}
 
 /* ---------- protokol (papír) – beze změny vzhledu dokumentu ---------- */
 #protokol{background:#fff;max-width:820px;margin:0 auto;padding:32px 38px;color:#111;border:1px solid var(--line,#e3e7ee);border-radius:6px;font-size:.9rem;box-shadow:var(--sh-sm)}
@@ -590,7 +593,6 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol table.lp td.u .pc2{display:block;font-weight:400;font-size:.72rem}
 #protokol table.lp td.nw{overflow-wrap:normal}
 #protokol table.lp .pc2{color:#6b7280}
-#protokol table.lp tr.abs td{color:#9aa1ab}
 #protokol table.lp tr.tot td{background:#eef1f5;border-bottom:0;font-weight:700}
 #protokol .znotes h3{color:#1f3864;font-size:.92rem}
 #protokol .sig{margin-top:44px}
@@ -1536,7 +1538,7 @@ function viewProtokol(){
   return crumb("Zpět na schůzi","openMeeting("+m.id+")")+
     pageHead("Protokol",esc(m.type||"")+' · '+dateCz(m.date),seg([["simple","Zjednodušený"],["full","Kompletní"]],v,"setProtoVariant")+'<button class="btn" onclick="printProto()">'+ic('printer')+'Vytisknout / PDF</button>')+
     (m.status==="open"?callout("warning","clock","Schůze ještě probíhá – protokol je zatím průběžný. Konečnou verzi vytiskněte po ukončení schůze."):'')+
-    '<p class="hint mb">'+ic('info')+'<span>'+(v==="simple"?'Zjednodušený: zápis, usnesení s výsledky, úkoly a listina přítomných.':'Kompletní: navíc celá listina všech jednotek a jmenovité hlasování u každého usnesení.')+' '+(m.status==="open"?'Údaje doplníte v záložkách Příprava a Zápis.':'U ukončené schůze lze doplnit jen záložku Zápis, ostatní údaje jen po odemčení.')+'</span></p>'+
+    '<p class="hint mb">'+ic('info')+'<span>'+(v==="simple"?'Zjednodušený: zápis, usnesení s výsledky, úkoly a listina přítomných.':'Kompletní: navíc jmenovité hlasování u každého usnesení.')+' '+(m.status==="open"?'Údaje doplníte v záložkách Příprava a Zápis.':'U ukončené schůze lze doplnit jen záložku Zápis, ostatní údaje jen po odemčení.')+'</span></p>'+
     '<div class="paper">'+(v==="simple"?protoSimple(m):protoFull(m))+'</div>';
 }
 
@@ -1567,13 +1569,13 @@ function protoDoc(m,full){
   H+=sec("Přílohy zápisu")+(att.length?'<ul class="plist">'+att.map(function(a,i){return '<li>Příloha č. '+(i+1)+' – '+esc(a)+'</li>';}).join("")+'</ul>':'<p>Bez příloh.</p>');
   H+='<div class="sig"><div>Zapisovatel<br><b>'+esc(m.zapisovatel||'')+'</b></div><div>Předsedající<br><b>'+esc(z.chair)+'</b></div><div>Ověřovatel<br><b>'+esc(z.verifier)+'</b></div></div>';
   // listina přítomných
-  var lst=full?m.roster:pres,legacy=!m.roster.some(function(u){var a=m.att[u.id];return a&&a.who!==undefined;});
-  H+='<h2 class="appx">Listina přítomných</h2><table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:21%">'+(full?'<col style="width:11%">':'')+'<col style="width:'+(full?24:28)+'%"></colgroup>'+
-    '<thead><tr><th>Jednotka</th><th>Vlastníci</th><th>Podíl</th>'+(full?'<th>Účast</th>':'')+'<th>Hlasoval(a)</th></tr></thead><tbody>'+
+  var lst=pres,legacy=!m.roster.some(function(u){var a=m.att[u.id];return a&&a.who!==undefined;});
+  H+='<h2 class="appx">Listina přítomných</h2><table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:21%"><col style="width:28%"></colgroup>'+
+    '<thead><tr><th>Jednotka</th><th>Vlastníci</th><th>Podíl</th><th>Hlasoval(a)</th></tr></thead><tbody>'+
     lst.map(function(u){var a=m.att[u.id]||{},w=a.present?String(a.who||"").trim()||(legacy?u.owner||'':''):'';
-      return '<tr'+(a.present?'':' class="abs"')+'><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td>'+ownersHtml(u)+'</td><td class="nw">'+podilFr(u.podil)+' <span class="pc2">('+fmtP(u.podil)+' %)</span></td>'+(full?'<td>'+(a.present?'přítomen':'—')+'</td>':'')+
+      return '<tr'+(a.present?'':' class="abs"')+'><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td>'+ownersHtml(u)+'</td><td class="nw">'+podilFr(u.podil)+' <span class="pc2">('+fmtP(u.podil)+' %)</span></td>'+
         '<td>'+esc(w)+(a.present&&a.pm&&w?' <span class="pc2">(plná moc)</span>':'')+(a.note?(w?' · ':'')+'<span class="pc2">'+esc(a.note)+'</span>':'')+'</td></tr>';}).join("")+
-    '<tr class="tot"><td colspan="2">Přítomno '+pres.length+' z '+m.roster.length+' jednotek</td><td class="nw">'+podilFr(tot>0?pp/tot*100:0)+' <span class="pc2">('+fmtP(tot>0?pp/tot*100:0)+' %)</span></td><td colspan="'+(full?2:1)+'"></td></tr></tbody></table>';
+    '<tr class="tot"><td colspan="2">Přítomno '+pres.length+' z '+m.roster.length+' jednotek</td><td class="nw">'+podilFr(tot>0?pp/tot*100:0)+' <span class="pc2">('+fmtP(tot>0?pp/tot*100:0)+' %)</span></td><td></td></tr></tbody></table>';
   if(full&&m.votes.length){H+='<h2 class="appx">Jmenovité hlasování</h2>';
     m.votes.forEach(function(v){H+=protoUsn(v)+'<table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:24%"><col style="width:14%"></colgroup><thead><tr><th>Jednotka</th><th>Hlasoval(a)</th><th>Podíl</th><th>Hlas</th></tr></thead><tbody>'+v.snap.units.map(function(u){var w=String(u.who||"").trim();return '<tr><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td>'+(w?esc(w)+(u.pm?' <span class="pc2">(plná moc)</span>':''):(esc(u.owner)||unitLabel(u)))+'</td><td class="nw">'+podilFr(u.podil)+' <span class="pc2">('+fmtP(u.podil)+' %)</span></td><td>'+protoVote(u.vote)+'</td></tr>';}).join("")+'</tbody></table>';});}
   H+='<div class="pfoot">Vygenerováno '+new Date().toLocaleString('cs-CZ')+'.</div>';
@@ -1954,7 +1956,7 @@ function viewNastaveni(){
       '<p class="mb" style="font-size:14px;color:var(--text-2)">Všechna data jsou uložená <b>jen v tomto prohlížeči</b>. Záloha je soubor <b>.json</b>, ze kterého data obnovíte i na jiném počítači.</p>'+
       '<div class="form-actions" style="margin:0 0 16px"><button class="btn" onclick="backup()">'+ic('download')+'Stáhnout zálohu</button><button class="btn secondary" data-restore onclick="pickRestore()">'+ic('upload')+'Obnovit ze zálohy</button></div>'+
       '<ul class="hint" style="display:block;padding-left:18px;margin-bottom:16px"><li>Aplikaci mějte otevřenou jen v jednom okně – dvě okna by si mohla data přepsat.</li><li>Nepoužívejte anonymní okno – data by se po zavření smazala.</li><li>Obnovení ze zálohy vždy nahradí současná data.</li></ul>'+
-      callout("warning","alert",'Záloha obsahuje jména vlastníků a podíly (osobní údaje). Neukládejte ji na veřejný web ani GitHub.')+'</div>');
+      callout("warning","alert",'Záloha obsahuje jména vlastníků a podíly (osobní údaje). Neukládejte ji na veřejný web ani GitHub.')+clearZone()+'</div>');
 }
 function unitById(id){return state.roster.filter(function(x){return x.id===id;})[0];}
 function setP(id,i,k,v){var u=unitById(id);if(!u||(k!=="name"&&k!=="share"))return;if(!Array.isArray(u.people))u.people=[];while(u.people.length<=i)u.people.push({name:"",share:""});u.people[i][k]=v;syncLabel(u);save();}
@@ -1963,6 +1965,19 @@ function addP(id){var u=unitById(id);if(!u)return;if(!Array.isArray(u.people))u.
 function removeP(id,i){var u=unitById(id);if(!u||!Array.isArray(u.people))return;var x=u.people[i]||{};
   function doIt(){u.people.splice(i,1);syncLabel(u);save();render();}
   if(String(x.name||"").trim())ask({title:"Odebrat vlastníka?",icon:"user",tone:"danger",text:esc(x.name)+' – jednotka '+esc(u.unit)+'<br>Ukončené schůze si původní vlastníky ponechají.',ok:"Odebrat",danger:true,onOk:doIt});else doIt();}
+// Začít načisto: nejdřív záloha, pak smazání všech schůzí (vč. usnesení) a úkolů; vlastníci, podíly a výbor zůstanou
+function clearZone(){return '<div class="dzone"><div><b>Začít načisto</b><p class="muted-s">Smaže všechny schůze, usnesení, zápisy a úkoly. Vlastníci, podíly a výbor zůstanou. Předtím se automaticky stáhne záloha.</p></div><button class="btn danger-outline" onclick="clearAll()">'+ic('trash')+'Začít načisto…</button></div>';}
+var clrTxt="";
+function clrOk(){return clrTxt.trim().toUpperCase()==="SMAZAT";}
+function clrCheck(v){clrTxt=v;var b=dlg&&dlg.el.querySelector('[data-a="ok"]');if(b)b.disabled=!clrOk();}
+function clearAll(){var n=state.meetings.length,u=allUsn().length,t=state.tasks.length;
+  if(!n&&!t){toast("Není co mazat – žádné schůze ani úkoly","info");return;}
+  clrTxt="";
+  ask({title:"Začít načisto?",icon:"trash",tone:"danger",danger:true,ok:"Stáhnout zálohu a smazat",
+    text:'<p>Smaže se: <b>'+n+' '+pl(n,'schůze','schůze','schůzí')+'</b> (včetně '+u+' '+pl(u,'usnesení','usnesení','usnesení')+', prezence a zápisů) a <b>'+t+' '+pl(t,'úkol','úkoly','úkolů')+'</b>.</p><p>Zůstane: vlastníci a podíly, výbor.</p><p>Nejdřív se automaticky stáhne záloha – data z ní půjde obnovit přes „Obnovit ze zálohy“.</p>'+
+      '<label class="field" style="margin:14px 0 0"><span class="lbl">Pro potvrzení napište SMAZAT</span><input type="text" id="clrIn" autocomplete="off" oninput="clrCheck(this.value)"></label>',
+    onOk:function(){if(!clrOk())return;backup("Záloha stažena");state.meetings=[];state.tasks=[];state.viewId=null;state.subtab=null;ui.voteDetail={};resetUi();save();go("prehled");toast("Schůze a úkoly smazány · záloha stažena");}});
+  var b=dlg&&dlg.el.querySelector('[data-a="ok"]');if(b)b.disabled=true;focusEl("clrIn");}
 function setRestoring(on){Array.prototype.forEach.call(document.querySelectorAll("[data-restore]"),function(b){if(on){b._h=b.innerHTML;b.disabled=true;b.innerHTML='<span class="spin"></span>Načítám zálohu…';}else if(b._h!==undefined){b.disabled=false;b.innerHTML=b._h;}});}
 function restore(ev){
   var f=ev.target.files[0];if(!f)return;var r=new FileReader();setRestoring(true);
