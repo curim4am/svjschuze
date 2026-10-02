@@ -151,6 +151,20 @@
    "podil": 5.404381111195331
   }
  ],
+ "committee": [
+  {
+   "name": "",
+   "role": "předseda výboru"
+  },
+  {
+   "name": "",
+   "role": "člen výboru"
+  },
+  {
+   "name": "",
+   "role": "člen výboru"
+  }
+ ],
  "meetings": [],
  "tasks": [],
  "screen": "prehled",
