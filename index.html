@@ -43,6 +43,8 @@ button{background:none;border:0;cursor:pointer;text-align:inherit}
 button:disabled{cursor:not-allowed}
 a{color:inherit;text-decoration:none}
 .hidden{display:none!important}
+.own-l{display:block}
+.nw{white-space:nowrap}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .num{font-variant-numeric:tabular-nums}
 :focus{outline:none}
@@ -271,6 +273,19 @@ input:disabled,select:disabled,textarea:disabled{background:var(--surface-2);col
 .tbl tbody tr:hover td{background:var(--surface-2)}
 .tbl .num{text-align:right;white-space:nowrap}
 .tbl.edit td{padding:7px 16px}
+.tbl th .th-s{display:block;margin-top:1px;font-size:11.5px;font-weight:400;color:var(--text-4)}
+.inp-ic{position:relative;display:block}
+.inp-ic>.ic{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--text-4);pointer-events:none}
+.inp-ic>input{padding-left:35px}
+.owns{display:flex;flex-direction:column;gap:6px}
+.own{display:grid;grid-template-columns:minmax(0,1fr) 132px 32px;gap:8px;align-items:center}
+.own .btn.icon-only{width:32px;color:var(--text-3)}
+.own-add{margin-top:7px;font-size:12.5px;font-weight:500;color:var(--text-3)}
+.own-add:hover{color:var(--primary)}
+.tbl.own-t td{vertical-align:top}
+.tbl.own-t td.c-unit,.tbl.own-t td.num{padding-top:17px}
+.p-note select{height:36px;font-size:13.5px}
+.p-note .pick-other{height:36px;font-size:13.5px}
 .c-unit{font-weight:600;color:var(--text-2);white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* ---------- upozornění ---------- */
@@ -566,6 +581,17 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol .usn .ut{margin:3px 0 4px}
 #protokol .pres{color:#555}
 #protokol .ptab th{background:#eef1f5}
+#protokol table.lp{table-layout:fixed;margin:8px 0}
+#protokol table.lp+.usn{margin-top:22px}
+#protokol table.lp th,#protokol table.lp td{border:0;border-bottom:1px solid #dfe3ea;padding:5px 8px;vertical-align:top;line-height:1.35;overflow-wrap:anywhere}
+#protokol table.lp th{border-bottom:1px solid #b9c3d3;font-size:.74rem;color:#333}
+#protokol table.lp tbody tr:nth-child(even) td{background:#f7f8fa}
+#protokol table.lp td.u{font-weight:600;overflow-wrap:normal}
+#protokol table.lp td.u .pc2{display:block;font-weight:400;font-size:.72rem}
+#protokol table.lp td.nw{overflow-wrap:normal}
+#protokol table.lp .pc2{color:#6b7280}
+#protokol table.lp tr.abs td{color:#9aa1ab}
+#protokol table.lp tr.tot td{background:#eef1f5;border-bottom:0;font-weight:700}
 #protokol .znotes h3{color:#1f3864;font-size:.92rem}
 #protokol .sig{margin-top:44px}
 #protokol .plist{list-style:none;margin:4px 0 8px;padding:0}
@@ -722,6 +748,7 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
   #protokol .keep,#protokol .usn,#protokol .sig{break-inside:avoid;page-break-inside:avoid}
   #protokol p{orphans:2;widows:2}
   #protokol h2.appx{break-before:page;page-break-before:always;margin-top:0}
+  #protokol table.lp tr.tot,#protokol table.lp tbody tr:nth-last-child(2){break-before:avoid;page-break-before:avoid}
   #protokol table.pinfo td{font-size:10pt}
   #protokol .pres{font-size:9pt}
   #usnprint{display:block;position:absolute;left:0;top:0;width:100%;color:#000;font-size:10pt}
@@ -737,8 +764,23 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
   body.pb>#printbox{display:block!important;position:static!important}
   #printbox table.fix{table-layout:fixed}
   #printbox .nw{white-space:nowrap}
-  #printbox.onepage table{margin-top:5px}
-  #printbox.onepage td{padding:2px 6px;vertical-align:middle}
+  #printbox{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printbox.onepage h1{font-size:16pt;margin:0 0 1mm}
+  #printbox.onepage .pc{font-size:9.5pt;color:#333}
+  #printbox.onepage .phead{display:flex;gap:12mm;margin:4mm 0 3.5mm;font-size:10pt}
+  #printbox.onepage .phead span{flex:1;border-bottom:1px solid #000;padding:0 0 1mm}
+  #printbox.onepage .phead span+span{flex:0 0 55mm}
+  #printbox.onepage table{margin-top:0;table-layout:fixed}
+  #printbox.onepage th{background:#eef1f5;font-size:8.5pt;font-weight:700;padding:1.6mm 2mm;border:1px solid #8a919c;vertical-align:middle}
+  #printbox.onepage td{padding:0 2mm;vertical-align:middle;font-size:9pt;line-height:1.2;border:1px solid #b4bac3}
+  #printbox.onepage tbody tr:nth-child(even) td{background:#f5f6f8}
+  #printbox.onepage td.u{font-weight:700;white-space:nowrap}
+  #printbox.onepage td.u .pc2{display:block;font-weight:400;font-size:7.5pt;color:#555}
+  #printbox.onepage td.o{font-size:8.5pt}
+  #printbox.onepage td.p{white-space:nowrap;font-size:8.5pt;line-height:1.1}
+  #printbox.onepage td.p small{display:block;font-size:7.5pt;color:#555}
+  #printbox.onepage .pn{font-size:8pt;color:#444;margin:2.5mm 0 0;line-height:1.35}
+  #printbox.onepage .psig{margin-top:10mm}
   #printbox .psig div{flex:1;border-top:1px solid #000;padding-top:3px;font-size:9pt}
   #usnprint h1{font-size:15pt;text-align:center;margin:0 0 2px}
   #usnprint table{width:100%;border-collapse:collapse;margin-top:8px}
@@ -761,6 +803,7 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <datalist id="peopleDl"></datalist>
 <datalist id="ownersDl"></datalist>
+<datalist id="sharesDl"><option value="SJM"><option value="1/2"><option value="1/3"><option value="2/3"><option value="1/4"><option value="3/4"></datalist>
 <datalist id="rolesDl"><option value="předseda výboru"><option value="člen výboru"><option value="členka výboru"><option value="předsedkyně výboru"><option value="místopředseda výboru"><option value="místopředsedkyně výboru"></datalist>
 <input id="restoreFile" type="file" accept="application/json,.json" class="hidden" onchange="restore(event)">
 <div id="printbox"></div>
@@ -791,7 +834,25 @@ var GARAZ_OWNER="Garáž – společný zástupce spoluvlastníků";
 function podilFr(p){var n=p*JMEN/100,r=Math.round(n);return Math.abs(n-r)<0.01?r+'/'+JMEN:'—';}
 function isGaraz(u){return /gar/i.test(String(u&&u.unit||""));}
 function unitLabel(u){return isGaraz(u)?'garáž':'byt '+esc(u.unit);}
-function defaultRoster(){return JEDNOTKY.map(function(j,i){return {id:i+1,unit:j[0],owner:/gar/i.test(j[0])?GARAZ_OWNER:"",podil:j[1]/JMEN*100};});}
+function defaultRoster(){return JEDNOTKY.map(function(j,i){return {id:i+1,unit:j[0],owner:"",people:[],podil:j[1]/JMEN*100};});}
+// vlastníci jednotky: seznam osob {name, share}; share = podíl (např. 1/2) nebo „SJM“; u.owner = odvozený popisek pro zobrazení
+function peopleList(u){if(u&&Array.isArray(u.people))return u.people.filter(function(p){return p&&String(p.name||"").trim();});var o=String(u&&u.owner||"").trim();return o&&o!==GARAZ_OWNER?[{name:o,share:""}]:[];}
+function ownersOf(u){return peopleList(u).map(function(p){return String(p.name).trim();});}
+function ownersLabel(u){var ps=peopleList(u);if(!ps.length)return "";
+  if(ps.length>1&&ps.every(function(p){return /^sjm$/i.test(String(p.share||"").trim());}))return "SJM: "+ps.map(function(p){return String(p.name).trim();}).join(" a ");
+  return ps.map(function(p){var x=String(p.share||"").trim();return String(p.name).trim()+(x?" ("+x+")":"");}).join(", ");}
+function syncLabel(u){u.owner=ownersLabel(u);}
+// vlastníci pro tisk: u podílového spoluvlastnictví každý na vlastním řádku, jména se nikdy nerozdělí
+function ownersHtml(u){var ps=peopleList(u);if(!ps.length)return esc(u.owner||"")||unitLabel(u);
+  if(ps.length>1&&ps.every(function(p){return /^sjm$/i.test(String(p.share||"").trim());}))return 'SJM: '+ps.map(function(p){return '<span class="nw">'+esc(String(p.name).trim())+'</span>';}).join(' a ');
+  return ps.map(function(p){var x=String(p.share||"").trim();return '<span class="own-l">'+esc(String(p.name).trim())+(x?' ('+esc(x)+')':'')+'</span>';}).join("");}
+function rosterCopy(u){return {id:u.id,unit:u.unit,owner:u.owner,people:peopleList(u).map(function(p){return {name:String(p.name).trim(),share:String(p.share||"").trim()};}),podil:+u.podil||0};}
+// převod staršího textu („SJM: Jan Novák a Jana Nováková“, „Jan Novák 1/2, Jana Nováková 1/2“) na seznam osob; dosavadní zástupce bude první
+function parseOwners(txt,first){var t=String(txt||"").trim(),sjm=/^sjm\b\s*:?/i.test(t),out=[];t=t.replace(/^sjm\b\s*:?\s*/i,"");
+  (t?t.split(/\s*(?:,|;|\sa\s)\s*/):[]).forEach(function(x){x=x.trim();if(!x)return;var r=x.match(/^(.*?)\s*\(?(\d+\s*\/\s*\d+)\)?$/);var n=r?r[1].trim():x;if(n)out.push({name:n,share:r?r[2].replace(/\s/g,""):(sjm?"SJM":"")});});
+  first=String(first||"").trim();
+  if(first&&first!==GARAZ_OWNER&&!/^gar[aá]ž/i.test(first)){var i=out.map(function(x){return x.name;}).indexOf(first);if(i>0)out.unshift(out.splice(i,1)[0]);else if(i<0)out.unshift({name:first,share:sjm&&out.length?"SJM":""});}
+  return out;}
 // převede jakýkoli uložený seznam na pevný seznam jednotek; jména zachová (podle čísla jednotky, jinak podle pořadí)
 function enforceRoster(){
   var old=Array.isArray(state.roster)?state.roster:[],fix=defaultRoster(),ok=old.length===fix.length;
@@ -799,11 +860,11 @@ function enforceRoster(){
   if(ok)return;
   var byUnit={};old.forEach(function(u){byUnit[String(u.unit)]=u;});
   var anyMatch=fix.some(function(f){return byUnit[f.unit];});
-  fix.forEach(function(f,i){var o=byUnit[f.unit]||(!anyMatch&&!isGaraz(f)?old[i]:null);if(o&&o.owner)f.owner=o.owner;});
+  fix.forEach(function(f,i){var o=byUnit[f.unit]||(!anyMatch&&!isGaraz(f)?old[i]:null);if(o&&o.owner)f.owner=o.owner;if(o&&o.owners)f.owners=o.owners;if(o&&Array.isArray(o.people))f.people=o.people;});
   state.roster=fix;
 }
 // neukončená (a nikdy neukončená) schůze bere jména vlastníků z Nastavení; při ukončení zůstane snímek
-function syncOwners(m){if(!m||m.status!=="open"||m.reopened||!Array.isArray(m.roster))return;var g={};state.roster.forEach(function(u){g[u.unit]=u;});m.roster.forEach(function(u){if(g[u.unit])u.owner=g[u.unit].owner;});}
+function syncOwners(m){if(!m||m.status!=="open"||m.reopened||!Array.isArray(m.roster))return;var g={};state.roster.forEach(function(u){g[u.unit]=u;});m.roster.forEach(function(u){var x=g[u.unit];if(x){var c=rosterCopy(x);u.owner=c.owner;u.people=c.people;}});}
 function load(){try{var s=localStorage.getItem(KEY);return s?JSON.parse(s):null;}catch(e){return null;}}
 // při chybě ukládání se zobrazí trvalá lišta (místo jednorázového alertu)
 var saveFailed=false;
@@ -818,11 +879,12 @@ var state=load()||initState();
 // převod starších dat a ochrana integrity
 function normalize(){
   enforceRoster();
+  state.roster.forEach(function(u){if(!Array.isArray(u.people))u.people=parseOwners(u.owners,u.owner);delete u.owners;syncLabel(u);});
   if(!Array.isArray(state.meetings))state.meetings=[];
   if(!Array.isArray(state.tasks))state.tasks=[];
   if(!Array.isArray(state.committee))state.committee=[{name:"",role:"předseda výboru"},{name:"",role:"člen výboru"},{name:"",role:"člen výboru"}];
   state.meetings.forEach(function(m){
-    if(!Array.isArray(m.roster)||!m.roster.length)m.roster=state.roster.map(function(u){return {id:u.id,unit:u.unit,owner:u.owner,podil:+u.podil||0};});
+    if(!Array.isArray(m.roster)||!m.roster.length)m.roster=state.roster.map(rosterCopy);
     if(!m.att)m.att={};
     m.roster.forEach(function(u){if(!m.att[u.id])m.att[u.id]={present:false,note:""};});
     if(!Array.isArray(m.votes))m.votes=[];
@@ -974,7 +1036,7 @@ function addMonthsISO(n){var d=new Date(),day=d.getDate();d.setDate(1);d.setMont
 function nowStamp(){var d=new Date();return todayISO()+" "+pad(d.getHours())+":"+pad(d.getMinutes());}
 function stampCz(s){s=String(s||"");return s?dateCz(s.slice(0,10))+(s.length>10?' '+s.slice(11,16):''):'—';}
 function peopleNames(){var s={};
-  state.roster.forEach(function(u){if(u.owner&&u.owner!==GARAZ_OWNER)s[u.owner]=1;});
+  state.roster.forEach(function(u){ownersOf(u).forEach(function(n){s[n]=1;});});
   state.tasks.forEach(function(t){if(t.owner)s[t.owner]=1;});
   state.meetings.forEach(function(m){if(m.zapisovatel)s[m.zapisovatel]=1;var z=m.zapis||{};if(z.chair)s[z.chair]=1;if(z.verifier)s[z.verifier]=1;});
   return Object.keys(s).sort(function(a,b){return a.localeCompare(b,"cs");});}
@@ -987,13 +1049,13 @@ function committeeOf(m){var c=m&&m.committee?m.committee:((!m||(m.status==="open
 function isChairRole(c){return /^předsed/i.test(String(c.role||"").trim());}
 function personInfo(m,name){name=String(name||"").trim();if(!name)return null;
   var c=committeeOf(m).filter(function(x){return String(x.name).trim()===name;})[0];
-  var ro=(m&&m.roster)||state.roster,u=ro.filter(function(x){return x.owner&&x.owner===name;})[0];
+  var ro=(m&&m.roster)||state.roster,u=ro.filter(function(x){return ownersOf(x).indexOf(name)>=0;})[0];
   return {name:name,role:c?String(c.role||"").trim():"",unit:u?u.unit:"",member:!!c};}
 // popisek osoby: člen výboru → funkce, vlastník → jednotka
 function pLabel(m,name){var p=personInfo(m,name);if(!p)return "";return esc(p.name)+(p.member?' ('+esc(p.role||'člen výboru')+')':(p.unit?' ('+esc(p.unit)+')':''));}
 function peopleOf(m){var out=[],seen={};
   committeeOf(m).forEach(function(c){var n=String(c.name).trim();if(seen[n])return;seen[n]=1;var p=personInfo(m,n);out.push(p);});
-  ((m&&m.roster)||state.roster).forEach(function(u){if(!u.owner||u.owner===GARAZ_OWNER||seen[u.owner])return;seen[u.owner]=1;out.push({name:u.owner,unit:u.unit,role:"",member:false});});
+  ((m&&m.roster)||state.roster).forEach(function(u){ownersOf(u).forEach(function(n){if(seen[n])return;seen[n]=1;out.push({name:n,unit:u.unit,role:"",member:false});});});
   return out;}
 // výběr osoby: výbor a vlastníci z dat aplikace, „Jiná osoba…“ pro ruční zadání
 function personPicker(key,val,dis){
@@ -1140,7 +1202,7 @@ function renderChrome(){
   document.getElementById("tabbar").innerHTML=navItems("tab-i");
   document.getElementById("sysbar").innerHTML=sysbarHtml();
   var dl=document.getElementById("peopleDl");if(dl)dl.innerHTML=peopleNames().map(function(n){return '<option value="'+esc(n)+'">';}).join("");
-  var ol=document.getElementById("ownersDl");if(ol)ol.innerHTML=state.roster.filter(function(u){return u.owner&&u.owner!==GARAZ_OWNER;}).map(function(u){return '<option value="'+esc(u.owner)+'">'+esc(u.unit)+'</option>';}).join("");
+  var ol=document.getElementById("ownersDl");if(ol)ol.innerHTML=state.roster.map(function(u){return ownersOf(u).map(function(n){return '<option value="'+esc(n)+'">'+esc(u.unit)+'</option>';}).join("");}).join("");
 }
 var TITLES={prehled:"Přehled",schuze:"Schůze",meeting:"Schůze",protokol:"Protokol",usneseni:"Usnesení",ukoly:"Úkoly",nastaveni:"Nastavení"};
 function render(){
@@ -1200,7 +1262,7 @@ function attentionCard(over,planned){
     if(miss.length)it.push(attItem("warning","edit","Zápis ze schůze "+dateCz(lc.date)+" není úplný","Chybí "+miss.join(" a ")+". Zápis je potřeba vyhotovit do 30 dnů od schůze. Údaje ukončené schůze jsou uzamčené – pro doplnění je potřeba schůzi odemknout.","Odemknout a doplnit","openMeeting("+lc.id+",'priprava');reopenMeeting()"));}
   var b=backupInfo();
   if(b.stale)it.push(attItem("warning","db",b.lb?"Poslední záloha je stará "+b.days+" "+pl(b.days,"den","dny","dní"):"Zatím nemáte žádnou zálohu dat","Data jsou uložená jen v tomto prohlížeči. Záloha je jediná ochrana před jejich ztrátou.","Stáhnout zálohu","backup()"));
-  var un=state.roster.filter(function(u){return !u.owner;}).length;
+  var un=state.roster.filter(function(u){return !ownersOf(u).length;}).length;
   if(un)it.push(attItem("neutral","users","U "+un+" "+pl(un,"jednotky","jednotek","jednotek")+" chybí jméno vlastníka","Jména se propíšou do prezence, hlasování i protokolu nových schůzí.","Doplnit","go('nastaveni')"));
   if(!it.length)return '<div class="allgood">'+ic('check')+'<span><b>Vše v pořádku.</b> Nic teď nevyžaduje vaši pozornost.</span></div>';
   return card("Vyžaduje pozornost",'<span class="count">'+it.length+'</span>','<div class="list">'+it.join("")+'</div>');
@@ -1226,7 +1288,7 @@ function statsCard(){
     st("Úkoly v řešení",act,"","goTasks('active')")+st("Splněné úkoly",done,"za posledních 12 měsíců","goTasks('done')")+'</div>');
 }
 function viewWelcome(){
-  var named=state.roster.filter(function(u){return u.owner&&u.owner!==GARAZ_OWNER;}).length,all=state.roster.length-1;
+  var named=state.roster.filter(function(u){return ownersOf(u).length&&!isGaraz(u);}).length,all=state.roster.length-1;
   function step(n,done,t,d,a){return '<div class="step"><div class="stepn'+(done?' done':'')+'">'+(done?ic('check'):n)+'</div><div class="li-m"><div class="step-t">'+t+'</div><div class="step-d">'+d+'</div>'+a+'</div></div>';}
   return pageHead("Vítejte","Schůze, hlasování, usnesení a úkoly SVJ na jednom místě")+
     card("Jak začít","",'<div class="steps">'+
@@ -1273,7 +1335,7 @@ function createMeeting(){
   var prev=state.meetings.slice().sort(byDateDesc)[0],pz=prev?zOf(prev):null,chair=committeeOf(null).filter(isChairRole)[0];
   var m={id:Date.now(),date:todayISO(),time:(prev&&prev.time)||"18:00",type:MTYPES[0],zapisovatel:"",status:"open",reopened:null,
     zapis:{place:(pz&&pz.place)||"velká sušárna",chair:chair?String(chair.name).trim():"",opener:chair?String(chair.name).trim():"",convener:"vybor",invWays:(pz&&pz.invWays||[]).slice(),invHow:(pz&&pz.invHow)||""},
-    roster:state.roster.map(function(u){return {id:u.id,unit:u.unit,owner:u.owner,podil:+u.podil||0};}),att:{},votes:[],current:null};
+    roster:state.roster.map(rosterCopy),att:{},votes:[],current:null};
   m.roster.forEach(function(u){m.att[u.id]={present:false,note:""};});
   state.meetings.push(m);
   toast("Schůze založena – zkontrolujte přípravu");openMeeting(m.id,"priprava");
@@ -1317,17 +1379,31 @@ function tabPrezence(m){
   var rows=m.roster.map(function(u){var a=m.att[u.id]||{};
     return '<div class="prow'+(a.present?' on':'')+'"><span class="p-unit">'+esc(u.unit)+'</span><span class="p-name">'+(u.owner?esc(u.owner):'<span class="muted-n">'+(isGaraz(u)?'garáž':'jméno nevyplněno')+'</span>')+'</span><span class="p-pod">'+fmtP(u.podil)+' %</span>'+
       '<span class="p-tog">'+(ro?(a.present?badge("success","Přítomen","check"):'<span class="muted-s">nepřítomen</span>'):'<button class="ptog'+(a.present?' on':'')+'" aria-pressed="'+!!a.present+'" aria-label="'+esc(u.unit)+' '+esc(u.owner||'')+': '+(a.present?'přítomen':'nepřítomen')+'" data-f="pt'+u.id+'" onclick="togglePresent('+u.id+')">'+(a.present?ic('check')+'Přítomen':'Nepřítomen')+'</button>')+'</span>'+
-      '<span class="p-note">'+(ro?esc(a.note||''):'<input type="text" value="'+esc(a.note||'')+'" placeholder="Plná moc / zmocněnec" aria-label="Plná moc nebo poznámka – '+esc(u.unit)+'" oninput="setNote('+u.id+',this.value)">')+'</span></div>';}).join("");
+      '<span class="p-note">'+voterCell(u,a,ro)+'</span></div>';}).join("");
   var right=ro?'<span class="muted-s">'+ic('lock')+' jen ke čtení</span>':'<div class="row"><span class="muted-s hide-m">Přítomno '+n+' z '+m.roster.length+'</span><button class="btn secondary sm" onclick="setAllPresent(true)">Označit všechny</button>'+(n?'<button class="btn ghost sm" onclick="setAllPresent(false)">Zrušit vše</button>':'')+'</div>';
-  var h=card("Prezenční listina",right,'<div class="list"><div class="prow head" aria-hidden="true"><span>Jednotka</span><span>Vlastník</span><span class="p-pod">Podíl</span><span>Účast</span><span>Plná moc / poznámka</span></div>'+rows+'</div>');
+  var miss=ro?0:presentUnits(m).filter(function(u){return !String((m.att[u.id]||{}).who||"").trim();}).length;
+  var h=(miss?callout("warning","users",'U '+miss+' '+pl(miss,'přítomné jednotky','přítomných jednotek','přítomných jednotek')+' není vybráno, kdo za ni hlasuje – vyberte vlastníka, nebo zmocněnce s plnou mocí.'):'')+
+    card("Prezenční listina",right,'<div class="list"><div class="prow head" aria-hidden="true"><span>Jednotka</span><span>Vlastníci</span><span class="p-pod">Podíl</span><span>Účast</span><span>Hlasuje za jednotku</span></div>'+rows+'</div>');
   if(!ro)h+='<div class="nextbar"><span class="muted-s">Pozdní příchod můžete zapsat kdykoli – i během hlasování.</span><button class="btn" onclick="setTab(\'hlasovani\')">Pokračovat na hlasování'+ic('arrowR')+'</button></div>';
   return h;
 }
-function togglePresent(id){var m=M();if(!m||m.status!=="open")return;m.att[id].present=!m.att[id].present;save();render();
+// kdo za jednotku hlasuje: jeden z vlastníků, nebo zmocněnec na základě plné moci
+function voterCell(u,a,ro){
+  if(ro){if(!a.present)return a.note?'<span class="muted-n">'+esc(a.note)+'</span>':'';var w=String(a.who||"").trim();
+    return (w?esc(w)+(a.pm?' <span class="muted-n">· plná moc</span>':''):'<span class="muted-n">nezapsáno</span>')+(a.note?' <span class="muted-n">· '+esc(a.note)+'</span>':'');}
+  if(!a.present)return '';
+  var os=ownersOf(u),none=!a.pm&&!String(a.who||"").trim();
+  return '<select data-f="pw'+u.id+'" aria-label="Kdo hlasuje za jednotku '+esc(u.unit)+'" onchange="setWho('+u.id+',this.value)"'+(none?' aria-invalid="true"':'')+'><option value="">– kdo hlasuje –</option>'+
+    os.map(function(n){return '<option value="'+esc(n)+'"'+(!a.pm&&a.who===n?' selected':'')+'>'+esc(n)+'</option>';}).join("")+
+    '<option value="__pm"'+(a.pm?' selected':'')+'>Zmocněnec (plná moc)…</option></select>'+
+    (a.pm?'<input type="text" class="pick-other" id="pm'+u.id+'" value="'+esc(a.who||'')+'" placeholder="Jméno zmocněnce" aria-label="Jméno zmocněnce – '+esc(u.unit)+'" oninput="setPmName('+u.id+',this.value)">':'');}
+function autoWho(m,u){var a=m.att[u.id];if(a&&a.present&&!a.pm&&!String(a.who||"").trim()){var os=ownersOf(u);if(os.length===1)a.who=os[0];}}
+function setWho(id,v){var m=M();if(!m||m.status!=="open")return;var a=m.att[id];if(v==="__pm"){a.pm=true;a.who="";save();render();focusEl("pm"+id);return;}a.pm=false;a.who=v;save();render();}
+function setPmName(id,v){var m=M();if(!m||m.status!=="open")return;m.att[id].who=v;save();}
+function togglePresent(id){var m=M();if(!m||m.status!=="open")return;m.att[id].present=!m.att[id].present;var u=m.roster.filter(function(x){return x.id===id;})[0];if(u)autoWho(m,u);save();render();
   if(m.current)toast(m.att[id].present?"Jednotka hlasuje i v probíhajícím hlasování (výchozí „Zdržel se“)":"Hlas jednotky se v probíhajícím hlasování už nepočítá","info");}
-function setNote(id,v){var m=M();if(!m||m.status!=="open")return;m.att[id].note=v;save();}
 function setAllPresent(v){var m=M();if(!m||m.status!=="open")return;
-  function doIt(){m.roster.forEach(function(u){m.att[u.id].present=v;});save();render();}
+  function doIt(){m.roster.forEach(function(u){m.att[u.id].present=v;autoWho(m,u);});save();render();}
   if(!v&&presentUnits(m).length)ask({title:"Zrušit přítomnost u všech?",icon:"users",tone:"danger",text:"Všechny jednotky se označí jako nepřítomné. Poznámky a plné moci zůstanou.",ok:"Zrušit přítomnost",danger:true,onOk:doIt});
   else doIt();}
 
@@ -1378,15 +1454,16 @@ function liveVote(m){
     '<div class="verdict-s">Pro je <b>'+fmt(share)+' %</b> podílů '+baseTxt+' · potřeba '+need+'</div></div></div>'+voteBar(w(t.ano),w(t.ne),w(t.zdr),w(absent),T.thr*100,true)+
     '<div class="legend"><span><i class="dot a"></i>ANO <b>'+t.cA+'</b></span><span><i class="dot n"></i>NE <b>'+t.cN+'</b></span><span><i class="dot z"></i>Zdržel se <b>'+t.cZ+'</b></span>'+(absent?'<span><i class="dot x"></i>Nepřítomní</span>':'')+'</div></div>';
   var acts='<div class="vact"><button class="btn success lg" onclick="closeVote()">'+ic('check')+'Uzavřít hlasování</button><button class="btn ghost danger-text" onclick="cancelVote()">Zrušit hlasování</button></div>';
-  var rows=presentUnits(m).map(function(u){var b=v.ballots[u.id]||"ZDR";
-    return '<div class="vrow"><span class="p-unit">'+esc(u.unit)+'</span><span class="p-name">'+(u.owner?esc(u.owner):unitLabel(u))+'</span><span class="p-pod">'+fmtP(u.podil)+' %</span><span class="vseg" role="group" aria-label="Hlas – '+esc(u.unit)+'">'+
+  var rows=presentUnits(m).map(function(u){var b=v.ballots[u.id]||"ZDR",a=m.att[u.id]||{};
+    return '<div class="vrow"><span class="p-unit">'+esc(u.unit)+'</span><span class="p-name">'+whoHtml(a.who,a.pm,u)+'</span><span class="p-pod">'+fmtP(u.podil)+' %</span><span class="vseg" role="group" aria-label="Hlas – '+esc(u.unit)+'">'+
       ["ANO","NE","ZDR"].map(function(x){var on=b===x;return '<button class="vb '+x.toLowerCase()+(on?' sel':'')+'" aria-pressed="'+on+'" data-f="vb'+u.id+x+'" onclick="cast('+u.id+',\''+x+'\')">'+(on?ic(x==="ANO"?'check':x==="NE"?'x':'minus'):'')+(x==="ZDR"?"Zdržel se":x)+'</button>';}).join("")+'</span></div>';}).join("");
   var ballots=card("Hlasy přítomných ("+presentUnits(m).length+")",'<div class="row"><span class="muted-s">Nastavit všem:</span><button class="btn secondary sm" onclick="setAllVotes(\'ANO\')">ANO</button><button class="btn secondary sm" onclick="setAllVotes(\'NE\')">NE</button><button class="btn secondary sm" onclick="setAllVotes(\'ZDR\')">Zdržel se</button></div>',
-    '<div class="list"><div class="vrow head" aria-hidden="true"><span>Jednotka</span><span>Vlastník</span><span class="p-pod">Podíl</span><span>Hlas</span></div>'+rows+'</div>');
+    '<div class="list"><div class="vrow head" aria-hidden="true"><span>Jednotka</span><span>Hlasuje</span><span class="p-pod">Podíl</span><span>Hlas</span></div>'+rows+'</div>');
   return prop+'<div class="votegrid">'+ballots+'<div class="vside">'+verdict+acts+'</div></div>'+
     '<div class="nextbar mobile-only"><button class="btn ghost danger-text" onclick="cancelVote()">Zrušit hlasování</button></div><div class="vmini-sp mobile-only"></div>'+
     '<div class="vmini '+(t.passed?'ok':'no')+'" aria-hidden="true">'+ic(t.passed?'check':'x')+'<b>'+(t.passed?'Bylo by přijato':'Nebylo by přijato')+' · '+fmt(share)+' %</b><button class="btn success sm" tabindex="-1" onclick="closeVote()">Uzavřít</button></div>';
 }
+function whoHtml(who,pm,u){who=String(who||"").trim();return who?esc(who)+(pm?' <span class="muted-n">· plná moc</span>':''):(u.owner?esc(u.owner):unitLabel(u));}
 function cast(id,x){var m=M();if(!m||!m.current)return;m.current.ballots[id]=x;save();render();}
 function setAllVotes(x){var m=M();if(!m||!m.current)return;presentUnits(m).forEach(function(u){m.current.ballots[u.id]=x;});save();render();}
 function cancelVote(){var m=M();if(!m||!m.current)return;
@@ -1402,7 +1479,7 @@ function closeVote(){
       var v=m.current,t=tally(m,v);
       m.votes.push({num:num,text:v.text,type:v.type,time:new Date().toLocaleTimeString("cs-CZ",{hour:"2-digit",minute:"2-digit"}),ballots:Object.assign({},v.ballots),result:t.passed,
         snap:{cA:t.cA,cN:t.cN,cZ:t.cZ,ano:t.ano,ne:t.ne,zdr:t.zdr,tot:t.tot,pres:t.pres,base:t.base,typeLabel:t.T.label,
-          units:presentUnits(m).map(function(u){return {unit:u.unit,owner:u.owner,podil:u.podil,vote:v.ballots[u.id]||"ZDR"};})}});
+          units:presentUnits(m).map(function(u){var a=m.att[u.id]||{};return {unit:u.unit,owner:u.owner,who:String(a.who||"").trim(),pm:!!a.pm,podil:u.podil,vote:v.ballots[u.id]||"ZDR"};})}});
       m.current=null;save();render();scrollTop();
       toast("Usnesení č. "+num+" uloženo – "+(t.passed?"schváleno":"neschváleno"),"success",{label:"+ Úkol",fn:function(){taskFromVote(num);}});
     }});
@@ -1418,8 +1495,8 @@ function usnCard(m,v){
   var s=v.snap||{},key=m.id+"_"+v.num,open=!!ui.voteDetail[key],tasks=tasksOfVote(m.id,v.num);
   var T=TYPES[v.type]||TYPES.prosta,base=s.base>0?s.base:(s.pres>0?s.pres:1),absent=T.base==="all"?Math.max(0,(s.tot||0)-(s.pres||0)):0;
   function w(x){return Math.max(0,Math.min(100,(x||0)/base*100));}
-  var det=open?'<div class="vdet tablewrap"><table class="tbl"><thead><tr><th>Jednotka</th><th>Vlastník</th><th class="num">Podíl</th><th>Hlas</th></tr></thead><tbody>'+
-    (s.units||[]).map(function(u){return '<tr><td class="c-unit">'+esc(u.unit)+'</td><td>'+(u.owner?esc(u.owner):unitLabel(u))+'</td><td class="num">'+fmtP(u.podil)+' %</td><td>'+voteBadge(u.vote)+'</td></tr>';}).join("")+'</tbody></table></div>':'';
+  var det=open?'<div class="vdet tablewrap"><table class="tbl"><thead><tr><th>Jednotka</th><th>Hlasoval(a)</th><th class="num">Podíl</th><th>Hlas</th></tr></thead><tbody>'+
+    (s.units||[]).map(function(u){return '<tr><td class="c-unit">'+esc(u.unit)+'</td><td>'+whoHtml(u.who,u.pm,u)+'</td><td class="num">'+fmtP(u.podil)+' %</td><td>'+voteBadge(u.vote)+'</td></tr>';}).join("")+'</tbody></table></div>':'';
   var tl=tasks.length?'<div class="utasks"><div class="lbl" style="margin-bottom:4px">Úkoly z usnesení</div>'+tasks.map(function(t){return '<button class="utask" onclick="openMeetingTask('+t.id+')"><span class="clamp1">'+esc(t.text)+'</span>'+taskBadge(taskState(t))+'</button>';}).join("")+'</div>':'';
   return '<article class="card ucard"><div class="card-b">'+
     '<div class="ucard-h"><span class="unum">'+v.num+'</span><span class="ucard-l">Usnesení č. '+v.num+'</span>'+resBadge(v.result)+'</div>'+
@@ -1490,12 +1567,15 @@ function protoDoc(m,full){
   H+=sec("Přílohy zápisu")+(att.length?'<ul class="plist">'+att.map(function(a,i){return '<li>Příloha č. '+(i+1)+' – '+esc(a)+'</li>';}).join("")+'</ul>':'<p>Bez příloh.</p>');
   H+='<div class="sig"><div>Zapisovatel<br><b>'+esc(m.zapisovatel||'')+'</b></div><div>Předsedající<br><b>'+esc(z.chair)+'</b></div><div>Ověřovatel<br><b>'+esc(z.verifier)+'</b></div></div>';
   // listina přítomných
-  var lst=full?m.roster:pres;
-  H+='<h2 class="appx">Listina přítomných</h2><table class="ptab"><thead><tr><th>Jedn.</th><th>Vlastník</th><th class="nw">Podíl</th><th class="r">%</th>'+(full?'<th>Účast</th>':'')+'<th>Plná moc / pozn.</th></tr></thead><tbody>'+
-    lst.map(function(u){var a=m.att[u.id]||{};return '<tr><td>'+esc(u.unit)+'</td><td>'+(esc(u.owner)||unitLabel(u))+'</td><td class="nw">'+podilFr(u.podil)+'</td><td class="r nw">'+fmtP(u.podil)+'</td>'+(full?'<td>'+(a.present?'přítomen':'—')+'</td>':'')+'<td>'+esc(a.note||'')+'</td></tr>';}).join("")+
-    '<tr class="tot"><td colspan="2"><b>Přítomno '+pres.length+' z '+m.roster.length+'</b></td><td class="nw"><b>'+podilFr(tot>0?pp/tot*100:0)+'</b></td><td class="r nw"><b>'+fmtP(tot>0?pp/tot*100:0)+'</b></td><td'+(full?' colspan="2"':'')+'></td></tr></tbody></table>';
+  var lst=full?m.roster:pres,legacy=!m.roster.some(function(u){var a=m.att[u.id];return a&&a.who!==undefined;});
+  H+='<h2 class="appx">Listina přítomných</h2><table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:21%">'+(full?'<col style="width:11%">':'')+'<col style="width:'+(full?24:28)+'%"></colgroup>'+
+    '<thead><tr><th>Jednotka</th><th>Vlastníci</th><th>Podíl</th>'+(full?'<th>Účast</th>':'')+'<th>Hlasoval(a)</th></tr></thead><tbody>'+
+    lst.map(function(u){var a=m.att[u.id]||{},w=a.present?String(a.who||"").trim()||(legacy?u.owner||'':''):'';
+      return '<tr'+(a.present?'':' class="abs"')+'><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td>'+ownersHtml(u)+'</td><td class="nw">'+podilFr(u.podil)+' <span class="pc2">('+fmtP(u.podil)+' %)</span></td>'+(full?'<td>'+(a.present?'přítomen':'—')+'</td>':'')+
+        '<td>'+esc(w)+(a.present&&a.pm&&w?' <span class="pc2">(plná moc)</span>':'')+(a.note?(w?' · ':'')+'<span class="pc2">'+esc(a.note)+'</span>':'')+'</td></tr>';}).join("")+
+    '<tr class="tot"><td colspan="2">Přítomno '+pres.length+' z '+m.roster.length+' jednotek</td><td class="nw">'+podilFr(tot>0?pp/tot*100:0)+' <span class="pc2">('+fmtP(tot>0?pp/tot*100:0)+' %)</span></td><td colspan="'+(full?2:1)+'"></td></tr></tbody></table>';
   if(full&&m.votes.length){H+='<h2 class="appx">Jmenovité hlasování</h2>';
-    m.votes.forEach(function(v){H+='<h3>Usnesení č. '+v.num+' – '+(v.result?'přijato':'nepřijato')+'</h3><table class="ptab"><thead><tr><th>Jedn.</th><th>Vlastník</th><th class="nw">Podíl</th><th class="r">%</th><th>Hlas</th></tr></thead><tbody>'+v.snap.units.map(function(u){return '<tr><td>'+esc(u.unit)+'</td><td>'+(esc(u.owner)||unitLabel(u))+'</td><td class="nw">'+podilFr(u.podil)+'</td><td class="r nw">'+fmtP(u.podil)+'</td><td>'+protoVote(u.vote)+'</td></tr>';}).join("")+'</tbody></table>';});}
+    m.votes.forEach(function(v){H+=protoUsn(v)+'<table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:24%"><col style="width:14%"></colgroup><thead><tr><th>Jednotka</th><th>Hlasoval(a)</th><th>Podíl</th><th>Hlas</th></tr></thead><tbody>'+v.snap.units.map(function(u){var w=String(u.who||"").trim();return '<tr><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td>'+(w?esc(w)+(u.pm?' <span class="pc2">(plná moc)</span>':''):(esc(u.owner)||unitLabel(u)))+'</td><td class="nw">'+podilFr(u.podil)+' <span class="pc2">('+fmtP(u.podil)+' %)</span></td><td>'+protoVote(u.vote)+'</td></tr>';}).join("")+'</tbody></table>';});}
   H+='<div class="pfoot">Vygenerováno '+new Date().toLocaleString('cs-CZ')+'.</div>';
   return '<div id="protokol">'+H+'</div>';
 }
@@ -1734,6 +1814,7 @@ function taskItem(t,inMeeting){
 function historyHtml(t){
   var L=[{at:t.created||"",t:"Úkol založen"}].concat(Array.isArray(t.log)?t.log:[]);
   if(t.doneAt&&!(t.log||[]).some(function(e){return /Splněno/.test(e.t);}))L.push({at:t.doneAt,t:"Splněno"});
+  L=L.map(function(e,i){return {e:e,i:i};}).sort(function(x,y){var a=String(x.e.at||""),b=String(y.e.at||"");return a<b?-1:a>b?1:x.i-y.i;}).map(function(x){return x.e;});
   return '<div class="ctx"><span class="lbl">Historie</span><ol class="hist">'+L.map(function(e){return '<li><span class="hist-d">'+stampCz(e.at)+'</span>'+esc(e.t)+'</li>';}).join("")+'</ol></div>';
 }
 function logTask(t,txt){if(!Array.isArray(t.log))t.log=[];t.log.push({at:nowStamp(),t:txt});}
@@ -1744,7 +1825,9 @@ function taskDetail(t,m){
   if(t.status==="done")return '<div class="tdet"><div>'+
     '<dl class="kvs"><dt>Odpovídá</dt><dd>'+(t.owner?esc(t.owner):'—')+'</dd><dt>Termín</dt><dd>'+(t.due?dateCz(t.due):'bez termínu')+'</dd><dt>Splněno</dt><dd>'+(t.doneAt?dateCz(t.doneAt):'—')+'</dd></dl>'+
     (t.note?'<div class="ctx" style="margin-top:16px"><span class="lbl">Poznámka</span><p>'+esc(t.note)+'</p></div>':'')+
-    '<p class="locked" style="margin-top:16px">'+ic('lock')+'Splněný úkol je uzamčený.</p></div><div class="tdet-side">'+ctx+historyHtml(t)+'</div></div>';
+    '<div style="margin-top:16px">'+field('Doplnit poznámku <span class="opt">zapíše se s dnešním datem</span>','<textarea id="dAdd" rows="2" placeholder="např. Faktura uhrazena"></textarea>','<span class="err" id="dAddErr"></span>')+
+    '<div class="form-actions"><button class="btn secondary" onclick="addDoneNote('+t.id+')">'+ic('plus')+'Doplnit poznámku</button><button class="btn ghost" onclick="toggleTask('+t.id+')">Zavřít</button></div></div>'+
+    '<p class="locked" style="margin-top:16px">'+ic('lock')+'Ostatní údaje splněného úkolu jsou uzamčené.</p></div><div class="tdet-side">'+ctx+historyHtml(t)+'</div></div>';
   if(!ui.draft||ui.draft.id!==t.id)ui.draft={id:t.id,status:t.status,note:t.note||"",text:t.text,owner:t.owner||"",due:t.due||""};
   var d=ui.draft;
   return '<div class="tdet"><div>'+
@@ -1759,6 +1842,10 @@ function taskDetail(t,m){
 }
 function toggleTask(id){ui.openTask=ui.openTask===id?null:id;ui.draft=null;render();}
 function setDraftStatus(s){if(ui.draft){ui.draft.status=s;render();}}
+// splněný úkol: lze jen doplnit poznámku (s datem), vše ostatní zůstává uzamčené
+function addDoneNote(id){var t=taskById(id);if(!t||t.status!=="done")return;var v=gv("dAdd").trim();
+  if(!v){setErr("dAddErr","Napište text poznámky.","dAdd");focusEl("dAdd");return;}
+  t.note=(t.note?t.note+"\n":"")+dateCz(todayISO())+": "+v;logTask(t,"Doplněna poznámka: "+clip(v,80));save();toast("Poznámka doplněna");render();}
 function saveTask(id){
   var t=taskById(id);if(!t||!ui.draft||t.status==="done")return;
   var d=ui.draft,text=(d.text||"").trim();
@@ -1825,7 +1912,7 @@ function taskListHtml(){
 }
 
 // ================= NASTAVENÍ =================
-function cUnit(name){name=String(name||"").trim();var u=name&&state.roster.filter(function(x){return x.owner===name;})[0];return u?ic('home')+esc(u.unit):'<span class="muted-n">'+(name?'není v seznamu vlastníků':'—')+'</span>';}
+function cUnit(name){name=String(name||"").trim();var u=name&&state.roster.filter(function(x){return ownersOf(x).indexOf(name)>=0;})[0];return u?ic('home')+esc(u.unit):'<span class="muted-n">'+(name?'není v seznamu vlastníků':'—')+'</span>';}
 function committeeCard(){
   var n=committeeOf(null).length;
   var rows=state.committee.map(function(c,i){
@@ -1847,16 +1934,19 @@ function removeC(i){var c=state.committee[i];if(!c)return;
   if(String(c.name||"").trim())ask({title:"Odebrat z výboru?",icon:"users",tone:"danger",text:esc(c.name)+(c.role?' – '+esc(c.role):'')+'<br>Ukončené schůze si původní složení výboru ponechají.',ok:"Odebrat",danger:true,onOk:doIt});else doIt();}
 function sumBadge(s){return Math.abs(s-100)<0.05?badge("success","Součet "+fmt(s)+" %","check"):badge("danger","Součet "+fmt(s)+" % – má být 100 %","alert");}
 function viewNastaveni(){
-  var named=state.roster.filter(function(u){return u.owner;}).length,tot=state.roster.length,b=backupInfo();
-  var rows=state.roster.map(function(u){return '<tr><td class="c-unit">'+esc(u.unit)+'</td>'+
-    '<td><input type="text" value="'+esc(u.owner)+'" aria-label="Vlastník jednotky '+esc(u.unit)+'" placeholder="'+(isGaraz(u)?'společný zástupce spoluvlastníků garáže':'jméno vlastníka')+'" oninput="setR('+u.id+',\'owner\',this.value)"></td>'+
+  var named=state.roster.filter(function(u){return ownersOf(u).length;}).length,tot=state.roster.length,b=backupInfo();
+  var rows=state.roster.map(function(u){var ps=Array.isArray(u.people)&&u.people.length?u.people:[{name:"",share:""}];
+    var lines=ps.map(function(x,i){return '<div class="own"><span class="inp-ic">'+ic('user')+'<input type="text" data-f="pn'+u.id+'_'+i+'" value="'+esc(x.name)+'" placeholder="'+(isGaraz(u)?'spoluvlastník garáže':'jméno vlastníka')+'" aria-label="Vlastník '+(i+1)+' – jednotka '+esc(u.unit)+'" oninput="setP('+u.id+','+i+',\'name\',this.value)"></span>'+
+      '<input type="text" class="own-s" list="sharesDl" value="'+esc(x.share||'')+'" placeholder="podíl / SJM" aria-label="Podíl nebo SJM – vlastník '+(i+1)+', '+esc(u.unit)+'" oninput="setP('+u.id+','+i+',\'share\',this.value)">'+
+      (ps.length>1||String(x.name||"").trim()?'<button class="btn ghost icon-only sm" title="Odebrat vlastníka" aria-label="Odebrat vlastníka '+(i+1)+' – '+esc(u.unit)+'" onclick="removeP('+u.id+','+i+')">'+ic('x')+'</button>':'<span></span>')+'</div>';}).join("");
+    return '<tr><td class="c-unit">'+esc(u.unit)+'</td><td><div class="owns">'+lines+'</div><button class="linkbtn own-add" onclick="addP('+u.id+')">'+ic('plus')+'Přidat vlastníka</button></td>'+
     '<td class="num">'+Math.round(u.podil*JMEN/100)+'/'+JMEN+' <span class="muted-n">('+fmtP(u.podil)+' %)</span></td></tr>';}).join("");
   return pageHead("Nastavení","Výbor, vlastníci jednotek a bezpečí vašich dat")+committeeCard()+
     card("Vlastníci a podíly",'<div class="row"><span id="sumB">'+sumBadge(rosterSum())+'</span><button class="btn secondary sm" onclick="printListina()">'+ic('printer')+'Listina k podpisu</button></div>',
       '<div class="card-b" style="padding-bottom:16px">'+
-        '<div class="qm" style="margin-bottom:16px"><div class="qm-top"><span class="qm-l '+(named===tot?'ok':'no')+'">'+ic(named===tot?'check':'users')+'Jména vyplněna u '+named+' z '+tot+' jednotek</span></div><div class="meter '+(named===tot?'ok':'')+'"><span style="width:'+(named/tot*100)+'%"></span></div></div>'+
-        callout("neutral","lock",'Jednotky a podíly jsou pevně dané prohlášením vlastníka (…/13193) a nelze je měnit – doplňte jen jména. Za garáž (2554/13) hlasuje společný zástupce spoluvlastníků. Změna jmen se projeví u schůzí, které ještě nejsou ukončené; ukončená schůze si jména uloží ke dni ukončení.')+'</div>'+
-      '<div class="tablewrap"><table class="tbl edit"><thead><tr><th style="width:150px">Jednotka</th><th>Vlastník</th><th class="num" style="width:180px">Podíl</th></tr></thead><tbody>'+rows+'</tbody></table></div>')+
+        '<div class="qm" style="margin-bottom:16px"><div class="qm-top"><span class="qm-l '+(named===tot?'ok':'no')+'">'+ic(named===tot?'check':'users')+'Vlastníci vyplněni u '+named+' z '+tot+' jednotek</span></div><div class="meter '+(named===tot?'ok':'')+'"><span style="width:'+(named/tot*100)+'%"></span></div></div>'+
+        callout("neutral","lock",'Jednotky a podíly jsou pevně dané prohlášením vlastníka (…/13193) a nelze je měnit. U každé jednotky zapište <b>všechny vlastníky – každého zvlášť</b>; u SJM nebo spoluvlastnictví doplňte „SJM“ nebo podíl (např. 1/2). <b>Kdo za jednotku hlasuje</b> (jeden z vlastníků, nebo zmocněnec s plnou mocí), se vybírá až v <b>Prezenci</b> u každé schůze. Změny se projeví u schůzí, které ještě nejsou ukončené; ukončená schůze si vlastníky uloží ke dni ukončení.')+'</div>'+
+      '<div class="tablewrap"><table class="tbl edit own-t"><thead><tr><th style="width:130px">Jednotka</th><th>Vlastníci<span class="th-s">každý zvlášť · u SJM nebo spoluvlastnictví doplňte „SJM“ nebo podíl</span></th><th class="num" style="width:170px">Podíl</th></tr></thead><tbody>'+rows+'</tbody></table></div>')+
     card("Data a záloha",'','<div class="card-b">'+
       callout(saveFailed?"danger":(b.stale?"warning":"success"),saveFailed?"alert":(b.stale?"alert":"check"),
         saveFailed?'<b>Změny se teď nedaří uložit do prohlížeče.</b> Stáhněte si zálohu.':
@@ -1866,7 +1956,13 @@ function viewNastaveni(){
       '<ul class="hint" style="display:block;padding-left:18px;margin-bottom:16px"><li>Aplikaci mějte otevřenou jen v jednom okně – dvě okna by si mohla data přepsat.</li><li>Nepoužívejte anonymní okno – data by se po zavření smazala.</li><li>Obnovení ze zálohy vždy nahradí současná data.</li></ul>'+
       callout("warning","alert",'Záloha obsahuje jména vlastníků a podíly (osobní údaje). Neukládejte ji na veřejný web ani GitHub.')+'</div>');
 }
-function setR(id,f,v){if(f!=='owner')return;var u=state.roster.filter(function(x){return x.id===id;})[0];if(u){u[f]=v;save();}}
+function unitById(id){return state.roster.filter(function(x){return x.id===id;})[0];}
+function setP(id,i,k,v){var u=unitById(id);if(!u||(k!=="name"&&k!=="share"))return;if(!Array.isArray(u.people))u.people=[];while(u.people.length<=i)u.people.push({name:"",share:""});u.people[i][k]=v;syncLabel(u);save();}
+function addP(id){var u=unitById(id);if(!u)return;if(!Array.isArray(u.people))u.people=[];if(!u.people.length)u.people.push({name:"",share:""});u.people.push({name:"",share:""});save();render();
+  var n=u.people.length-1;setTimeout(function(){var e=document.querySelector('[data-f="pn'+id+'_'+n+'"]');if(e)e.focus();},40);}
+function removeP(id,i){var u=unitById(id);if(!u||!Array.isArray(u.people))return;var x=u.people[i]||{};
+  function doIt(){u.people.splice(i,1);syncLabel(u);save();render();}
+  if(String(x.name||"").trim())ask({title:"Odebrat vlastníka?",icon:"user",tone:"danger",text:esc(x.name)+' – jednotka '+esc(u.unit)+'<br>Ukončené schůze si původní vlastníky ponechají.',ok:"Odebrat",danger:true,onOk:doIt});else doIt();}
 function setRestoring(on){Array.prototype.forEach.call(document.querySelectorAll("[data-restore]"),function(b){if(on){b._h=b.innerHTML;b.disabled=true;b.innerHTML='<span class="spin"></span>Načítám zálohu…';}else if(b._h!==undefined){b.disabled=false;b.innerHTML=b._h;}});}
 function restore(ev){
   var f=ev.target.files[0];if(!f)return;var r=new FileReader();setRestoring(true);
@@ -1891,12 +1987,12 @@ function printBox(html,onePage,title){var p=document.getElementById("printbox");
 try{window.addEventListener("afterprint",function(){var p=document.getElementById("printbox");if(p)p.innerHTML="";try{document.body.classList.remove("pb");}catch(e){}});}catch(e){}
 function printListina(){
   var R=state.roster;
-  var rh=Math.max(5.5,Math.min(10,195/Math.max(1,R.length))).toFixed(1);
-  var rows=R.map(function(u){return '<tr style="height:'+rh+'mm"><td>'+esc(u.unit)+'</td><td>'+esc(u.owner||'')+'</td><td class="nw">'+podilFr(+u.podil||0)+'</td><td class="nw" style="text-align:right">'+fmtP(+u.podil||0)+'</td><td></td><td></td></tr>';}).join("");
-  printBox('<h1>Prezenční listina</h1><p class="pc">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p>'+
-    '<p class="pc">Schůze: ..................................................... &nbsp; Datum: ..........................</p>'+
-    '<table><thead><tr><th style="width:26mm">Jedn.</th><th>Vlastník</th><th style="width:21mm">Podíl</th><th style="width:11mm;text-align:right">%</th><th style="width:40mm">Podpis</th><th style="width:34mm">Plná moc / zmocněnec</th></tr></thead><tbody>'+rows+'</tbody></table>'+
-    '<p class="pn">Celkem '+R.length+' jednotek · součet podílů '+fmt(rosterSum())+' %. Zmocněnec předloží písemnou plnou moc; jeden zmocněnec může zastupovat jen jednoho vlastníka.</p>'+
+  var rh=Math.max(6.5,Math.min(11,192/Math.max(1,R.length))).toFixed(1);
+  var rows=R.map(function(u){return '<tr style="height:'+rh+'mm"><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td class="o">'+ownersHtml(u)+'</td><td class="p">'+podilFr(+u.podil||0)+'<small>'+fmtP(+u.podil||0)+' %</small></td><td></td><td></td></tr>';}).join("");
+  printBox('<h1>Prezenční listina</h1><p class="pc">Shromáždění vlastníků jednotek · SVJ v domě č.p. 2553 a 2554, Praha 3</p>'+
+    '<div class="phead"><span>Schůze:</span><span>Datum:</span></div>'+
+    '<table><colgroup><col style="width:28mm"><col><col style="width:23mm"><col style="width:37mm"><col style="width:33mm"></colgroup><thead><tr><th>Jednotka</th><th>Vlastník</th><th>Podíl</th><th>Zástupce</th><th>Podpis</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+    '<p class="pn">Celkem '+R.length+' jednotek, součet podílů '+fmt(rosterSum())+' %. Do sloupce Zástupce čitelně uveďte, kdo za jednotku podepisuje a hlasuje. Zmocněnec, který není vlastníkem jednotky, předloží písemnou plnou moc; jeden zmocněnec může zastupovat jen jednoho vlastníka.</p>'+
     '<div class="psig"><div>Zapisovatel</div><div>Předsedající</div></div>',true,"Prezenční listina");
 }
 function printTasks(){
