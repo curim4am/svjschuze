@@ -59,8 +59,11 @@ function app(modify) {
     absent: (units) => { units.forEach((u) => { const id = a.unitId(u); if (a.M().att[id].present) w.eval(`togglePresent(${id})`); }); },
     startButton: () => a.button(/Zahájit hlasování/),
     // zahájí hlasování přes formulář, jako by klikal uživatel
-    startVote: (text, type) => {
+    // bod programu: "p1"… (body z Přípravy), "elect" (volba orgánů schůze), "off" (mimo program)
+    pickProg: (val) => { const sel = d.getElementById("vProg"); sel.value = val; sel.dispatchEvent(new w.Event("change", { bubbles: true })); },
+    startVote: (text, type, prog) => {
       w.eval("setTab('hlasovani')");
+      if (d.getElementById("vProg")) a.pickProg(prog || "p1");
       d.getElementById("vText").value = text;
       d.querySelector(`input[name="vType"][value="${type}"]`).checked = true;
       a.startButton().click();
@@ -263,6 +266,95 @@ test("O3: starší uzavřená usnesení se nemění", () => {
   const before = JSON.parse(DEMO).meetings.find((m) => m.id === CLOSED_ID).votes;
   const a = app(); a.ev(`openMeeting(${CLOSED_ID})`);
   eq(JSON.stringify(a.state().meetings.find((m) => m.id === CLOSED_ID).votes), JSON.stringify(before), "usnesení ukončené schůze");
+});
+
+// =============== KROK 3: průvodce většinou, bod programu ===============
+const radioType = (a) => (a.d.querySelector('input[name="vType"]:checked') || {}).value;
+const pickSubj = (a, label) => {
+  const sel = a.d.getElementById("vSubj"), o = [...sel.options].find((x) => x.textContent === label);
+  if (!o) throw new Error("není volba „" + label + "“"); sel.value = o.value; sel.dispatchEvent(new a.w.Event("change", { bubbles: true }));
+};
+test("N1: „O čem se hlasuje“ nastaví většinu a ukáže článek stanov", () => {
+  const a = app(); a.open(); a.present(SET_6597); a.ev("setTab('hlasovani')");
+  const cases = [
+    ["Účetní závěrka a zpráva o hospodaření", "prosta", "čl. VI A odst. 3"],
+    ["Změna stanov, domovního řádu nebo směrnic", "ctvrt", "čl. VI A odst. 4"],
+    ["Modernizace a rekonstrukce zvyšující hodnotu (zateplení, okna)", "ctvrt", "čl. VI A odst. 4"],
+    ["Volba člena výboru", "nadpvse", "čl. VI A odst. 5"],
+    ["Změna podílů nebo poměru příspěvků do fondu oprav", "vsichni", "čl. VI A odst. 6"],
+  ];
+  cases.forEach(([label, type, art]) => {
+    pickSubj(a, label);
+    eq(radioType(a), type, "většina pro „" + label + "“");
+    has(a.d.getElementById("vSubjArt").textContent, art, "článek pro „" + label + "“");
+  });
+});
+test("N1: nabídka obsahuje všechny okruhy ze stanov (4 skupiny, 21 položek)", () => {
+  const a = app(); a.open(); a.present(SET_6597); a.ev("setTab('hlasovani')");
+  const groups = [...a.d.querySelectorAll("#vSubj optgroup")];
+  eq(groups.length, 4, "skupiny");
+  eq(groups.map((g) => g.querySelectorAll("option").length).join(","), "8,8,2,3", "položky ve skupinách");
+  const all = [...a.d.querySelectorAll("#vSubj option")].map((o) => o.textContent);
+  ["Běžná správa domu", "Volba orgánů schůze", "Úvěr", "Odměny výboru", "Jiné", "Zástavní právo k jednotce", "Členství v právnické osobě", "Změna účelu užívání stavby", "Změna stavby"].forEach((x) => ok(all.includes(x), "chybí „" + x + "“"));
+});
+test("N1: většinu lze po výběru ručně změnit", () => {
+  const a = app(); a.open(); a.present(SET_6597);
+  a.ev("setTab('hlasovani')"); a.pickProg("p2");
+  pickSubj(a, "Změna stanov, domovního řádu nebo směrnic");
+  a.d.querySelector('input[name="vType"][value="prosta"]').checked = true;
+  a.d.getElementById("vText").value = "Ručně prostá většina";
+  a.startButton().click(); a.cast(SET_6597, "NE"); a.closeVote();
+  eq(a.lastVote().type, "prosta", "uložený typ většiny");
+});
+
+test("O5: nabídka bodů programu = body z Přípravy + Mimo program (volba orgánů už v programu je)", () => {
+  const a = app(); a.open(); a.present(SET_6597); a.ev("setTab('hlasovani')");
+  const opts = [...a.d.querySelectorAll("#vProg option")].filter((o) => o.value).map((o) => o.textContent);
+  eq(JSON.stringify(opts), JSON.stringify(["1. Volba orgánů schůze", "2. Oprava střechy – výběr zhotovitele", "3. Zvýšení příspěvku do fondu oprav od 1. 1. 2027", "4. Různé", "Mimo program"]), "body programu");
+});
+test("O5: bez programu v Přípravě se nabídne Volba orgánů schůze a Mimo program", () => {
+  const a = app((d) => { d.meetings.find((m) => m.id === OPEN_ID).zapis.program = ""; });
+  a.open(); a.present(SET_6597); a.ev("setTab('hlasovani')");
+  const opts = [...a.d.querySelectorAll("#vProg option")].filter((o) => o.value).map((o) => o.textContent);
+  eq(JSON.stringify(opts), JSON.stringify(["Volba orgánů schůze", "Mimo program"]), "body programu");
+});
+test("O5: bez vybraného bodu programu hlasování nezačne", () => {
+  const a = app(); a.open(); a.present(SET_6597); a.ev("setTab('hlasovani')");
+  a.d.getElementById("vText").value = "Bez bodu programu";
+  a.startButton().click();
+  eq(a.M().current, null, "hlasování nesmí začít");
+  has(a.view(), "Vyberte bod programu");
+});
+test("O5: bod programu se uloží do snímku a uvede v protokolu", () => {
+  const a = app(); a.open(); a.present(SET_6597);
+  a.startVote("Shromáždění schvaluje zhotovitele střechy.", "prosta", "p2"); a.cast(SET_6597, "NE"); a.closeVote();
+  eq(JSON.stringify(a.lastVote().snap.prog), JSON.stringify({ num: 2, text: "Oprava střechy – výběr zhotovitele" }), "snap.prog");
+  has(usnBlocks(a.proto(OPEN_ID)).pop(), "Bod programu: 2. Oprava střechy – výběr zhotovitele");
+});
+test("O5: Mimo program – bez 100 % přítomných je hlasování neaktivní i se souhlasem", () => {
+  const a = app(); a.open(); a.present(SET_6597); a.ev("setTab('hlasovani')");
+  a.pickProg("off");
+  const chk = a.d.getElementById("vOff"); chk.checked = true; chk.dispatchEvent(new a.w.Event("change", { bubbles: true }));
+  ok(a.startButton().disabled, "tlačítko má být neaktivní");
+  has(a.startButton().parentElement.textContent, "100 %", "vysvětlení");
+  a.d.getElementById("vText").value = "Mimo program"; a.ev("startVote()");
+  eq(a.M().current, null, "hlasování nesmí začít");
+});
+test("O5: Mimo program – při 100 % přítomných až po zaškrtnutí souhlasu všech", () => {
+  const a = app(); a.open(); a.ev("setAllPresent(true)"); a.ev("setTab('hlasovani')");
+  a.pickProg("off");
+  ok(a.startButton().disabled, "bez souhlasu neaktivní");
+  has(a.view(), "Všichni vlastníci souhlasí s projednáním bodu mimo program (čl. VI D odst. 2 stanov)");
+  const chk = a.d.getElementById("vOff"); chk.checked = true; chk.dispatchEvent(new a.w.Event("change", { bubbles: true }));
+  ok(!a.startButton().disabled, "se souhlasem aktivní");
+  a.d.getElementById("vText").value = "Shromáždění schvaluje věc mimo program.";
+  a.startButton().click(); a.cast(a.M().roster.map((u) => u.unit), "NE"); a.closeVote();
+  eq(JSON.stringify(a.lastVote().snap.prog), JSON.stringify({ off: true }), "snap.prog");
+  has(usnBlocks(a.proto(OPEN_ID)).pop(), "Mimo program – se souhlasem všech vlastníků");
+});
+test("O5: starší usnesení bez bodu programu – protokol bod neuvádí", () => {
+  const a = app();
+  usnBlocks(a.proto(CLOSED_ID)).forEach((b) => { hasNot(b, "Bod programu"); hasNot(b, "Mimo program"); });
 });
 
 // ---------- běh ----------
