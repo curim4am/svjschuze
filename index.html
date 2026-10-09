@@ -617,17 +617,10 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol .phd .orgs{font-size:.74rem;color:#666;margin-top:2px}
 #protokol h1{color:var(--primary)}
 #protokol .psub{text-align:center;font-size:.76rem;color:#666;margin:0 0 4px}
-#protokol .pbox{border:1px solid #d9dee6;border-radius:6px;background:#f7f9fc;padding:10px 14px 6px;margin:16px 0 6px}
-#protokol .pbox .pbt{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);margin:0 0 4px}
-#protokol .pbox p{margin:2px 0;font-size:.86rem}
-#protokol .pbox table.lp{margin:8px 0 2px}
-#protokol .pbox table.lp tbody tr:nth-child(even) td{background:#fff}
-#protokol .pbox td.zn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal}
-#protokol .pbox td.ok{color:var(--success);font-weight:700}#protokol .pbox td.ko{color:var(--danger);font-weight:700}
 #protokol table.porg{width:auto;margin:4px 0}#protokol table.porg td{border:none;padding:2px 14px 2px 0;font-size:.86rem;vertical-align:top}
 #protokol table.psig{table-layout:fixed;margin:8px 0}#protokol table.psig th{border:0;border-bottom:1px solid #b9c3d3;font-size:.74rem;color:#333;background:none}
 #protokol table.psig td{border:0;border-bottom:1px solid #9aa3b0;height:34px;vertical-align:bottom;padding:4px 8px}
-#protokol.bw h1,#protokol.bw .phd .org,#protokol.bw .pbox .pbt,#protokol.bw .pbox td.ok,#protokol.bw .pbox td.ko{color:#111}
+#protokol.bw h1,#protokol.bw .phd .org{color:#111}
 #usnprint,#printbox{display:none}
 
 /* =====================================================================
@@ -1632,20 +1625,15 @@ function protoDoc(m,full){
   function sec(t){n++;return '<h2>'+n+'. '+t+'</h2>';}
   function row(l,v){return '<tr><td class="pl">'+l+'</td><td>'+v+'</td></tr>';}
   function nj(k){return k+' '+pl(k,'jednotka','jednotky','jednotek');}
-  var dots='………………………',v1=m.votes[0],s1=v1&&v1.snap,nA=m.votes.filter(function(v){return v.result;}).length;
+  var dots='………………………',v1=m.votes[0],s1=v1&&v1.snap;
   // hlavička
   var H='<style>@page{@bottom-center{content:"Zápis ze shromáždění dne '+dateCz(m.date)+' · strana " counter(page) " / " counter(pages);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;font-size:8.5pt;color:#666}}</style>'+
     '<div class="phd"><div class="org">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</div><div class="orgs">IČO 26781816 · sídlo Buková 2553/4, 130 00 Praha 3 · spisová značka S 3907 vedená u Městského soudu v Praze</div></div>'+
     '<h1>Zápis ze shromáždění vlastníků jednotek</h1><p class="psub">podle § 254 a § 1221 OZ a čl. VI D odst. 3 stanov</p>'+
     '<table class="pinfo">'+row("Datum",dateCz(m.date))+row("Čas",'zahájení '+(m.time?esc(m.time):dots)+' · ukončení '+(m.endTime?esc(m.endTime):dots))+(z.place?row("Místo",esc(z.place)):'')+row("Druh",esc(m.type||''))+'</table>'+
     (m.reopened?'<p class="rd center">Pozn.: zápis byl po ukončení schůze opraven ('+esc(m.reopened)+').</p>':'');
-  // přehled na první pohled
+  // usnášeníschopnost při zahájení = snímek prvního hlasování
   var qs=s1?{pres:Math.round(s1.tot>0?s1.pres/s1.tot*JMEN:0),pct:s1.tot>0?s1.pres/s1.tot*100:0,q:voteQuorate(v1),when:'při zahájení'}:{pres:Math.round(tot>0?pp/tot*JMEN:0),pct:tot>0?pp/tot*100:0,q:q,when:'na konci'};
-  H+='<div class="pbox keep"><p class="pbt">Přehled</p><p><b>Usnášeníschopnost:</b> přítomno '+qs.pres+' z '+JMEN+' hlasů = '+fmt(qs.pct)+' % ('+qs.when+') – '+(qs.q?'usnášeníschopné':'neusnášeníschopné')+'</p>'+
-    '<p><b>Usnesení:</b> '+(m.votes.length?m.votes.length+' '+pl(m.votes.length,'usnesení','usnesení','usnesení')+': '+nA+' přijato, '+(m.votes.length-nA)+' nepřijato':'Na shromáždění se nehlasovalo.')+'</p>'+
-    (m.votes.length?'<table class="ptab lp"><colgroup><col style="width:7%"><col style="width:27%"><col><col style="width:15%"></colgroup><thead><tr><th>Č.</th><th>Bod programu</th><th>Znění</th><th>Výsledek</th></tr></thead><tbody>'+
-      m.votes.map(function(v){var p=v.snap&&v.snap.prog,b=!p?'—':p.off?'Mimo program':p.elect?'Volba orgánů schůze':p.num+'. '+esc(p.text||'');
-        return '<tr><td>'+v.num+'</td><td>'+b+'</td><td class="zn">'+esc(clip(v.text||'',110))+'</td><td class="nw '+(v.result?'ok':'ko')+'">'+(v.result?'✓ přijato':'✗ nepřijato')+'</td></tr>';}).join("")+'</tbody></table>':'')+'</div>';
   // 1. svolání a orgány schůze
   var days=z.invDate&&m.date?Math.round((Date.parse(m.date)-Date.parse(z.invDate))/86400000):null;
   H+=sec("Svolání a orgány schůze")+'<table class="porg">'+row("Svolavatel",esc(convText(z)))+

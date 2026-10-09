@@ -464,39 +464,26 @@ test("zápis: číslované sekce ve správném pořadí, přílohy na konci", ()
   const f = P(a.proto(CLOSED_ID));
   eq([...f.querySelectorAll("h2.appx")].length, 1, "příloha začíná na nové stránce (h2.appx)");
 });
+test("zápis: po hlavičce hned 1. sekce (bez boxu Přehled)", () => {
+  const a = app(), f = P(a.proto(CLOSED_ID)), t = f.querySelector("table.pinfo");
+  let n = t.nextElementSibling; while (n && n.tagName === "P") n = n.nextElementSibling;
+  eq(n && n.textContent.trim(), "1. Svolání a orgány schůze", "prvek po hlavičce");
+});
 test("zápis: hlavička – SVJ, IČO, sídlo, spisová značka, nadpis, datum, čas, místo, druh", () => {
   const a = app(), f = P(a.proto(CLOSED_ID)), t = f.textContent.replace(/\s+/g, " ");
   has(t, "Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3"); has(t, "IČO 26781816"); has(t, "sídlo Buková 2553/4, 130 00 Praha 3"); has(t, "spisová značka S 3907 vedená u Městského soudu v Praze");
   eq(f.querySelector("h1").textContent, "Zápis ze shromáždění vlastníků jednotek", "nadpis");
   eq(JSON.stringify(rowsText(f.querySelector("table.pinfo"))), JSON.stringify(["Datum | 16. 4. 2026", "Čas | zahájení 18:00 · ukončení 19:55", "Místo | velká sušárna", "Druh | Řádné shromáždění"]), "údaje");
 });
-test("zápis: přehled na první pohled – usnášeníschopnost, počty usnesení, tabulka usnesení", () => {
-  const a = app(), box = P(a.proto(CLOSED_ID)).querySelector(".pbox");
-  ok(box, "box přehledu"); const t = box.textContent.replace(/\s+/g, " ");
-  has(t, "přítomno 10758 z 13193 hlasů = 81,54 % (při zahájení) – usnášeníschopné");
-  has(t, "5 usnesení: 4 přijato, 1 nepřijato");
-  const rows = rowsText(box.querySelector("table"));
-  eq(rows[0], "Č. | Bod programu | Znění | Výsledek", "záhlaví");
-  eq(rows.length, 6, "řádky");
-  ok(/^1 \| — \| Shromáždění volí předsedajícím Jana Nováka/.test(rows[1]) && rows[1].endsWith("| ✓ přijato"), "usnesení č. 1: " + rows[1]);
-  ok(rows[5].startsWith("5 | — | Shromáždění schvaluje instalaci kamerového systému") && rows[5].endsWith("| ✗ nepřijato"), "usnesení č. 5: " + rows[5]);
-});
 test("zápis: při zahájení = stav při 1. hlasování, na konci = stav prezence; plné moci", () => {
   const a = app(); a.open(); a.present(SET_6597);
   a.startVote("Volba orgánů", "prosta", "p1"); a.cast(SET_6597, "NE"); a.closeVote();
   a.present(["2553/01"]); // přišla později: 6597 + 529 = 7126
-  const f = P(a.proto(OPEN_ID)), box = f.querySelector(".pbox").textContent.replace(/\s+/g, " ");
-  has(box, "přítomno 6597 z 13193 hlasů = 50,0 % (při zahájení) – usnášeníschopné");
-  has(rowsText(f.querySelector(".pbox table"))[1], "1 | 1. Volba orgánů schůze | Volba orgánů | ✓ přijato");
+  const f = P(a.proto(OPEN_ID));
   const sec = f.textContent.replace(/\s+/g, " ").split("2. Usnášeníschopnost")[1].split("3. Průběh")[0];
   has(sec, "Při zahájení (při hlasování o usnesení č. 1): přítomno 12 jednotek s 6597 z 13193 hlasů (50,0 %)");
   has(sec, "Na konci: přítomno 13 z 25 jednotek s 7126 z 13193 hlasů, tj. 54,01 % všech hlasů");
   has(sec, "na základě plné moci 0 jednotek"); has(sec, "§ 1206 odst. 1 OZ");
-});
-test("zápis: bez hlasování – přehled uvádí stav na konci", () => {
-  const a = app(); a.open(); a.present(SET_6596);
-  const box = P(a.proto(OPEN_ID)).querySelector(".pbox").textContent.replace(/\s+/g, " ");
-  has(box, "přítomno 6596 z 13193 hlasů = 50,0 % (na konci) – neusnášeníschopné"); has(box, "Na shromáždění se nehlasovalo.");
 });
 test("zápis: usnášeníschopnost – plné moci ze svjdemo.json", () => {
   const a = app(), t = P(a.proto(CLOSED_ID)).textContent.replace(/\s+/g, " ");
