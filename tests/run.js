@@ -135,6 +135,7 @@ test("všichni: všech 25 jednotek ANO = přijato", () => {
   const a = app(); a.open(); a.ev("setAllPresent(true)");
   a.startVote("Všichni – přijato", "vsichni"); a.cast(a.M().roster.map((u) => u.unit), "NE"); a.closeVote();
   eq(a.lastVote().result, true, "výsledek");
+  eq(grey(usnEls(a.proto(OPEN_ID))[0])[1], "Přítomno 100,0 % hlasů (usnášeníschopné) · souhlas všech vlastníků · " + a.lastVote().time, "řádek v protokolu");
 });
 test("všichni: jedna jednotka se zdrží = nepřijato", () => {
   const a = app(); a.open(); a.ev("setAllPresent(true)");
@@ -193,7 +194,7 @@ test("O1: ztráta usnášeníschopnosti během hlasování → NEPŘIJATO s dův
   const v = a.lastVote();
   eq(v.result, false, "výsledek"); eq(v.reason, "shromáždění nebylo usnášeníschopné", "důvod");
   const el = usnEls(a.proto(OPEN_ID)).pop();
-  has(el.textContent, "NEPŘIJATO"); has(grey(el)[1], "% hlasů – neusnášeníschopné");
+  has(el.textContent, "NEPŘIJATO"); has(grey(el)[1], "% hlasů (neusnášeníschopné)");
 });
 
 // V1: příznak usnášeníschopnosti ve snímku a v protokolu
@@ -210,7 +211,7 @@ test("V1: protokol u každého usnesení uvádí usnášeníschopné / neusnáš
   a.startVote("B", "prosta"); a.cast(SET_6597, "NE"); a.absent([GARAZ]); a.closeVote();
   const b = usnBlocks(a.proto(OPEN_ID));
   eq(b.length, 2, "počet usnesení");
-  has(b[0], "% hlasů – usnášeníschopné"); has(b[1], "% hlasů – neusnášeníschopné");
+  has(b[0], "% hlasů (usnášeníschopné)"); has(b[1], "% hlasů (neusnášeníschopné)");
 });
 test("V1: stará usnesení bez příznaku – dopočet ze snap.pres/snap.tot", () => {
   const a = app((d) => {
@@ -220,8 +221,8 @@ test("V1: stará usnesení bez příznaku – dopočet ze snap.pres/snap.tot", (
   });
   const b = usnBlocks(a.proto(CLOSED_ID));
   eq(b.length, 6, "počet usnesení");
-  for (let i = 0; i < 5; i++) has(b[i], "přítomno 81,54 % hlasů – usnášeníschopné", "usnesení č. " + (i + 1) + " (10758 z 13193)");
-  has(b[5], "přítomno 50,0 % hlasů – neusnášeníschopné", "usnesení se 6596 z 13193");
+  for (let i = 0; i < 5; i++) has(b[i], "Přítomno 81,54 % hlasů (usnášeníschopné)", "usnesení č. " + (i + 1) + " (10758 z 13193)");
+  has(b[5], "Přítomno 50,0 % hlasů (neusnášeníschopné)", "usnesení se 6596 z 13193");
 });
 
 // =============== Výchozí hlas „Zdržel se“ ===============
@@ -391,7 +392,7 @@ test("blok usnesení: záhlaví, bod programu, znění, dva šedé řádky", () 
     // 10 ANO = 5359, 2 NE = 1238 z 6597 přítomných; přítomno 6597 z 13193
     eq(JSON.stringify(grey(el)), JSON.stringify([
       "PRO 10 (81,23 %) · PROTI 2 (18,77 %) · ZDRŽEL SE 0 (0,0 %) z hlasů přítomných",
-      "potřebná většina: Prostá většina přítomných (> 50 %) · přítomno 50,0 % hlasů – usnášeníschopné · hlasováno v " + time,
+      "Přítomno 50,0 % hlasů (usnášeníschopné) · prostá většina přítomných · " + time,
     ]), "šedé řádky (" + v + ")");
   });
 });
@@ -404,7 +405,7 @@ test("blok usnesení: většina všech, neusnášeníschopné, nepřijato", () =
   // ze všech hlasů: ANO 685/13193, ZDRŽEL SE 5199/13193; přítomno 5884 z 13193
   eq(JSON.stringify(grey(el)), JSON.stringify([
     "PRO 1 (5,19 %) · PROTI 0 (0,0 %) · ZDRŽEL SE 10 (39,41 %) z hlasů všech vlastníků",
-    "potřebná většina: Nadpoloviční většina VŠECH vlastníků (> 50 %) · přítomno 44,6 % hlasů – neusnášeníschopné · hlasováno v " + time,
+    "Přítomno 44,6 % hlasů (neusnášeníschopné) · většina všech vlastníků · " + time,
   ]), "šedé řádky");
 });
 test("blok usnesení: starší usnesení ze svjdemo.json – bez řádku bodu programu", () => {
@@ -414,8 +415,10 @@ test("blok usnesení: starší usnesení ze svjdemo.json – bez řádku bodu pr
   // 19 ANO = 10250, 1 ZDRŽEL SE = 508 z 10758 přítomných
   eq(JSON.stringify(grey(els[0])), JSON.stringify([
     "PRO 19 (95,28 %) · PROTI 0 (0,0 %) · ZDRŽEL SE 1 (4,72 %) z hlasů přítomných",
-    "potřebná většina: Prostá většina přítomných (> 50 %) · přítomno 81,54 % hlasů – usnášeníschopné · hlasováno v 18:07",
+    "Přítomno 81,54 % hlasů (usnášeníschopné) · prostá většina přítomných · 18:07",
   ]), "šedé řádky");
+  eq(grey(els[2])[1], "Přítomno 81,54 % hlasů (usnášeníschopné) · tříčtvrtinová většina přítomných · 18:51", "¾ přítomných");
+  eq(grey(els[3])[1], "Přítomno 81,54 % hlasů (usnášeníschopné) · většina všech vlastníků · 19:12", "většina všech");
 });
 
 // ---------- běh ----------

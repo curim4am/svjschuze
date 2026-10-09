@@ -1589,9 +1589,11 @@ function usnP(x,s){var b=s.base>0?s.base:s.pres;return fmt(b>0?(x||0)/b*100:0);}
 function usnBaseTxt(v){return (TYPES[v.type]||TYPES.prosta).base==="all"?"z hlasů všech vlastníků":"z hlasů přítomných";}
 function protoVote(x){return x==="ANO"||x==="NE"?x:"ZDRŽEL SE";}
 function progTxt(p){return !p?'':p.off?'Mimo program – se souhlasem všech vlastníků':p.elect?'Bod programu: Volba orgánů schůze':'Bod programu: '+p.num+'. '+esc(p.text||'');}
+// název většiny v protokolu (malým písmem, bez procent)
+var TSHORT={prosta:"prostá většina přítomných",ctvrt:"tříčtvrtinová většina přítomných",nadpvse:"většina všech vlastníků",vsichni:"souhlas všech vlastníků"};
 function protoUsn(v){var s=v.snap,pt=s.tot>0?s.pres/s.tot*100:0;
   return '<div class="usn keep '+(v.result?'ok':'ko')+'"><div class="uh"><b>Usnesení č. '+v.num+'</b><span class="ub">'+(v.result?'✓ PŘIJATO':'✗ NEPŘIJATO')+'</span></div>'+(s.prog?'<p class="pres uprog">'+progTxt(s.prog)+'</p>':'')+'<p class="ut">'+esc(v.text||'(bez textu)')+'</p>'+
-    '<p class="pres">PRO '+s.cA+' ('+usnP(s.ano,s)+' %) · PROTI '+s.cN+' ('+usnP(s.ne,s)+' %) · ZDRŽEL SE '+s.cZ+' ('+usnP(s.zdr,s)+' %) '+usnBaseTxt(v)+'<br>potřebná většina: '+esc(s.typeLabel)+' · přítomno '+fmt(pt)+' % hlasů – '+(voteQuorate(v)?'usnášeníschopné':'neusnášeníschopné')+(v.time?' · hlasováno v '+esc(v.time):'')+'</p></div>';}
+    '<p class="pres">PRO '+s.cA+' ('+usnP(s.ano,s)+' %) · PROTI '+s.cN+' ('+usnP(s.ne,s)+' %) · ZDRŽEL SE '+s.cZ+' ('+usnP(s.zdr,s)+' %) '+usnBaseTxt(v)+'<br>Přítomno '+fmt(pt)+' % hlasů ('+(voteQuorate(v)?'usnášeníschopné':'neusnášeníschopné')+') · '+(TSHORT[v.type]||TSHORT.prosta)+(v.time?' · '+esc(v.time):'')+'</p></div>';}
 function protoDoc(m,full){
   var z=zOf(m),tot=totalPodil(m),pp=presentPodil(m),q=isQuorate(m),pres=presentUnits(m),n=0;
   function sec(t){n++;return '<h2>'+n+'. '+t+'</h2>';}
