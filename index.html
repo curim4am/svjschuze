@@ -815,7 +815,7 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
     <header class="topbar" id="topbar"></header>
     <div id="sysbar"></div>
     <main class="wrap" id="app" tabindex="-1"></main>
-    <footer class="foot">Vytvořeno pro SVJ Buková 2553 a 2554 · © 2026 curim4am</footer>
+    <footer class="foot">Vytvořeno pro SVJ Buková 2553 a 2554 · © 2026 curim4am · <a href="https://www.svjbukova.cz" target="_blank" rel="noopener">www.svjbukova.cz</a></footer>
   </div>
 </div>
 <nav class="tabbar" id="tabbar" aria-label="Hlavní navigace"></nav>
@@ -956,7 +956,7 @@ function tally(m,v){
   var T=TYPES[v.type]||TYPES.prosta,base=T.base==="all"?tot:pres,ratio=base>0?ano/base:0,q=isQuorate(m);
   return {ano:ano,ne:ne,zdr:zdr,cA:cA,cN:cN,cZ:cZ,tot:tot,pres:pres,base:base,ratio:ratio,quorate:q,passed:q&&pass(T.op,ratio,T.thr),T:T};
 }
-// usnášeníschopnost při hlasování (§ 1206 odst. 1 OZ); starší usnesení bez příznaku se dopočítají ze snímku
+// usnášeníschopnost při hlasování (§ 1206 odst. 2 OZ); starší usnesení bez příznaku se dopočítají ze snímku
 var NOQ="shromáždění nebylo usnášeníschopné";
 function voteQuorate(v){var s=v.snap||{};return s.quorate!==undefined?!!s.quorate:(s.tot>0&&s.pres/s.tot>QUORUM);}
 function rosterSum(){return state.roster.reduce(function(a,u){return a+(+u.podil||0);},0);}
@@ -1447,7 +1447,7 @@ function tabHlasovani(m){
   if(m.current)return liveVote(m);
   var n=presentUnits(m).length,q=isQuorate(m),num=m.votes.length+1;
   var warn=!n?callout("warning","users",'Nejdřív v <button class="linkbtn" onclick="setTab(\'prezence\')">prezenci</button> označte přítomné – hlasují jen přítomní.')
-    :(!q?callout("warning","alert",'Schůze teď není usnášeníschopná ('+fmt(pct(m))+' % podílů, potřeba více než 50 % – § 1206 odst. 1 OZ). Hlasovat lze až za přítomnosti vlastníků s většinou všech hlasů.'):'');
+    :(!q?callout("warning","alert",'Schůze teď není usnášeníschopná ('+fmt(pct(m))+' % podílů, potřeba více než 50 % – § 1206 odst. 2 OZ). Hlasovat lze až za přítomnosti vlastníků s většinou všech hlasů.'):'');
   var prog=programOf(m),elect=electionText(m),first=!m.votes.length,pre=first?elect:"";
   if(first)warn+=elect?callout("info","check",'Návrh prvního usnesení je předvyplněný podle <button class="linkbtn" onclick="setTab(\'priprava\')">Přípravy</button> – volba předsedajícího, zapisovatele a ověřovatele. Text můžete upravit.')
     :callout("neutral","users",'Vyberte v <button class="linkbtn" onclick="setTab(\'priprava\')">Přípravě</button> předsedajícího, zapisovatele a ověřovatele – návrh jejich volby se sem předvyplní sám.');
@@ -1627,7 +1627,7 @@ function protoDoc(m,full){
     '<table class="pinfo">'+row("Datum a čas",dateCz(m.date)+(m.time?', '+esc(m.time):'')+(m.endTime?' – ukončeno '+esc(m.endTime):''))+row("Druh",esc(m.type||''))+(z.place?row("Místo",esc(z.place)):'')+row("Svolavatel",esc(convText(z)))+row("Svolání",(z.invDate?'pozvánkou ze dne '+dateCz(z.invDate):'pozvánkou ze dne '+dots)+(waysText(z)?', '+esc(waysText(z)):''))+(z.opener?row("Zahájil(a)",pLabel(m,z.opener)):'')+row("Předsedající",pLabel(m,z.chair)||dots)+row("Zapisovatel",pLabel(m,m.zapisovatel)||dots)+row("Ověřovatel",pLabel(m,z.verifier)||dots)+
     (committeeOf(m).length?row("Výbor SVJ",committeeOf(m).map(function(c){return esc(String(c.name).trim())+' ('+esc(c.role||'člen výboru')+')';}).join(', ')):'')+'</table>'+
     (m.reopened?'<p class="rd">Pozn.: protokol byl po ukončení schůze opraven ('+esc(m.reopened)+').</p>':'');
-  H+=sec("Prezence a usnášeníschopnost")+'<p>Přítomno <b>'+pres.length+' z '+m.roster.length+'</b> jednotek s <b>'+Math.round(tot>0?pp/tot*JMEN:0)+' z '+JMEN+'</b> hlasů, tj. <b>'+fmt(tot>0?pp/tot*100:0)+' %</b> všech hlasů (podílů). Shromáždění <b>'+(q?'bylo usnášeníschopné':'nebylo usnášeníschopné')+'</b> (potřeba přítomnost vlastníků s většinou všech hlasů – § 1206 odst. 1 OZ, čl. VI A odst. 3 stanov). Hlasuje se podle velikosti podílů na společných částech; spoluvlastníci a manželé hlasují jedním společným zástupcem (čl. VI A odst. 2 stanov). Listina přítomných je na konci protokolu.</p>';
+  H+=sec("Prezence a usnášeníschopnost")+'<p>Přítomno <b>'+pres.length+' z '+m.roster.length+'</b> jednotek s <b>'+Math.round(tot>0?pp/tot*JMEN:0)+' z '+JMEN+'</b> hlasů, tj. <b>'+fmt(tot>0?pp/tot*100:0)+' %</b> všech hlasů (podílů). Shromáždění <b>'+(q?'bylo usnášeníschopné':'nebylo usnášeníschopné')+'</b> (potřeba přítomnost vlastníků s většinou všech hlasů – § 1206 odst. 2 OZ, čl. VI A odst. 3 stanov). Hlasuje se podle velikosti podílů na společných částech; spoluvlastníci a manželé hlasují jedním zmocněncem z jejich středu (čl. VI A odst. 2 stanov). Listina přítomných je přílohou zápisu.</p>';
   // 3. průběh a usnesení
   var nh=notesHtml(z.notes,false);
   H+=sec("Průběh jednání a usnesení")+(nh?'<div class="znotes">'+nh+'</div>':'')+(m.votes.length?m.votes.map(protoUsn).join(''):'<p>Na shromáždění se nehlasovalo.</p>');

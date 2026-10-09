@@ -19,7 +19,7 @@ Repozitář: https://github.com/curim4am/svjschuze
 - Data jen v `localStorage` (klíč `svj_schuze`, demo `svj_schuze_demo`); zálohy jako `.json`.
 - Demo verze se sestavuje skriptem z `index.html` + `svjdemo.json` (vloží data, změní klíč, přidá lištu „Demo verze“ a skryje „Začít načisto“).
 - **GDPR:** zálohy `.json` nikdy nezveřejňovat ani nenahrávat na GitHub (obsahují jména a podíly). Na GitHub Pages jen `index.html`.
-- Patička: `© 2026 curim4am`.
+- Patička: `© 2026 curim4am · www.svjbukova.cz` (odkaz). Do hlavičky protokolu web až po potvrzení výborem.
 - Jednotky a podíly jsou pevné podle prohlášení vlastníka: 25 jednotek (24 bytů + garáž 2554/13), jmenovatel **13 193**. Za garáž (4 spoluvlastníci) hlasuje jeden z nich – vybírá se v Prezenci.
 - Před předáním změn: kontrola syntaxe JS (`node --check`) a testy `node tests/run.js`.
 
@@ -40,7 +40,7 @@ Detail schůze – záložky: neukončená **Příprava → Prezence → Hlasov�
 - **Zápis**: průběh a poznámky, čas ukončení (vyplní se při „Ukončit schůzi“, lze upravit), námitky, přílohy (4 zaškrtávací standardní – výchozí všechny – a „Další přílohy“ po řádcích).
 - **Zamykání**: po ukončení lze měnit jen záložku Zápis; vše ostatní až po „Odemknout pro opravu“ (v protokolu se uvede oprava).
 - **Snímek**: neukončená schůze bere jména vlastníků i výbor z Nastavení; při ukončení si je uloží. Staré schůze (i po odemčení) se nedoplňují.
-- **Usnášeníschopnost** (§ 1206 odst. 1 OZ, čl. VI A odst. 3): přítomné podíly > 50 % všech. Bez ní je „Zahájit hlasování“ neaktivní s vysvětlením. Klesne-li během hlasování, uzavřené usnesení je NEPŘIJATO s důvodem `reason` „shromáždění nebylo usnášeníschopné“ (dialog uzavření to ukáže předem). Snímek hlasování má `snap.quorate`; u starších usnesení se dopočítá ze `snap.pres/snap.tot`.
+- **Usnášeníschopnost** (§ 1206 odst. 2 OZ, čl. VI A odst. 3): přítomné podíly > 50 % všech. Bez ní je „Zahájit hlasování“ neaktivní s vysvětlením. Klesne-li během hlasování, uzavřené usnesení je NEPŘIJATO s důvodem `reason` „shromáždění nebylo usnášeníschopné“ (dialog uzavření to ukáže předem). Snímek hlasování má `snap.quorate`; u starších usnesení se dopočítá ze `snap.pres/snap.tot`.
 - **Nové hlasování – „O čem se hlasuje“** (`SUBJ`): výběr okruhu nastaví potřebnou většinu a ukáže článek stanov (čl. VI A odst. 3–6); většinu lze ručně změnit. Okruh se neukládá.
 - **Bod programu** (povinný, `vProg`): body z Přípravy + „Volba orgánů schůze“ (pokud už není v programu) + „Mimo program“; výběr vloží text do prázdného / automaticky vloženého návrhu. „Mimo program“ jen při 100 % přítomných podílů a se zaškrtnutým souhlasem všech vlastníků (čl. VI D odst. 2), jinak je „Zahájit hlasování“ neaktivní s vysvětlením. Ukládá se do `snap.prog` (`{num,text}` / `{elect:true}` / `{off:true}`).
 - **První usnesení** se předvyplní z Přípravy (volba předsedajícího, zapisovatele, ověřovatele, se skloňováním).

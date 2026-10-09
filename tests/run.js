@@ -484,7 +484,7 @@ test("zápis: prezence a usnášeníschopnost – stav prezence (odstavec)", () 
   a.present(["2553/01"]); // přišla později: 6597 + 529 = 7126
   const rows = secRows(a.proto(OPEN_ID), "1. Prezence a usnášeníschopnost");
   has(rows[0], "Přítomno 13 z 25 jednotek s 7126 z 13193 hlasů, tj. 54,01 % všech hlasů (podílů). Shromáždění bylo usnášeníschopné");
-  has(rows[0], "Listina přítomných je na konci protokolu.");
+  has(rows[0], "Listina přítomných je přílohou zápisu.");
 });
 test("zápis: prezence a usnášeníschopnost – svjdemo.json", () => {
   const a = app(), rows = secRows(a.proto(CLOSED_ID), "1. Prezence a usnášeníschopnost");
