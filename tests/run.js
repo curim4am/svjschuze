@@ -218,6 +218,53 @@ test("V1: stará usnesení bez příznaku – dopočet ze snap.pres/snap.tot", (
   has(b[5], "usnášeníschopné: ne", "usnesení se 6596 z 13193");
 });
 
+// =============== KROK 2: nezapsaný hlas ===============
+const closeButton = (a) => a.button(/^\s*Uzavřít hlasování\s*$/);
+const restButton = (a) => a.button(/Zbývající označit jako Zdržel se/);
+test("O3: po zahájení nemá přítomná jednotka hlas – je „nezapsáno“", () => {
+  const a = app(); a.open(); a.present(SET_6597);
+  a.startVote("Nezapsané hlasy", "prosta");
+  eq(Object.keys(a.M().current.ballots).length, 0, "předvyplněné hlasy");
+  const rows = [...a.d.querySelectorAll(".vrow:not(.head)")];
+  eq(rows.length, 12, "řádky přítomných");
+  rows.forEach((r) => { has(r.textContent, "nezapsáno"); eq(r.querySelectorAll('.vb[aria-pressed="true"]').length, 0, "vybraný hlas v řádku"); });
+});
+test("O3: „Uzavřít hlasování“ je neaktivní, dokud všichni přítomní nemají hlas", () => {
+  const a = app(); a.open(); a.present(SET_6597);
+  a.startVote("Uzavření až po všech hlasech", "prosta");
+  SET_6597.slice(0, 11).forEach((u) => a.ev(`cast(${a.unitId(u)},'ANO')`)); // garáž ještě nehlasovala
+  ok(closeButton(a).disabled, "Uzavřít má být neaktivní");
+  a.ev("closeVote()");
+  ok(!a.modal(), "dialog uzavření se nemá otevřít"); eq(a.M().votes.length, 0, "uložená usnesení");
+  a.ev(`cast(${a.unitId(GARAZ)},'NE')`);
+  ok(!closeButton(a).disabled, "po zapsání všech hlasů je Uzavřít aktivní");
+});
+test("O3: „Zbývající označit jako Zdržel se“ změní jen nezapsané", () => {
+  const a = app(); a.open(); a.present(SET_6597);
+  a.startVote("Zbývající zdržel se", "prosta");
+  a.ev(`cast(${a.unitId("2553/04")},'ANO');cast(${a.unitId("2553/02")},'NE')`);
+  restButton(a).click();
+  const b = a.M().current.ballots;
+  eq(b[a.unitId("2553/04")], "ANO", "zapsané ANO"); eq(b[a.unitId("2553/02")], "NE", "zapsané NE"); eq(b[a.unitId(GARAZ)], "ZDR", "nezapsaná garáž");
+  eq(Object.keys(b).length, 12, "hlasy všech přítomných");
+  ok(!closeButton(a).disabled, "Uzavřít je aktivní");
+  a.closeVote();
+  const s = a.lastVote().snap; eq(s.cA, 1, "ANO"); eq(s.cN, 1, "NE"); eq(s.cZ, 10, "Zdržel se");
+});
+test("O3: jednotka přihlášená během hlasování je „nezapsáno“", () => {
+  const a = app(); a.open(); a.present(SET_6597);
+  a.startVote("Pozdní příchod", "prosta"); a.cast(SET_6597, "NE");
+  a.present(["2553/01"]); a.ev("setTab('hlasovani')");
+  eq(a.M().current.ballots[a.unitId("2553/01")], undefined, "hlas pozdě příchozí jednotky");
+  const row = [...a.d.querySelectorAll(".vrow:not(.head)")].find((r) => r.textContent.includes("2553/01"));
+  has(row.textContent, "nezapsáno"); ok(closeButton(a).disabled, "Uzavřít má být neaktivní");
+});
+test("O3: starší uzavřená usnesení se nemění", () => {
+  const before = JSON.parse(DEMO).meetings.find((m) => m.id === CLOSED_ID).votes;
+  const a = app(); a.ev(`openMeeting(${CLOSED_ID})`);
+  eq(JSON.stringify(a.state().meetings.find((m) => m.id === CLOSED_ID).votes), JSON.stringify(before), "usnesení ukončené schůze");
+});
+
 // ---------- běh ----------
 let failed = 0;
 for (const t of tests) {
