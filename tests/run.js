@@ -221,51 +221,23 @@ test("V1: stará usnesení bez příznaku – dopočet ze snap.pres/snap.tot", (
   has(b[5], "usnášeníschopné: ne", "usnesení se 6596 z 13193");
 });
 
-// =============== KROK 2: nezapsaný hlas ===============
-const closeButton = (a) => a.button(/^\s*Uzavřít hlasování\s*$/);
-const restButton = (a) => a.button(/Zbývající označit jako Zdržel se/);
-test("O3: po zahájení nemá přítomná jednotka hlas – je „nezapsáno“", () => {
+// =============== Výchozí hlas „Zdržel se“ ===============
+test("po zahájení mají všichni přítomní předvyplněno „Zdržel se“", () => {
   const a = app(); a.open(); a.present(SET_6597);
-  a.startVote("Nezapsané hlasy", "prosta");
-  eq(Object.keys(a.M().current.ballots).length, 0, "předvyplněné hlasy");
-  const rows = [...a.d.querySelectorAll(".vrow:not(.head)")];
-  eq(rows.length, 12, "řádky přítomných");
-  rows.forEach((r) => { has(r.textContent, "nezapsáno"); eq(r.querySelectorAll('.vb[aria-pressed="true"]').length, 0, "vybraný hlas v řádku"); });
-});
-test("O3: „Uzavřít hlasování“ je neaktivní, dokud všichni přítomní nemají hlas", () => {
-  const a = app(); a.open(); a.present(SET_6597);
-  a.startVote("Uzavření až po všech hlasech", "prosta");
-  SET_6597.slice(0, 11).forEach((u) => a.ev(`cast(${a.unitId(u)},'ANO')`)); // garáž ještě nehlasovala
-  ok(closeButton(a).disabled, "Uzavřít má být neaktivní");
-  a.ev("closeVote()");
-  ok(!a.modal(), "dialog uzavření se nemá otevřít"); eq(a.M().votes.length, 0, "uložená usnesení");
-  a.ev(`cast(${a.unitId(GARAZ)},'NE')`);
-  ok(!closeButton(a).disabled, "po zapsání všech hlasů je Uzavřít aktivní");
-});
-test("O3: „Zbývající označit jako Zdržel se“ změní jen nezapsané", () => {
-  const a = app(); a.open(); a.present(SET_6597);
-  a.startVote("Zbývající zdržel se", "prosta");
-  a.ev(`cast(${a.unitId("2553/04")},'ANO');cast(${a.unitId("2553/02")},'NE')`);
-  restButton(a).click();
+  a.startVote("Výchozí zdržel se", "prosta");
   const b = a.M().current.ballots;
-  eq(b[a.unitId("2553/04")], "ANO", "zapsané ANO"); eq(b[a.unitId("2553/02")], "NE", "zapsané NE"); eq(b[a.unitId(GARAZ)], "ZDR", "nezapsaná garáž");
-  eq(Object.keys(b).length, 12, "hlasy všech přítomných");
-  ok(!closeButton(a).disabled, "Uzavřít je aktivní");
+  eq(Object.keys(b).length, 12, "předvyplněné hlasy");
+  ok(Object.values(b).every((x) => x === "ZDR"), "všechny hlasy jsou Zdržel se");
+  a.ev(`cast(${a.unitId("2553/04")},'ANO')`);
   a.closeVote();
-  const s = a.lastVote().snap; eq(s.cA, 1, "ANO"); eq(s.cN, 1, "NE"); eq(s.cZ, 10, "Zdržel se");
+  const s = a.lastVote().snap; eq(s.cA, 1, "ANO"); eq(s.cZ, 11, "Zdržel se");
 });
-test("O3: jednotka přihlášená během hlasování je „nezapsáno“", () => {
+test("jednotka přihlášená během hlasování hlasuje jako „Zdržel se“", () => {
   const a = app(); a.open(); a.present(SET_6597);
   a.startVote("Pozdní příchod", "prosta"); a.cast(SET_6597, "NE");
-  a.present(["2553/01"]); a.ev("setTab('hlasovani')");
-  eq(a.M().current.ballots[a.unitId("2553/01")], undefined, "hlas pozdě příchozí jednotky");
-  const row = [...a.d.querySelectorAll(".vrow:not(.head)")].find((r) => r.textContent.includes("2553/01"));
-  has(row.textContent, "nezapsáno"); ok(closeButton(a).disabled, "Uzavřít má být neaktivní");
-});
-test("O3: starší uzavřená usnesení se nemění", () => {
-  const before = JSON.parse(DEMO).meetings.find((m) => m.id === CLOSED_ID).votes;
-  const a = app(); a.ev(`openMeeting(${CLOSED_ID})`);
-  eq(JSON.stringify(a.state().meetings.find((m) => m.id === CLOSED_ID).votes), JSON.stringify(before), "usnesení ukončené schůze");
+  a.present(["2553/01"]); a.closeVote();
+  const u = a.lastVote().snap.units.find((x) => x.unit === "2553/01");
+  ok(u, "pozdě příchozí jednotka je ve snímku"); eq(u.vote, "ZDR", "hlas pozdě příchozí jednotky");
 });
 
 // =============== KROK 3: průvodce většinou, bod programu ===============
@@ -357,7 +329,7 @@ test("O5: starší usnesení bez bodu programu – protokol bod neuvádí", () =
   usnBlocks(a.proto(CLOSED_ID)).forEach((b) => { hasNot(b, "Bod programu"); hasNot(b, "Mimo program"); });
 });
 
-// =============== KROK 4: kontrola plnění úkolů ===============
+// =============== Úkol z usnesení ===============
 // vlastní úkoly s pevnými termíny (nezávislé na dnešním datu)
 const T = (id, text, owner, due, status, extra) => Object.assign({ id, text, owner, due, status, source: "jine", meetingId: null, voteNum: null, note: "", created: "2020-01-01" }, extra || {});
 const withTasks = (d) => {
@@ -368,49 +340,7 @@ const withTasks = (d) => {
     T(4, "Poptat pronájem sušárny", "Jan Novák", "", "cancelled"),
   ];
 };
-const checkCard = (a) => [...a.d.querySelectorAll("section.card")].find((c) => /Kontrola plnění úkolů/.test((c.querySelector("h2") || {}).textContent || ""));
-const protoSection = (html) => { const p = html.split(/<h2>\d+\. Kontrola plnění úkolů<\/h2>/); return p.length > 1 ? p[1].split("<h2")[0] : null; };
-const endMeeting = (a) => { a.ev("endMeeting()"); a.modalOk(); };
 
-test("V2: Příprava – blok Kontrola plnění úkolů s otevřenými úkoly, po termínu zvýrazněné", () => {
-  const a = app(withTasks); a.open("priprava");
-  const c = checkCard(a); ok(c, "blok Kontrola plnění úkolů");
-  const rows = [...c.querySelectorAll("tbody tr")];
-  eq(rows.length, 2, "otevřené úkoly");
-  const late = rows.find((r) => r.textContent.includes("Opravit zvonek u vchodu 2553"));
-  ok(late && late.classList.contains("over"), "úkol po termínu je zvýrazněný"); has(late.textContent, "Po termínu");
-  const fine = rows.find((r) => r.textContent.includes("Objednat revizi výtahu"));
-  ok(fine && !fine.classList.contains("over"), "úkol v termínu není zvýrazněný"); has(fine.textContent, "V řešení");
-  hasNot(c.textContent, "Vymalovat sušárnu"); hasNot(c.textContent, "Poptat pronájem sušárny");
-});
-test("V2: tlačítko přidá do programu bod Kontrola plnění úkolů (jen jednou)", () => {
-  const a = app(withTasks); a.open("priprava");
-  const btn = () => [...checkCard(a).querySelectorAll("button")].find((b) => /Přidat do programu jako bod Kontrola plnění úkolů/.test(b.textContent));
-  btn().click();
-  const prog = () => a.M().zapis.program.split("\n").filter((x) => x.trim());
-  eq(JSON.stringify(prog()), JSON.stringify(["Volba orgánů schůze", "Oprava střechy – výběr zhotovitele", "Zvýšení příspěvku do fondu oprav od 1. 1. 2027", "Různé", "Kontrola plnění úkolů"]), "program");
-  const b2 = btn(); if (b2 && !b2.disabled) b2.click();
-  eq(prog().filter((x) => x === "Kontrola plnění úkolů").length, 1, "bod v programu jen jednou");
-});
-test("V2: ukončení schůze uloží snímek otevřených úkolů; protokol ho ukazuje i po splnění úkolu", () => {
-  const a = app(withTasks); a.open(); a.present(SET_6597);
-  endMeeting(a);
-  eq(JSON.stringify(a.M().taskCheck), JSON.stringify([
-    { text: "Opravit zvonek u vchodu 2553", owner: "Jan Novák", due: "2020-03-31", state: "overdue" },
-    { text: "Objednat revizi výtahu", owner: "Eva Černá", due: "2099-12-31", state: "open" },
-  ]), "snímek");
-  a.state().tasks.find((t) => t.id === 1).status = "done"; // splněno až po schůzi
-  const sec = protoSection(a.proto(OPEN_ID)); ok(sec, "sekce Kontrola plnění úkolů");
-  const s = text(sec);
-  has(s, "Úkol Odpovědná osoba Termín Stav", "záhlaví tabulky");
-  has(s, "Opravit zvonek u vchodu 2553 Jan Novák 31. 3. 2020 Po termínu");
-  has(s, "Objednat revizi výtahu Eva Černá 31. 12. 2099 V řešení");
-  hasNot(s, "Vymalovat sušárnu");
-});
-test("V2: stará ukončená schůze bez snímku – protokol sekci neuvádí", () => {
-  const a = app(withTasks);
-  eq(protoSection(a.proto(CLOSED_ID)), null, "sekce Kontrola plnění úkolů");
-});
 test("V2: úkol z usnesení – odpovědná osoba i termín jsou povinné", () => {
   const a = app(withTasks); a.open(); a.present(SET_6597);
   a.startVote("Usnesení s úkolem", "prosta"); a.cast(SET_6597, "NE"); a.closeVote();
