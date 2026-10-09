@@ -83,6 +83,12 @@ const text = (html) => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
 const usnEls = (html) => [...JSDOM.fragment(html).querySelectorAll(".usn")];
 // dva šedé řádky pod zněním usnesení
 const grey = (el) => el.querySelector("p.pres:not(.uprog)").innerHTML.split(/<br\s*\/?>/).map((x) => JSDOM.fragment("<p>" + x + "</p>").textContent.replace(/\s+/g, " ").trim());
+// legenda hlasů jako v aplikaci: tečka, název, počet tučně, procento šedě
+const legend = (el) => [...el.querySelectorAll(".legend > span")].map((sp) => {
+  const d = sp.querySelector("i.dot"), b = sp.querySelector("b"), pc = sp.querySelector(".muted-n");
+  return d ? (d.className.replace("dot ", "") + ":" + sp.textContent.replace(/\s+/g, " ").trim() + (b ? "" : "!bez tučného") + (pc ? "" : "!bez šedého %")) : sp.textContent.trim();
+}).map((x) => x.replace(/^[anz]:/, "")).join(" | ");
+const bar = (el) => [...el.querySelectorAll(".pbar > span")].map((x) => x.className.slice(1) + " " + parseFloat(x.style.width)).join(" | ");
 const usnBlocks = (html) => usnEls(html).map((e) => e.textContent.replace(/\s+/g, " "));
 
 // =============== KROK 1: usnášeníschopnost, většiny, garáž, protokol ===============
@@ -135,7 +141,7 @@ test("všichni: všech 25 jednotek ANO = přijato", () => {
   const a = app(); a.open(); a.ev("setAllPresent(true)");
   a.startVote("Všichni – přijato", "vsichni"); a.cast(a.M().roster.map((u) => u.unit), "NE"); a.closeVote();
   eq(a.lastVote().result, true, "výsledek");
-  eq(grey(usnEls(a.proto(OPEN_ID))[0])[1], "Přítomno 100,0 % hlasů (usnášeníschopné) · souhlas všech vlastníků · " + a.lastVote().time, "řádek v protokolu");
+  eq(grey(usnEls(a.proto(OPEN_ID))[0])[0], "Přítomno 100,0 % hlasů (usnášeníschopné) · souhlas všech vlastníků · " + a.lastVote().time, "řádek v protokolu");
 });
 test("všichni: jedna jednotka se zdrží = nepřijato", () => {
   const a = app(); a.open(); a.ev("setAllPresent(true)");
@@ -194,7 +200,7 @@ test("O1: ztráta usnášeníschopnosti během hlasování → NEPŘIJATO s dův
   const v = a.lastVote();
   eq(v.result, false, "výsledek"); eq(v.reason, "shromáždění nebylo usnášeníschopné", "důvod");
   const el = usnEls(a.proto(OPEN_ID)).pop();
-  has(el.textContent, "NEPŘIJATO"); has(grey(el)[1], "% hlasů (neusnášeníschopné)");
+  has(el.textContent, "NEPŘIJATO"); has(grey(el)[0], "% hlasů (neusnášeníschopné)");
 });
 
 // V1: příznak usnášeníschopnosti ve snímku a v protokolu
@@ -390,10 +396,9 @@ test("blok usnesení: záhlaví, bod programu, znění, dva šedé řádky", () 
     eq(pg.textContent, "Bod programu: 2. Oprava střechy – výběr zhotovitele", "bod programu");
     eq(el.querySelector(".ut").textContent, "Shromáždění schvaluje zhotovitele střechy.", "znění");
     // 10 ANO = 5359, 2 NE = 1238 z 6597 přítomných; přítomno 6597 z 13193
-    eq(JSON.stringify(grey(el)), JSON.stringify([
-      "PRO 10 (81,23 %) · PROTI 2 (18,77 %) · ZDRŽEL SE 0 (0,0 %) z hlasů přítomných",
-      "Přítomno 50,0 % hlasů (usnášeníschopné) · prostá většina přítomných · " + time,
-    ]), "šedé řádky (" + v + ")");
+    eq(legend(el), "ANO 10 81,23 % | NE 2 18,77 % | Zdržel se 0 0,0 % | z hlasů přítomných", "legenda (" + v + ")");
+    eq(bar(el), "a 81.23 | n 18.77 | z 0", "proužek (" + v + ")");
+    eq(JSON.stringify(grey(el)), JSON.stringify(["Přítomno 50,0 % hlasů (usnášeníschopné) · prostá většina přítomných · " + time]), "šedý řádek (" + v + ")");
   });
 });
 test("blok usnesení: většina všech, neusnášeníschopné, nepřijato", () => {
@@ -403,22 +408,43 @@ test("blok usnesení: většina všech, neusnášeníschopné, nepřijato", () =
   ok(el.classList.contains("ko"), "nepřijaté usnesení má třídu ko");
   eq(el.querySelector(".uh .ub").textContent, "✗ NEPŘIJATO", "štítek");
   // ze všech hlasů: ANO 685/13193, ZDRŽEL SE 5199/13193; přítomno 5884 z 13193
-  eq(JSON.stringify(grey(el)), JSON.stringify([
-    "PRO 1 (5,19 %) · PROTI 0 (0,0 %) · ZDRŽEL SE 10 (39,41 %) z hlasů všech vlastníků",
-    "Přítomno 44,6 % hlasů (neusnášeníschopné) · většina všech vlastníků · " + time,
-  ]), "šedé řádky");
+  eq(legend(el), "ANO 1 5,19 % | NE 0 0,0 % | Zdržel se 10 39,41 % | z hlasů všech vlastníků", "legenda");
+  eq(bar(el), "a 5.19 | n 0 | z 39.41", "proužek – zbytek do 100 % jsou nepřítomní");
+  eq(JSON.stringify(grey(el)), JSON.stringify(["Přítomno 44,6 % hlasů (neusnášeníschopné) · většina všech vlastníků · " + time]), "šedý řádek");
 });
 test("blok usnesení: starší usnesení ze svjdemo.json – bez řádku bodu programu", () => {
   const a = app(), els = usnEls(a.proto(CLOSED_ID));
   eq(els.length, 5, "počet usnesení");
   els.forEach((el) => ok(el.querySelector(".uh").nextElementSibling.matches(".ut"), "po záhlaví hned znění"));
   // 19 ANO = 10250, 1 ZDRŽEL SE = 508 z 10758 přítomných
-  eq(JSON.stringify(grey(els[0])), JSON.stringify([
-    "PRO 19 (95,28 %) · PROTI 0 (0,0 %) · ZDRŽEL SE 1 (4,72 %) z hlasů přítomných",
-    "Přítomno 81,54 % hlasů (usnášeníschopné) · prostá většina přítomných · 18:07",
-  ]), "šedé řádky");
-  eq(grey(els[2])[1], "Přítomno 81,54 % hlasů (usnášeníschopné) · tříčtvrtinová většina přítomných · 18:51", "¾ přítomných");
-  eq(grey(els[3])[1], "Přítomno 81,54 % hlasů (usnášeníschopné) · většina všech vlastníků · 19:12", "většina všech");
+  eq(legend(els[0]), "ANO 19 95,28 % | NE 0 0,0 % | Zdržel se 1 4,72 % | z hlasů přítomných", "legenda");
+  eq(JSON.stringify(grey(els[0])), JSON.stringify(["Přítomno 81,54 % hlasů (usnášeníschopné) · prostá většina přítomných · 18:07"]), "šedý řádek");
+  eq(grey(els[2])[0], "Přítomno 81,54 % hlasů (usnášeníschopné) · tříčtvrtinová většina přítomných · 18:51", "¾ přítomných");
+  eq(grey(els[3])[0], "Přítomno 81,54 % hlasů (usnášeníschopné) · většina všech vlastníků · 19:12", "většina všech");
+});
+
+// =============== Černobílý tisk ===============
+test("legenda: tečky ve stejných barvách jako v aplikaci (a = ANO, n = NE, z = Zdržel se)", () => {
+  const a = app(), el = usnEls(a.proto(CLOSED_ID))[0];
+  eq([...el.querySelectorAll(".legend i.dot")].map((d) => d.className).join(","), "dot a,dot n,dot z", "třídy teček");
+  eq([...el.querySelectorAll(".pbar > span")].map((d) => d.className).join(","), "va,vn,vz", "třídy proužku");
+});
+test("přepínač „Černobílý tisk“ u tlačítka tisku – zapne třídu bw a pamatuje se", () => {
+  const a = app(); a.ev(`openProtokolFor(${CLOSED_ID})`);
+  const chk = () => [...a.d.querySelectorAll("label")].find((l) => /Černobílý tisk/.test(l.textContent)).querySelector("input[type=checkbox]");
+  ok(chk(), "přepínač"); ok(!chk().checked, "výchozí stav vypnuto"); ok(!a.d.getElementById("protokol").classList.contains("bw"), "barevně");
+  chk().checked = true; chk().dispatchEvent(new a.w.Event("change", { bubbles: true }));
+  ok(a.d.getElementById("protokol").classList.contains("bw"), "černobíle");
+  eq(JSON.parse(a.w.localStorage.getItem("svj_schuze")).protoBW, true, "uloženo v localStorage");
+  // znovu otevřená aplikace si volbu pamatuje
+  const saved = a.w.localStorage.getItem("svj_schuze");
+  const b = app((d) => Object.assign(d, JSON.parse(saved)));
+  ok(b.d.getElementById("protokol").classList.contains("bw"), "po znovuotevření černobíle");
+});
+test("černobílý tisk: blok usnesení obsahuje stejné texty a čísla jako barevný", () => {
+  const a = app(), color = usnBlocks(a.proto(CLOSED_ID, true));
+  a.ev("state.protoBW=true");
+  eq(JSON.stringify(usnBlocks(a.proto(CLOSED_ID, true))), JSON.stringify(color), "texty bloků");
 });
 
 // ---------- běh ----------

@@ -574,7 +574,7 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol h2.appx{margin-top:34px}
 #protokol{-webkit-print-color-adjust:exact;print-color-adjust:exact;line-height:1.45}
 #protokol h1{letter-spacing:-.2px}
-#protokol h2{font-size:1.02rem;color:#1f3864;border:none;border-bottom:1px solid #b9c3d3;margin:24px 0 8px;padding:0 0 4px}
+#protokol h2{font-size:1.02rem;color:var(--primary);border:none;border-bottom:1px solid #dfe3ea;margin:24px 0 8px;padding:0 0 4px}
 #protokol table.pinfo{width:auto;border:none;margin:12px auto 6px}
 #protokol .usn{margin:10px 0;padding:7px 12px 6px;border:1px solid #d9dee6;border-left:4px solid #136c2e;border-radius:6px;background:#fbfcfd}
 #protokol .usn.ko{border-left-color:#a5201d}
@@ -582,6 +582,18 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol .usn .ub{font-size:.74rem;font-weight:800;letter-spacing:.04em;padding:1px 8px;border-radius:10px;border:1px solid #136c2e;color:#136c2e;background:#eaf6ee;white-space:nowrap}
 #protokol .usn.ko .ub{border-color:#a5201d;color:#a5201d;background:#fbecea}
 #protokol .usn .uprog{margin:0}
+#protokol .usn .legend{font-size:.8rem;color:#333;gap:2px 14px;margin:4px 0 0}
+#protokol .usn .pbar{display:flex;height:5px;border-radius:999px;overflow:hidden;background:#eef0f3;margin:5px 0 4px}
+#protokol .usn .pbar>span{height:100%}
+#protokol.bw h2{color:#111}
+#protokol.bw .usn{border-left-color:#333;background:#fff}
+#protokol.bw .usn.ko{border-left-color:#999}
+#protokol.bw .usn .ub,#protokol.bw .usn.ko .ub{border-color:#111;color:#111;background:#fff}
+#protokol.bw .usn .dot{width:auto;height:auto;background:none;font-style:normal;font-weight:800;color:#111}
+#protokol.bw .usn .dot.a::before{content:"✓"}#protokol.bw .usn .dot.n::before{content:"✗"}#protokol.bw .usn .dot.z::before{content:"–"}
+#protokol.bw .usn .pbar{background:#f2f2f2}
+#protokol.bw .usn .pbar .va{background:#333}#protokol.bw .usn .pbar .vn{background:repeating-linear-gradient(45deg,#333 0 2px,#fff 2px 4px)}#protokol.bw .usn .pbar .vz{background:#bbb}
+#protokol.bw .grn,#protokol.bw .rd{color:#111}
 #protokol .usn .ut{margin:3px 0 4px}
 #protokol .pres{color:#555}
 #protokol .ptab th{background:#eef1f5}
@@ -596,6 +608,7 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol table.lp .pc2{color:#6b7280}
 #protokol table.lp tr.tot td{background:#eef1f5;border-bottom:0;font-weight:700}
 #protokol .znotes h3{color:#1f3864;font-size:.92rem}
+#protokol.bw .znotes h3{color:#111}
 #protokol .sig{margin-top:44px}
 #protokol .plist{list-style:none;margin:4px 0 8px;padding:0}
 #protokol .pfoot{margin-top:24px;font-size:.72rem;color:#666;text-align:right}
@@ -920,6 +933,7 @@ function normalize(){
   if(["prehled","schuze","usneseni","ukoly","nastaveni","meeting","protokol"].indexOf(state.screen)<0)state.screen="prehled";
   if((state.screen==="meeting"||state.screen==="protokol")&&!M())state.screen="schuze";
   if(state.protoVariant!=="full")state.protoVariant="simple";
+  state.protoBW=state.protoBW===true;
 }
 
 // ================= VÝPOČTY =================
@@ -1578,13 +1592,14 @@ function viewProtokol(){
   var m=M();if(!m)return viewSchuze();
   var v=state.protoVariant;
   return crumb("Zpět na schůzi","openMeeting("+m.id+")")+
-    pageHead("Protokol",esc(m.type||"")+' · '+dateCz(m.date),seg([["simple","Zjednodušený"],["full","Kompletní"]],v,"setProtoVariant")+'<button class="btn" onclick="printProto()">'+ic('printer')+'Vytisknout / PDF</button>')+
+    pageHead("Protokol",esc(m.type||"")+' · '+dateCz(m.date),seg([["simple","Zjednodušený"],["full","Kompletní"]],v,"setProtoVariant")+'<label class="check"><input type="checkbox"'+(state.protoBW?' checked':'')+' onchange="setProtoBW(this.checked)">Černobílý tisk</label><button class="btn" onclick="printProto()">'+ic('printer')+'Vytisknout / PDF</button>')+
     (m.status==="open"?callout("warning","clock","Schůze ještě probíhá – protokol je zatím průběžný. Konečnou verzi vytiskněte po ukončení schůze."):'')+
     '<p class="hint mb">'+ic('info')+'<span>'+(v==="simple"?'Zjednodušený: zápis, usnesení s výsledky, úkoly a listina přítomných.':'Kompletní: navíc jmenovité hlasování u každého usnesení.')+' '+(m.status==="open"?'Údaje doplníte v záložkách Příprava a Zápis.':'U ukončené schůze lze doplnit jen záložku Zápis, ostatní údaje jen po odemčení.')+'</span></p>'+
     '<div class="paper">'+(v==="simple"?protoSimple(m):protoFull(m))+'</div>';
 }
 
 function setProtoVariant(v){state.protoVariant=v;save();render();}
+function setProtoBW(on){state.protoBW=!!on;save();render();}
 function usnP(x,s){var b=s.base>0?s.base:s.pres;return fmt(b>0?(x||0)/b*100:0);}
 function usnBaseTxt(v){return (TYPES[v.type]||TYPES.prosta).base==="all"?"z hlasů všech vlastníků":"z hlasů přítomných";}
 function protoVote(x){return x==="ANO"||x==="NE"?x:"ZDRŽEL SE";}
@@ -1593,7 +1608,9 @@ function progTxt(p){return !p?'':p.off?'Mimo program – se souhlasem všech vla
 var TSHORT={prosta:"prostá většina přítomných",ctvrt:"tříčtvrtinová většina přítomných",nadpvse:"většina všech vlastníků",vsichni:"souhlas všech vlastníků"};
 function protoUsn(v){var s=v.snap,pt=s.tot>0?s.pres/s.tot*100:0;
   return '<div class="usn keep '+(v.result?'ok':'ko')+'"><div class="uh"><b>Usnesení č. '+v.num+'</b><span class="ub">'+(v.result?'✓ PŘIJATO':'✗ NEPŘIJATO')+'</span></div>'+(s.prog?'<p class="pres uprog">'+progTxt(s.prog)+'</p>':'')+'<p class="ut">'+esc(v.text||'(bez textu)')+'</p>'+
-    '<p class="pres">PRO '+s.cA+' ('+usnP(s.ano,s)+' %) · PROTI '+s.cN+' ('+usnP(s.ne,s)+' %) · ZDRŽEL SE '+s.cZ+' ('+usnP(s.zdr,s)+' %) '+usnBaseTxt(v)+'<br>Přítomno '+fmt(pt)+' % hlasů ('+(voteQuorate(v)?'usnášeníschopné':'neusnášeníschopné')+') · '+(TSHORT[v.type]||TSHORT.prosta)+(v.time?' · '+esc(v.time):'')+'</p></div>';}
+    '<div class="legend"><span><i class="dot a"></i>ANO <b>'+s.cA+'</b> <span class="muted-n">'+usnP(s.ano,s)+' %</span></span><span><i class="dot n"></i>NE <b>'+s.cN+'</b> <span class="muted-n">'+usnP(s.ne,s)+' %</span></span><span><i class="dot z"></i>Zdržel se <b>'+s.cZ+'</b> <span class="muted-n">'+usnP(s.zdr,s)+' %</span></span><span class="muted-n">'+usnBaseTxt(v)+'</span></div>'+
+    '<div class="pbar">'+[["va",s.ano],["vn",s.ne],["vz",s.zdr]].map(function(x){var b=s.base>0?s.base:s.pres;return '<span class="'+x[0]+'" style="width:'+(b>0?Math.round(Math.max(0,Math.min(100,(x[1]||0)/b*100))*100)/100:0)+'%"></span>';}).join("")+'</div>'+
+    '<p class="pres">Přítomno '+fmt(pt)+' % hlasů ('+(voteQuorate(v)?'usnášeníschopné':'neusnášeníschopné')+') · '+(TSHORT[v.type]||TSHORT.prosta)+(v.time?' · '+esc(v.time):'')+'</p></div>';}
 function protoDoc(m,full){
   var z=zOf(m),tot=totalPodil(m),pp=presentPodil(m),q=isQuorate(m),pres=presentUnits(m),n=0;
   function sec(t){n++;return '<h2>'+n+'. '+t+'</h2>';}
@@ -1624,7 +1641,7 @@ function protoDoc(m,full){
   if(full&&m.votes.length){H+='<h2 class="appx">Jmenovité hlasování</h2>';
     m.votes.forEach(function(v){H+=protoUsn(v)+'<table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:24%"><col style="width:14%"></colgroup><thead><tr><th>Jednotka</th><th>Hlasoval(a)</th><th>Podíl</th><th>Hlas</th></tr></thead><tbody>'+v.snap.units.map(function(u){var w=String(u.who||"").trim();return '<tr><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td>'+(w?esc(w)+(u.pm?' <span class="pc2">(plná moc)</span>':''):(esc(u.owner)||unitLabel(u)))+'</td><td class="nw">'+podilFr(u.podil)+' <span class="pc2">('+fmtP(u.podil)+' %)</span></td><td>'+protoVote(u.vote)+'</td></tr>';}).join("")+'</tbody></table>';});}
   H+='<div class="pfoot">Vygenerováno '+new Date().toLocaleString('cs-CZ')+'.</div>';
-  return '<div id="protokol">'+H+'</div>';
+  return '<div id="protokol"'+(state.protoBW?' class="bw"':'')+'>'+H+'</div>';
 }
 function protoSimple(m){return protoDoc(m,false);}
 function protoFull(m){return protoDoc(m,true);}
