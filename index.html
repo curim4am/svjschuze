@@ -565,7 +565,7 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol th{font-weight:700}
 #protokol .rbig{font-weight:800;padding:4px 0}
 #protokol .grn{color:#136c2e}#protokol .rd{color:#a5201d}
-#protokol .usn{margin:12px 0}
+#protokol .usn{margin:16px 0}
 #protokol .sig{margin-top:40px;display:flex;gap:40px;flex-wrap:wrap}
 #protokol .sig div{flex:1;min-width:200px;border-top:1px solid #111;padding-top:4px;font-size:.8rem}
 #protokol table.pinfo{margin:10px auto 4px;width:auto}#protokol table.pinfo td{border:none;padding:1px 12px 1px 0;font-size:.86rem}#protokol td.pl{color:#555}
@@ -576,12 +576,21 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol h1{letter-spacing:-.2px}
 #protokol h2{font-size:1.02rem;color:#1f3864;border:none;border-bottom:1px solid #b9c3d3;margin:24px 0 8px;padding:0 0 4px}
 #protokol table.pinfo{width:auto;border:none;margin:12px auto 6px}
-#protokol .usn{margin:10px 0;padding:7px 12px 6px;border:1px solid #d9dee6;border-left:4px solid #136c2e;border-radius:6px;background:#fbfcfd}
-#protokol .usn.ko{border-left-color:#a5201d}
+#protokol .usn{margin:18px 0;padding:10px 14px 9px;border:1px solid #8c95a3;border-radius:6px;background:#fff;break-inside:avoid;page-break-inside:avoid}
 #protokol .usn .uh{display:flex;justify-content:space-between;align-items:center;gap:10px}
-#protokol .usn .ub{font-size:.74rem;font-weight:800;letter-spacing:.04em;padding:1px 8px;border-radius:10px;border:1px solid #136c2e;color:#136c2e;background:#eaf6ee;white-space:nowrap}
-#protokol .usn.ko .ub{border-color:#a5201d;color:#a5201d;background:#fbecea}
-#protokol .usn .ut{margin:3px 0 4px}
+#protokol .usn .uh b{font-size:.98rem}
+#protokol .usn .ub{font-size:.8rem;font-weight:800;letter-spacing:.05em;padding:2px 10px;border:2px solid currentColor;border-radius:4px;color:#136c2e;background:#fff;white-space:nowrap}
+#protokol .usn.ko .ub{color:#a5201d}
+#protokol .usn .uprog{margin:2px 0 0;font-size:.78rem;color:#444}
+#protokol .usn .ut{margin:8px 0;padding:3px 0 3px 12px;border-left:3px solid #555;font-size:inherit}
+#protokol .usn table.uvt{width:100%;table-layout:fixed;margin:8px 0 2px}
+#protokol .usn table.uvt th,#protokol .usn table.uvt td{text-align:center;padding:3px 6px}
+#protokol .usn table.uvt th{background:#eef1f5;font-size:.74rem;letter-spacing:.04em}
+#protokol .usn table.uvt td b{font-size:.9rem}
+#protokol .usn .ubase{margin:0 0 6px;font-size:.72rem;color:#555}
+#protokol .usn dl.uft{display:grid;grid-template-columns:max-content 1fr;gap:1px 10px;margin:6px 0 0;padding-top:6px;border-top:1px solid #d5dae2;font-size:.76rem}
+#protokol .usn dl.uft dt{color:#666}
+#protokol .usn dl.uft dd{margin:0}
 #protokol .pres{color:#555}
 #protokol .ptab th{background:#eef1f5}
 #protokol table.lp{table-layout:fixed;margin:8px 0}
@@ -1588,9 +1597,18 @@ function usnP(x,s){var b=s.base>0?s.base:s.pres;return fmt(b>0?(x||0)/b*100:0);}
 function usnBaseTxt(v){return (TYPES[v.type]||TYPES.prosta).base==="all"?"z hlasů všech vlastníků":"z hlasů přítomných";}
 function protoVote(x){return x==="ANO"||x==="NE"?x:"ZDRŽEL SE";}
 function progTxt(p){return !p?'':p.off?'Mimo program – se souhlasem všech vlastníků':p.elect?'Bod programu: Volba orgánů schůze':'Bod programu: '+p.num+'. '+esc(p.text||'');}
+// blok usnesení v protokolu: záhlaví s výsledkem, bod programu, znění, tabulka hlasů, patička (čitelné i černobíle)
 function protoUsn(v){var s=v.snap,pt=s.tot>0?s.pres/s.tot*100:0;
-  return '<div class="usn keep '+(v.result?'ok':'ko')+'"><div class="uh"><b>Usnesení č. '+v.num+'</b><span class="ub">'+(v.result?'✓ PŘIJATO':'✗ NEPŘIJATO')+'</span></div><p class="ut">'+esc(v.text||'(bez textu)')+'</p>'+
-    '<p class="pres">'+(s.prog?progTxt(s.prog)+'<br>':'')+'PRO '+s.cA+' ('+usnP(s.ano,s)+' %) · PROTI '+s.cN+' ('+usnP(s.ne,s)+' %) · ZDRŽEL SE '+s.cZ+' ('+usnP(s.zdr,s)+' %) '+usnBaseTxt(v)+'<br>potřebná většina: '+esc(s.typeLabel)+' · přítomno '+fmt(pt)+' % hlasů · usnášeníschopné: '+(voteQuorate(v)?'ano':'ne')+(v.time?' · hlasováno v '+esc(v.time):'')+(v.reason?'<br>Usnesení nepřijato – '+esc(v.reason)+'.':'')+'</p></div>';}
+  function nj(n){return n+' '+pl(n,'jednotka','jednotky','jednotek');}
+  function kv(l,x){return '<dt>'+l+':</dt><dd>'+x+'</dd>';}
+  return '<div class="usn keep '+(v.result?'ok':'ko')+'"><div class="uh"><b>Usnesení č. '+v.num+'</b><span class="ub">'+(v.result?'✓ PŘIJATO':'✗ NEPŘIJATO')+'</span></div>'+
+    (s.prog?'<p class="uprog">'+progTxt(s.prog)+'</p>':'')+
+    '<blockquote class="ut">'+esc(v.text||'(bez textu)')+'</blockquote>'+
+    '<table class="uvt"><thead><tr><th>PRO</th><th>PROTI</th><th>ZDRŽEL SE</th></tr></thead><tbody><tr><td>'+nj(s.cA)+'</td><td>'+nj(s.cN)+'</td><td>'+nj(s.cZ)+'</td></tr>'+
+    '<tr><td><b>'+usnP(s.ano,s)+' %</b></td><td><b>'+usnP(s.ne,s)+' %</b></td><td><b>'+usnP(s.zdr,s)+' %</b></td></tr></tbody></table>'+
+    '<p class="ubase">% '+usnBaseTxt(v)+'</p>'+
+    '<dl class="uft">'+kv('Potřebná většina',esc(s.typeLabel))+kv('Přítomno',fmt(pt)+' % hlasů – '+(voteQuorate(v)?'usnášeníschopné':'neusnášeníschopné'))+
+    (v.time?kv('Čas hlasování',esc(v.time)):'')+(v.reason?kv('Důvod nepřijetí',esc(v.reason)):'')+'</dl></div>';}
 function protoDoc(m,full){
   var z=zOf(m),tot=totalPodil(m),pp=presentPodil(m),q=isQuorate(m),pres=presentUnits(m),n=0;
   function sec(t){n++;return '<h2>'+n+'. '+t+'</h2>';}
