@@ -503,6 +503,7 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 .vb.sel{color:#fff;box-shadow:var(--sh-sm)}
 .vb.ano.sel{background:var(--success-solid)}.vb.ne.sel{background:var(--danger-solid)}.vb.zdr.sel{background:#6b7280}
 .vrow.nez{background:var(--warning-soft)}
+.tbl tr.over td{background:var(--danger-soft)}
 .nez-t{margin-left:6px;font-size:12px;font-weight:600;color:var(--warning);white-space:nowrap}
 .vb:focus-visible{outline:none;box-shadow:var(--ring)}
 .vmini,.mobile-only{display:none}
@@ -1608,6 +1609,9 @@ function protoDoc(m,full){
   H+=sec("Prezence a usnášeníschopnost")+'<p>Přítomno <b>'+pres.length+' z '+m.roster.length+'</b> jednotek s <b>'+Math.round(tot>0?pp/tot*JMEN:0)+' z '+JMEN+'</b> hlasů, tj. <b>'+fmt(tot>0?pp/tot*100:0)+' %</b> všech hlasů (podílů). Shromáždění <b>'+(q?'bylo usnášeníschopné':'nebylo usnášeníschopné')+'</b> (potřeba přítomnost vlastníků s většinou všech hlasů – § 1206 odst. 1 OZ, čl. VI A odst. 3 stanov). Hlasuje se podle velikosti podílů na společných částech; spoluvlastníci a manželé hlasují jedním společným zástupcem (čl. VI A odst. 2 stanov). Listina přítomných je na konci protokolu.</p>';
   var nh=notesHtml(z.notes,false);if(nh)H+=sec("Průběh jednání")+'<div class="znotes">'+nh+'</div>';
   H+=sec("Usnesení a výsledky hlasování")+(m.votes.length?m.votes.map(protoUsn).join(''):'<p>Na shromáždění se nehlasovalo.</p>');
+  var tc=taskCheckOf(m);
+  if(tc)H+=sec(TCHK)+(tc.length?'<table class="ptab lp"><colgroup><col><col style="width:22%"><col style="width:14%"><col style="width:14%"></colgroup><thead><tr><th>Úkol</th><th>Odpovědná osoba</th><th>Termín</th><th>Stav</th></tr></thead><tbody>'+
+    tc.map(function(t){return '<tr><td>'+esc(t.text)+'</td><td class="nw">'+esc(t.owner||'—')+'</td><td class="nw">'+(t.due?dateCz(t.due):'—')+'</td><td class="nw">'+(t.state==="overdue"?'Po termínu':'V řešení')+'</td></tr>';}).join("")+'</tbody></table>':'<p>Žádné otevřené úkoly.</p>');
   var tasks=state.tasks.filter(function(t){return t.meetingId===m.id;});
   if(tasks.length)H+=sec("Nové úkoly ze shromáždění")+'<table class="ptab lp"><colgroup><col><col style="width:24%"><col style="width:16%"></colgroup><thead><tr><th>Úkol</th><th>Odpovídá</th><th>Termín</th></tr></thead><tbody>'+tasks.map(function(t){return '<tr><td>'+esc(t.text)+(t.voteNum?' <span class="pc2 nw">(usnesení č. '+t.voteNum+')</span>':'')+'</td><td class="nw">'+esc(t.owner||'—')+'</td><td class="nw">'+(t.due?dateCz(t.due):'—')+'</td></tr>';}).join("")+'</tbody></table>';
   if(z.objections.trim())H+=sec("Námitky a nesouhlas zaprotokolované na žádost")+'<p>'+esc(z.objections).replace(/\n/g,'<br>')+'</p>';
@@ -1703,9 +1707,21 @@ function tabPriprava(m){
     (late?callout("warning","alert",Date.parse(z.invDate)>Date.parse(m.date)?"Datum pozvánky je pozdější než datum zasedání – zkontrolujte ho.":"Pozvánka byla odeslána méně než 15 dní před zasedáním (čl. VI C odst. 1 stanov)."):'')+
     field('Program podle pozvánky','<textarea rows="4" oninput="setZ(\'program\',this.value)" placeholder="Informace výboru&#10;Účetní závěrka 2025&#10;Různé"'+dis+'>'+esc(z.program)+'</textarea>',
       '<span class="hint">'+ic('info')+'<span>Každý bod na nový řádek. Body se nabídnou při hlasování.</span></span>')+'</div>');
+  if(open)h+=taskCheckCard(m);
   if(open)h+='<div class="nextbar"><span class="muted-s">'+ic('check')+' Ukládá se automaticky a propíše se do protokolu.</span><button class="btn" onclick="setTab(\'prezence\')">Pokračovat na prezenci'+ic('arrowR')+'</button></div>';
   return h;
 }
+// kontrola plnění úkolů: otevřené úkoly z dřívějška (ne úkoly vzniklé na této schůzi)
+var TCHK="Kontrola plnění úkolů";
+function openTasksFor(m){return state.tasks.filter(function(t){return t.status==="open"&&t.meetingId!==m.id;}).sort(taskSortActive);}
+function taskCheckOf(m){return Array.isArray(m.taskCheck)?m.taskCheck:(m.status==="open"&&!m.reopened?openTasksFor(m).map(function(t){return {text:t.text,owner:t.owner||"",due:t.due||"",state:taskState(t)};}):null);}
+function hasTchk(m){return programOf(m).some(function(p){return p.toLowerCase()===TCHK.toLowerCase();});}
+function taskCheckCard(m){var L=taskCheckOf(m)||[],inP=hasTchk(m);
+  var body=L.length?'<div class="tablewrap"><table class="tbl"><thead><tr><th>Úkol</th><th>Odpovídá</th><th>Termín</th><th>Stav</th></tr></thead><tbody>'+
+    L.map(function(t){return '<tr'+(t.state==="overdue"?' class="over"':'')+'><td>'+esc(t.text)+'</td><td>'+esc(t.owner||'—')+'</td><td>'+(t.due?dateCz(t.due):'—')+'</td><td>'+taskBadge(t.state)+'</td></tr>';}).join("")+'</tbody></table></div>'
+    :'<div class="card-b"><p class="muted-s">Žádné otevřené úkoly.</p></div>';
+  return card(TCHK,'<button class="btn secondary sm"'+(inP?' disabled':'')+' onclick="addTchk()">'+ic('plus')+(inP?'Bod je v programu':'Přidat do programu jako bod '+TCHK)+'</button>',body);}
+function addTchk(){var m=M();if(!m||m.status!=="open"||hasTchk(m))return;var z=zOf(m);z.program=z.program.replace(/\s+$/,"")+(z.program.trim()?"\n":"")+TCHK;save();render();toast("Bod „"+TCHK+"“ přidán do programu");}
 function toggleWay(k,on){var m=M();if(!m||m.status!=="open")return;var z=zOf(m),a=z.invWays.filter(function(x){return x!==k;});if(on)a.push(k);z.invWays=WAYS.map(function(w){return w[0];}).filter(function(x){return a.indexOf(x)>=0;});save();}
 function setM(k,v){var m=M();if(!m||m.status!=="open")return;if(k==="date"&&!v)return;m[k]=v;save();if(k==="date"||k==="type"||k==="time")render();}
 
@@ -1757,6 +1773,7 @@ function endMeeting(){
       if(!m.endTime)m.endTime=new Date().toLocaleTimeString("cs-CZ",{hour:"2-digit",minute:"2-digit"});
       syncOwners(m);
       if(!m.committee&&!m.reopened)m.committee=committeeOf(null).map(function(c){return {name:String(c.name).trim(),role:String(c.role||"").trim()};});
+      if(!m.taskCheck&&!m.reopened)m.taskCheck=taskCheckOf(m);
       m.status="closed";state.subtab="vysledky";save();render();scrollTop();backup("Schůze ukončena · záloha stažena");
     }});
 }
@@ -1833,7 +1850,7 @@ function taskForm(m){
   return (v?callout("info","filecheck",'Úkol k usnesení č. '+v.num+': <i>'+esc(clip(v.text,220))+'</i>'):'')+
     (m&&ui.mtForm&&ui.mtForm.back==="zapis"?callout("info","edit","Úkol z řádku zápisu. Po uložení se řádek v zápisu označí „→ úkol“."):'')+
     field("Co je potřeba udělat",'<textarea id="tText" rows="2" placeholder="Např. Objednat revizi hasicích přístrojů" onkeydown="if((event.metaKey||event.ctrlKey)&&event.key===\'Enter\'){event.preventDefault();saveNewTask('+mid+')}">'+esc(m&&ui.mtForm&&ui.mtForm.prefill||'')+'</textarea>','<span class="err" id="tErr"></span>')+
-    '<div class="fields">'+field("Odpovídá",'<input type="text" id="tOwner" list="peopleDl" placeholder="Jméno">')+field("Termín",'<input type="date" id="tDue">',quick)+(v?'':field("Zdroj",srcSel))+'</div>'+
+    '<div class="fields">'+field("Odpovídá",'<input type="text" id="tOwner" list="peopleDl" placeholder="Jméno">',v?'<span class="err" id="tOErr"></span>':'')+field("Termín",'<input type="date" id="tDue">',quick+(v?'<span class="err" id="tDErr"></span>':''))+(v?'':field("Zdroj",srcSel))+'</div>'+
     field('Poznámka <span class="opt">nepovinné</span>','<input type="text" id="tNote">')+
     '<div class="form-actions"><button class="btn" onclick="saveNewTask('+mid+')">'+ic('plus')+'Přidat úkol</button><button class="btn ghost" onclick="closeTaskForm()">Zrušit</button><span class="hint">nebo ⌘/Ctrl + Enter</span></div>';
 }
@@ -1843,6 +1860,8 @@ function saveNewTask(mid){
   var text=gv("tText").trim();
   if(!text){setErr("tErr","Napište, co je potřeba udělat.","tText");focusEl("tText");return;}
   var vn=(mid&&ui.mtForm)?ui.mtForm.voteNum:null;
+  if(vn&&!gv("tOwner").trim()){setErr("tOErr","U úkolu z usnesení vyplňte, kdo odpovídá.","tOwner");focusEl("tOwner");return;}
+  if(vn&&!gv("tDue")){setErr("tDErr","U úkolu z usnesení vyplňte termín.","tDue");focusEl("tDue");return;}
   state.tasks.push({id:Date.now(),text:text,source:vn?"usneseni":(gv("tSrc")||"jine"),owner:gv("tOwner").trim(),due:gv("tDue"),note:gv("tNote").trim(),
     status:"open",created:todayISO(),meetingId:mid||null,voteNum:vn||null});
   var fm=ui.mtForm;
@@ -1900,6 +1919,7 @@ function saveTask(id){
   var d=ui.draft,text=(d.text||"").trim();
   if(!text){setErr("dErr","Popis úkolu nemůže být prázdný.","dText");return;}
   var ch=[],was=t.status,owner=(d.owner||"").trim(),note=(d.note||"").trim();
+  if(t.source==="usneseni"&&t.voteNum&&(!owner||!d.due)){setErr("dErr","U úkolu z usnesení musí být vyplněno, kdo odpovídá, i termín.");return;}
   if(text!==t.text){ch.push("upraven popis");t.text=text;}
   if(owner!==(t.owner||"")){ch.push("odpovídá: "+(owner||"nikdo"));t.owner=owner;}
   if((d.due||"")!==(t.due||"")){ch.push("termín: "+(d.due?dateCz(d.due):"bez termínu"));t.due=d.due||"";}

@@ -357,6 +357,90 @@ test("O5: starší usnesení bez bodu programu – protokol bod neuvádí", () =
   usnBlocks(a.proto(CLOSED_ID)).forEach((b) => { hasNot(b, "Bod programu"); hasNot(b, "Mimo program"); });
 });
 
+// =============== KROK 4: kontrola plnění úkolů ===============
+// vlastní úkoly s pevnými termíny (nezávislé na dnešním datu)
+const T = (id, text, owner, due, status, extra) => Object.assign({ id, text, owner, due, status, source: "jine", meetingId: null, voteNum: null, note: "", created: "2020-01-01" }, extra || {});
+const withTasks = (d) => {
+  d.tasks = [
+    T(1, "Opravit zvonek u vchodu 2553", "Jan Novák", "2020-03-31", "open"),
+    T(2, "Objednat revizi výtahu", "Eva Černá", "2099-12-31", "open"),
+    T(3, "Vymalovat sušárnu", "Filip Urban", "2026-01-31", "done", { doneAt: "2026-01-20" }),
+    T(4, "Poptat pronájem sušárny", "Jan Novák", "", "cancelled"),
+  ];
+};
+const checkCard = (a) => [...a.d.querySelectorAll("section.card")].find((c) => /Kontrola plnění úkolů/.test((c.querySelector("h2") || {}).textContent || ""));
+const protoSection = (html) => { const p = html.split(/<h2>\d+\. Kontrola plnění úkolů<\/h2>/); return p.length > 1 ? p[1].split("<h2")[0] : null; };
+const endMeeting = (a) => { a.ev("endMeeting()"); a.modalOk(); };
+
+test("V2: Příprava – blok Kontrola plnění úkolů s otevřenými úkoly, po termínu zvýrazněné", () => {
+  const a = app(withTasks); a.open("priprava");
+  const c = checkCard(a); ok(c, "blok Kontrola plnění úkolů");
+  const rows = [...c.querySelectorAll("tbody tr")];
+  eq(rows.length, 2, "otevřené úkoly");
+  const late = rows.find((r) => r.textContent.includes("Opravit zvonek u vchodu 2553"));
+  ok(late && late.classList.contains("over"), "úkol po termínu je zvýrazněný"); has(late.textContent, "Po termínu");
+  const fine = rows.find((r) => r.textContent.includes("Objednat revizi výtahu"));
+  ok(fine && !fine.classList.contains("over"), "úkol v termínu není zvýrazněný"); has(fine.textContent, "V řešení");
+  hasNot(c.textContent, "Vymalovat sušárnu"); hasNot(c.textContent, "Poptat pronájem sušárny");
+});
+test("V2: tlačítko přidá do programu bod Kontrola plnění úkolů (jen jednou)", () => {
+  const a = app(withTasks); a.open("priprava");
+  const btn = () => [...checkCard(a).querySelectorAll("button")].find((b) => /Přidat do programu jako bod Kontrola plnění úkolů/.test(b.textContent));
+  btn().click();
+  const prog = () => a.M().zapis.program.split("\n").filter((x) => x.trim());
+  eq(JSON.stringify(prog()), JSON.stringify(["Volba orgánů schůze", "Oprava střechy – výběr zhotovitele", "Zvýšení příspěvku do fondu oprav od 1. 1. 2027", "Různé", "Kontrola plnění úkolů"]), "program");
+  const b2 = btn(); if (b2 && !b2.disabled) b2.click();
+  eq(prog().filter((x) => x === "Kontrola plnění úkolů").length, 1, "bod v programu jen jednou");
+});
+test("V2: ukončení schůze uloží snímek otevřených úkolů; protokol ho ukazuje i po splnění úkolu", () => {
+  const a = app(withTasks); a.open(); a.present(SET_6597);
+  endMeeting(a);
+  eq(JSON.stringify(a.M().taskCheck), JSON.stringify([
+    { text: "Opravit zvonek u vchodu 2553", owner: "Jan Novák", due: "2020-03-31", state: "overdue" },
+    { text: "Objednat revizi výtahu", owner: "Eva Černá", due: "2099-12-31", state: "open" },
+  ]), "snímek");
+  a.state().tasks.find((t) => t.id === 1).status = "done"; // splněno až po schůzi
+  const sec = protoSection(a.proto(OPEN_ID)); ok(sec, "sekce Kontrola plnění úkolů");
+  const s = text(sec);
+  has(s, "Úkol Odpovědná osoba Termín Stav", "záhlaví tabulky");
+  has(s, "Opravit zvonek u vchodu 2553 Jan Novák 31. 3. 2020 Po termínu");
+  has(s, "Objednat revizi výtahu Eva Černá 31. 12. 2099 V řešení");
+  hasNot(s, "Vymalovat sušárnu");
+});
+test("V2: stará ukončená schůze bez snímku – protokol sekci neuvádí", () => {
+  const a = app(withTasks);
+  eq(protoSection(a.proto(CLOSED_ID)), null, "sekce Kontrola plnění úkolů");
+});
+test("V2: úkol z usnesení – odpovědná osoba i termín jsou povinné", () => {
+  const a = app(withTasks); a.open(); a.present(SET_6597);
+  a.startVote("Usnesení s úkolem", "prosta"); a.cast(SET_6597, "NE"); a.closeVote();
+  const n0 = a.state().tasks.length;
+  a.ev("taskFromVote(1)");
+  const add = () => a.button(/Přidat úkol/).click();
+  a.d.getElementById("tText").value = "Zajistit tři nabídky"; add();
+  eq(a.state().tasks.length, n0, "bez odpovědné osoby a termínu se úkol nepřidá"); has(a.view(), "odpovídá");
+  a.d.getElementById("tOwner").value = "Jan Novák"; add();
+  eq(a.state().tasks.length, n0, "bez termínu se úkol nepřidá");
+  a.d.getElementById("tDue").value = "2026-12-31"; add();
+  eq(a.state().tasks.length, n0 + 1, "s odpovědnou osobou a termínem se úkol přidá");
+  const t = a.state().tasks[n0]; eq(t.voteNum, 1, "vazba na usnesení"); eq(t.owner, "Jan Novák", "odpovídá"); eq(t.due, "2026-12-31", "termín");
+});
+test("V2: úkol z usnesení – při úpravě nelze odpovědnou osobu ani termín smazat", () => {
+  const a = app((d) => { withTasks(d); d.tasks.push(T(5, "Úkol z usnesení", "Jan Novák", "2099-06-30", "open", { source: "usneseni", meetingId: CLOSED_ID, voteNum: 2 })); });
+  a.ev("go('ukoly')"); a.ev("toggleTask(5)");
+  a.ev("ui.draft.owner=''"); a.ev("saveTask(5)");
+  eq(a.state().tasks.find((t) => t.id === 5).owner, "Jan Novák", "odpovědná osoba zůstala");
+  a.ev("ui.draft.owner='Jan Novák';ui.draft.due=''"); a.ev("saveTask(5)");
+  eq(a.state().tasks.find((t) => t.id === 5).due, "2099-06-30", "termín zůstal");
+});
+test("V2: úkol mimo usnesení jde dál přidat bez odpovědné osoby a termínu", () => {
+  const a = app(withTasks); a.open("ukoly");
+  const n0 = a.state().tasks.length;
+  a.ev("openMeetingTaskForm(0)");
+  a.d.getElementById("tText").value = "Úkol bez termínu"; a.button(/Přidat úkol/).click();
+  eq(a.state().tasks.length, n0 + 1, "úkol přidán");
+});
+
 // ---------- běh ----------
 let failed = 0;
 for (const t of tests) {
