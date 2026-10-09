@@ -19,7 +19,7 @@ Repozitář: https://github.com/curim4am/svjschuze
 - Demo verze se sestavuje skriptem z `index.html` + `svjdemo.json` (vloží data, změní klíč, přidá lištu „Demo verze“ a skryje „Začít načisto“).
 - **GDPR:** zálohy `.json` nikdy nezveřejňovat ani nenahrávat na GitHub (obsahují jména a podíly). Na GitHub Pages jen `index.html`.
 - Patička: `© 2026 curim4am`.
-- Jednotky a podíly podle prohlášení vlastníka: 25 jednotek (24 bytů + garáž 2554/13), jmenovatel **13 193** – těchto 25 jednotek ani jejich podíly nelze měnit. Při změně prohlášení lze v Nastavení → Vlastníci a podíly **přidat jednotku** (označení, typ byt / nebytový prostor, podíl jako čitatel `cit`, vlastníci; `added:true`, přidanou lze i odebrat). Jmenovatel hlasů = součet čitatelů všech jednotek (`jmen()`); když se liší od 13 193, Nastavení zobrazí upozornění „Součet podílů neodpovídá prohlášení vlastníka“. Neukončená schůze přebírá jednotky z Nastavení a ukládá si jmenovatel (`m.jmen`, ve snímku hlasování `snap.jmen`); ukončené schůze si ponechají svůj snímek (bez `m.jmen` = 13 193). Za garáž (4 spoluvlastníci) hlasuje jeden z nich – vybírá se v Prezenci.
+- Jednotky a podíly jsou pevné podle prohlášení vlastníka: 25 jednotek (24 bytů + garáž 2554/13), jmenovatel **13 193**. Za garáž (4 spoluvlastníci) hlasuje jeden z nich – vybírá se v Prezenci.
 - Před předáním změn: kontrola syntaxe JS (`node --check`) a funkční test (např. jsdom: načíst `svjdemo.json`, otevřít schůzi, vygenerovat protokol).
 
 ## Právní rámec, ze kterého aplikace vychází
