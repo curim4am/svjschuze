@@ -1,2 +1,3 @@
 *.json
 !svjdemo.json
+node_modules/

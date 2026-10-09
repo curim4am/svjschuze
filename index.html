@@ -928,9 +928,12 @@ function tally(m,v){
   var tot=totalPodil(m),pres=presentPodil(m),ano=0,ne=0,zdr=0,cA=0,cN=0,cZ=0;
   presentUnits(m).forEach(function(u){var b=v.ballots[u.id];
     if(b==="ANO"){ano+=+u.podil;cA++;}else if(b==="NE"){ne+=+u.podil;cN++;}else{zdr+=+u.podil;cZ++;}});
-  var T=TYPES[v.type]||TYPES.prosta,base=T.base==="all"?tot:pres,ratio=base>0?ano/base:0;
-  return {ano:ano,ne:ne,zdr:zdr,cA:cA,cN:cN,cZ:cZ,tot:tot,pres:pres,base:base,ratio:ratio,passed:pass(T.op,ratio,T.thr),T:T};
+  var T=TYPES[v.type]||TYPES.prosta,base=T.base==="all"?tot:pres,ratio=base>0?ano/base:0,q=isQuorate(m);
+  return {ano:ano,ne:ne,zdr:zdr,cA:cA,cN:cN,cZ:cZ,tot:tot,pres:pres,base:base,ratio:ratio,quorate:q,passed:q&&pass(T.op,ratio,T.thr),T:T};
 }
+// usnášeníschopnost při hlasování (§ 1206 odst. 1 OZ); starší usnesení bez příznaku se dopočítají ze snímku
+var NOQ="shromáždění nebylo usnášeníschopné";
+function voteQuorate(v){var s=v.snap||{};return s.quorate!==undefined?!!s.quorate:(s.tot>0&&s.pres/s.tot>QUORUM);}
 function rosterSum(){return state.roster.reduce(function(a,u){return a+(+u.podil||0);},0);}
 
 function allUsn(){var out=[];state.meetings.forEach(function(m){m.votes.forEach(function(v){out.push({m:m,v:v,mid:m.id,date:m.date||"",num:v.num,text:v.text||"",result:v.result});});});return out;}
@@ -1418,7 +1421,7 @@ function tabHlasovani(m){
   if(m.current)return liveVote(m);
   var n=presentUnits(m).length,q=isQuorate(m),num=m.votes.length+1;
   var warn=!n?callout("warning","users",'Nejdřív v <button class="linkbtn" onclick="setTab(\'prezence\')">prezenci</button> označte přítomné – hlasují jen přítomní.')
-    :(!q?callout("warning","alert",'Schůze teď není usnášeníschopná ('+fmt(pct(m))+' % podílů). Přijaté usnesení by nemuselo být platné.'):'');
+    :(!q?callout("warning","alert",'Schůze teď není usnášeníschopná ('+fmt(pct(m))+' % podílů, potřeba více než 50 % – § 1206 odst. 1 OZ). Hlasovat lze až za přítomnosti vlastníků s většinou všech hlasů.'):'');
   var prog=programOf(m),elect=electionText(m),first=!m.votes.length,pre=first?elect:"";
   if(first)warn+=elect?callout("info","check",'Návrh prvního usnesení je předvyplněný podle <button class="linkbtn" onclick="setTab(\'priprava\')">Přípravy</button> – volba předsedajícího, zapisovatele a ověřovatele. Text můžete upravit.')
     :callout("neutral","users",'Vyberte v <button class="linkbtn" onclick="setTab(\'priprava\')">Přípravě</button> předsedajícího, zapisovatele a ověřovatele – návrh jejich volby se sem předvyplní sám.');
@@ -1428,7 +1431,7 @@ function tabHlasovani(m){
   var h=warn+card("Nové hlasování",'<span class="muted-s">usnesení č. '+num+'</span>','<div class="card-b">'+chips+
     field("Návrh usnesení",'<textarea id="vText" rows="3" placeholder="Shromáždění schvaluje …">'+esc(pre)+'</textarea>','<span class="err" id="vErr"></span>')+
     '<div class="field"><span class="lbl">Potřebná většina</span><div class="choices" role="radiogroup" aria-label="Potřebná většina">'+opts+'</div></div>'+
-    '<div class="form-actions"><button class="btn lg"'+(n?'':' disabled')+' onclick="startVote()">'+ic('play')+'Zahájit hlasování</button><span class="hint">'+(n?'Všem přítomným se předvyplní „Zdržel se“.':'Nejdřív označte přítomné.')+'</span></div></div>');
+    '<div class="form-actions"><button class="btn lg"'+(n&&q?'':' disabled')+' onclick="startVote()">'+ic('play')+'Zahájit hlasování</button><span class="hint">'+(!n?'Nejdřív označte přítomné.':!q?'Shromáždění není usnášeníschopné – hlasování nelze zahájit.':'Všem přítomným se předvyplní „Zdržel se“.')+'</span></div></div>');
   if(m.votes.length){var nA=m.votes.filter(function(v){return v.result;}).length;
     h+='<div class="sec-h"><h2>Usnesení této schůze</h2><span class="muted-s">'+m.votes.length+' usnesení · '+nA+' schváleno · '+(m.votes.length-nA)+' neschváleno</span></div>'+m.votes.slice().reverse().map(function(v){return usnCard(m,v);}).join("");
     h+='<div class="nextbar"><span class="muted-s">Hotovo s hlasováním? Protokol se sestaví sám z přípravy, prezence a usnesení.</span><button class="btn secondary" onclick="setTab(\'zapis\')">'+ic('edit')+'Zápis</button><button class="btn" onclick="openProtokol()">'+ic('printer')+'Protokol</button></div>';}
@@ -1440,7 +1443,7 @@ function startVote(){
   var m=M();if(!m||m.status!=="open")return;
   var r=document.querySelector('input[name="vType"]:checked'),text=gv("vText").trim(),type=r?r.value:"prosta";
   if(!text){setErr("vErr","Napište znění návrhu usnesení.","vText");focusEl("vText");return;}
-  if(!presentUnits(m).length)return;
+  if(!presentUnits(m).length||!isQuorate(m))return;
   m.current={text:text,type:type,ballots:{}};
   presentUnits(m).forEach(function(u){m.current.ballots[u.id]="ZDR";});
   save();render();scrollTop();
@@ -1456,7 +1459,7 @@ function liveVote(m){
     '<p class="explain">'+ic('info')+'<span>Hlasy se počítají podle spoluvlastnických podílů, ne podle počtu lidí – větší jednotka má větší váhu. '+
       (all?'U tohoto typu rozhoduje podíl ze <b>všech</b> vlastníků, takže kdo chybí, jako by nehlasoval pro.':'Rozhoduje podíl z <b>přítomných</b>.')+'</span></p></div></section>';
   var verdict='<div class="verdict '+(t.passed?'ok':'no')+'"><div class="verdict-h"><span class="verdict-ic">'+ic(t.passed?'check':'x')+'</span><div><div class="verdict-t">'+(t.passed?'Usnesení by bylo přijato':'Usnesení by nebylo přijato')+'</div>'+
-    '<div class="verdict-s">Pro je <b>'+fmt(share)+' %</b> podílů '+baseTxt+' · potřeba '+need+'</div></div></div>'+voteBar(w(t.ano),w(t.ne),w(t.zdr),w(absent),T.thr*100,true)+
+    '<div class="verdict-s">'+(t.quorate?'':'<b>Shromáždění není usnášeníschopné</b> ('+fmt(t.tot>0?t.pres/t.tot*100:0)+' % podílů) · ')+'Pro je <b>'+fmt(share)+' %</b> podílů '+baseTxt+' · potřeba '+need+'</div></div></div>'+voteBar(w(t.ano),w(t.ne),w(t.zdr),w(absent),T.thr*100,true)+
     '<div class="legend"><span><i class="dot a"></i>ANO <b>'+t.cA+'</b></span><span><i class="dot n"></i>NE <b>'+t.cN+'</b></span><span><i class="dot z"></i>Zdržel se <b>'+t.cZ+'</b></span>'+(absent?'<span><i class="dot x"></i>Nepřítomní</span>':'')+'</div></div>';
   var acts='<div class="vact"><button class="btn success lg" onclick="closeVote()">'+ic('check')+'Uzavřít hlasování</button><button class="btn ghost danger-text" onclick="cancelVote()">Zrušit hlasování</button></div>';
   var rows=presentUnits(m).map(function(u){var b=v.ballots[u.id]||"ZDR",a=m.att[u.id]||{};
@@ -1478,12 +1481,13 @@ function closeVote(){
   var m=M();if(!m||!m.current)return;
   var t0=tally(m,m.current),num=m.votes.length+1;
   ask({title:"Uzavřít hlasování o usnesení č. "+num+"?",icon:t0.passed?"check":"x",tone:t0.passed?"success":"danger",
-    text:'<p>Výsledek bude konečný: <b>'+(t0.passed?'PŘIJATO':'NEPŘIJATO')+'</b></p><p class="muted-s">ANO '+t0.cA+' · NE '+t0.cN+' · Zdržel se '+t0.cZ+'</p>',ok:"Uzavřít hlasování",okClass:"success",cancel:"Zpět",
+    text:'<p>Výsledek bude konečný: <b>'+(t0.passed?'PŘIJATO':'NEPŘIJATO')+'</b>'+(t0.quorate?'':' – '+NOQ)+'</p><p class="muted-s">ANO '+t0.cA+' · NE '+t0.cN+' · Zdržel se '+t0.cZ+'</p>',ok:"Uzavřít hlasování",okClass:"success",cancel:"Zpět",
     onOk:function(){
       if(!m.current)return;
       var v=m.current,t=tally(m,v);
       m.votes.push({num:num,text:v.text,type:v.type,time:new Date().toLocaleTimeString("cs-CZ",{hour:"2-digit",minute:"2-digit"}),ballots:Object.assign({},v.ballots),result:t.passed,
-        snap:{cA:t.cA,cN:t.cN,cZ:t.cZ,ano:t.ano,ne:t.ne,zdr:t.zdr,tot:t.tot,pres:t.pres,base:t.base,typeLabel:t.T.label,
+        reason:t.quorate?undefined:NOQ,
+        snap:{quorate:t.quorate,cA:t.cA,cN:t.cN,cZ:t.cZ,ano:t.ano,ne:t.ne,zdr:t.zdr,tot:t.tot,pres:t.pres,base:t.base,typeLabel:t.T.label,
           units:presentUnits(m).map(function(u){var a=m.att[u.id]||{};return {unit:u.unit,owner:u.owner,who:String(a.who||"").trim(),pm:!!a.pm,podil:u.podil,vote:v.ballots[u.id]||"ZDR"};})}});
       m.current=null;save();render();scrollTop();
       toast("Usnesení č. "+num+" uloženo – "+(t.passed?"schváleno":"neschváleno"),"success",{label:"+ Úkol",fn:function(){taskFromVote(num);}});
@@ -1506,7 +1510,7 @@ function usnCard(m,v){
   return '<article class="card ucard"><div class="card-b">'+
     '<div class="ucard-h"><span class="unum">'+v.num+'</span><span class="ucard-l">Usnesení č. '+v.num+'</span>'+resBadge(v.result)+'</div>'+
     '<p class="ucard-t">'+esc(v.text||'(bez textu)')+'</p>'+
-    '<div class="meta"><span>'+ic('vote')+esc(s.typeLabel||T.label)+'</span>'+(v.time?'<span>'+ic('clock')+'hlasováno '+esc(v.time)+'</span>':'')+'</div>'+
+    '<div class="meta"><span>'+ic('vote')+esc(s.typeLabel||T.label)+'</span>'+(v.reason?'<span>'+ic('alert')+esc(v.reason)+'</span>':'')+(v.time?'<span>'+ic('clock')+'hlasováno '+esc(v.time)+'</span>':'')+'</div>'+
     voteBar(w(s.ano),w(s.ne),w(s.zdr),w(absent),T.thr*100,false)+
     '<div class="legend"><span><i class="dot a"></i>ANO <b>'+s.cA+'</b> <span class="muted-n">'+usnP(s.ano,s)+' %</span></span><span><i class="dot n"></i>NE <b>'+s.cN+'</b> <span class="muted-n">'+usnP(s.ne,s)+' %</span></span><span><i class="dot z"></i>Zdržel se <b>'+s.cZ+'</b> <span class="muted-n">'+usnP(s.zdr,s)+' %</span></span><span class="muted-n">'+usnBaseTxt(v)+'</span></div>'+
     tl+'<div class="uact"><button class="linkbtn" onclick="taskFromVote('+v.num+')">'+ic('plus')+'Úkol z usnesení</button><button class="linkbtn" aria-expanded="'+open+'" onclick="toggleVoteDetail(\''+key+'\')">'+ic(open?'chevD':'chevR')+(open?'Skrýt hlasy jednotek':'Hlasy jednotek')+'</button></div>'+det+'</div></article>';
@@ -1551,7 +1555,7 @@ function usnBaseTxt(v){return (TYPES[v.type]||TYPES.prosta).base==="all"?"z hlas
 function protoVote(x){return x==="ANO"||x==="NE"?x:"ZDRŽEL SE";}
 function protoUsn(v){var s=v.snap,pt=s.tot>0?s.pres/s.tot*100:0;
   return '<div class="usn keep '+(v.result?'ok':'ko')+'"><div class="uh"><b>Usnesení č. '+v.num+'</b><span class="ub">'+(v.result?'✓ PŘIJATO':'✗ NEPŘIJATO')+'</span></div><p class="ut">'+esc(v.text||'(bez textu)')+'</p>'+
-    '<p class="pres">PRO '+s.cA+' ('+usnP(s.ano,s)+' %) · PROTI '+s.cN+' ('+usnP(s.ne,s)+' %) · ZDRŽEL SE '+s.cZ+' ('+usnP(s.zdr,s)+' %) '+usnBaseTxt(v)+'<br>potřebná většina: '+esc(s.typeLabel)+' · přítomno '+fmt(pt)+' % hlasů'+(v.time?' · hlasováno v '+esc(v.time):'')+'</p></div>';}
+    '<p class="pres">PRO '+s.cA+' ('+usnP(s.ano,s)+' %) · PROTI '+s.cN+' ('+usnP(s.ne,s)+' %) · ZDRŽEL SE '+s.cZ+' ('+usnP(s.zdr,s)+' %) '+usnBaseTxt(v)+'<br>potřebná většina: '+esc(s.typeLabel)+' · přítomno '+fmt(pt)+' % hlasů · usnášeníschopné: '+(voteQuorate(v)?'ano':'ne')+(v.time?' · hlasováno v '+esc(v.time):'')+(v.reason?'<br>Usnesení nepřijato – '+esc(v.reason)+'.':'')+'</p></div>';}
 function protoDoc(m,full){
   var z=zOf(m),tot=totalPodil(m),pp=presentPodil(m),q=isQuorate(m),pres=presentUnits(m),n=0;
   function sec(t){n++;return '<h2>'+n+'. '+t+'</h2>';}
