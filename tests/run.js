@@ -81,8 +81,6 @@ function app(modify) {
 const text = (html) => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
 // bloky usnesení v protokolu (prvky a jejich text)
 const usnEls = (html) => [...JSDOM.fragment(html).querySelectorAll(".usn")];
-const pairs = (el) => [...el.querySelectorAll("dl.uft dt")].map((dt) => dt.textContent.trim() + " " + dt.nextElementSibling.textContent.trim());
-const cells = (tr) => [...tr.children].map((c) => c.textContent.trim());
 const usnBlocks = (html) => usnEls(html).map((e) => e.textContent.replace(/\s+/g, " "));
 
 // =============== KROK 1: usnášeníschopnost, většiny, garáž, protokol ===============
@@ -193,7 +191,7 @@ test("O1: ztráta usnášeníschopnosti během hlasování → NEPŘIJATO s dův
   const v = a.lastVote();
   eq(v.result, false, "výsledek"); eq(v.reason, "shromáždění nebylo usnášeníschopné", "důvod");
   const el = usnEls(a.proto(OPEN_ID)).pop();
-  has(el.textContent, "NEPŘIJATO"); has(pairs(el).join(" / "), "Důvod nepřijetí: shromáždění nebylo usnášeníschopné");
+  has(el.textContent, "NEPŘIJATO"); has(el.querySelector(".um").textContent, "neusnášeníschopné – nepřijato");
 });
 
 // V1: příznak usnášeníschopnosti ve snímku a v protokolu
@@ -210,7 +208,7 @@ test("V1: protokol u každého usnesení uvádí usnášeníschopné / neusnáš
   a.startVote("B", "prosta"); a.cast(SET_6597, "NE"); a.absent([GARAZ]); a.closeVote();
   const b = usnBlocks(a.proto(OPEN_ID));
   eq(b.length, 2, "počet usnesení");
-  has(b[0], "% hlasů – usnášeníschopné"); has(b[1], "% hlasů – neusnášeníschopné");
+  has(b[0], "· usnášeníschopné ("); has(b[1], "· neusnášeníschopné");
 });
 test("V1: stará usnesení bez příznaku – dopočet ze snap.pres/snap.tot", () => {
   const a = app((d) => {
@@ -220,8 +218,8 @@ test("V1: stará usnesení bez příznaku – dopočet ze snap.pres/snap.tot", (
   });
   const b = usnBlocks(a.proto(CLOSED_ID));
   eq(b.length, 6, "počet usnesení");
-  for (let i = 0; i < 5; i++) has(b[i], "% hlasů – usnášeníschopné", "usnesení č. " + (i + 1) + " (10758 z 13193)");
-  has(b[5], "50,0 % hlasů – neusnášeníschopné", "usnesení se 6596 z 13193");
+  for (let i = 0; i < 5; i++) has(b[i], "· usnášeníschopné (81,5 %)", "usnesení č. " + (i + 1) + " (10758 z 13193)");
+  has(b[5], "· neusnášeníschopné", "usnesení se 6596 z 13193");
 });
 
 // =============== Výchozí hlas „Zdržel se“ ===============
@@ -374,47 +372,44 @@ test("V2: úkol mimo usnesení jde dál přidat bez odpovědné osoby a termínu
   eq(a.state().tasks.length, n0 + 1, "úkol přidán");
 });
 
-// =============== Blok usnesení v protokolu ===============
-test("blok usnesení: záhlaví, bod programu, citace, tabulka hlasů, patička", () => {
+// =============== Blok usnesení v protokolu: 4 řádky ===============
+const rowsOf = (el) => [...el.children].map((c) => c.textContent.replace(/\s+/g, " ").trim());
+test("blok usnesení: 4 řádky – záhlaví s bodem a výsledkem, znění, hlasy, drobný řádek", () => {
   const a = app(); a.open(); a.present(SET_6597);
   a.startVote("Shromáždění schvaluje zhotovitele střechy.", "prosta", "p2"); a.cast(SET_6597.slice(0, 10), "NE"); a.closeVote();
   const time = a.lastVote().time;
   [false, true].forEach((full) => {
-    const el = usnEls(a.proto(OPEN_ID, full))[0];
-    // 1. záhlaví na jednom řádku: číslo vlevo, výrazný štítek vpravo
-    const uh = el.firstElementChild;
-    ok(uh.classList.contains("uh"), "záhlaví je první"); has(uh.textContent, "Usnesení č. 1");
-    eq(uh.querySelector(".ub").textContent, "✓ PŘIJATO", "štítek výsledku");
-    // 2. bod programu pod záhlavím
-    eq(uh.nextElementSibling.textContent, "Bod programu: 2. Oprava střechy – výběr zhotovitele", "bod programu");
-    // 3. znění v citaci
-    const ut = el.querySelector("blockquote.ut"); ok(ut, "citace znění"); eq(ut.textContent, "Shromáždění schvaluje zhotovitele střechy.", "znění");
-    // 4. tabulka PRO | PROTI | ZDRŽEL SE
-    const tb = el.querySelector("table.uvt"); ok(tb, "tabulka výsledku");
-    eq(cells(tb.querySelector("thead tr")).join("|"), "PRO|PROTI|ZDRŽEL SE", "záhlaví tabulky");
-    const rows = [...tb.querySelectorAll("tbody tr")];
-    // 10 ANO: 2553/02,03,04,06,08,09,11,12, 2554/01,03 = 3×508 + 6×525 + 685 = 5359 z 6597; 2 NE: 2554/04 + garáž = 525 + 713 = 1238
-    eq(cells(rows[0]).join("|"), "10 jednotek|2 jednotky|0 jednotek", "počty jednotek");
-    eq(cells(rows[1]).join("|"), "81,23 %|18,77 %|0,0 %", "podíly v %");
-    eq(rows[1].querySelectorAll("b").length, 3, "procenta tučně");
-    eq(tb.nextElementSibling.textContent, "% z hlasů přítomných", "základ procent");
-    // 5. patička popisek: hodnota
-    eq(JSON.stringify(pairs(el)), JSON.stringify(["Potřebná většina: Prostá většina přítomných (> 50 %)", "Přítomno: 50,0 % hlasů – usnášeníschopné", "Čas hlasování: " + time]), "patička " + (full ? "kompletní" : "zjednodušená"));
+    const el = usnEls(a.proto(OPEN_ID, full))[0], r = rowsOf(el);
+    eq(r.length, 4, "počet řádků " + (full ? "kompletní" : "zjednodušená"));
+    eq(el.querySelector(".uh b").textContent, "Usnesení č. 1", "tučné číslo usnesení");
+    eq(el.querySelector(".uh .ub").textContent, "✓ PŘIJATO", "výsledek vpravo");
+    eq(r[0], "Usnesení č. 1 · Bod programu: 2. Oprava střechy – výběr zhotovitele ✓ PŘIJATO", "1. řádek");
+    eq(r[1], "Shromáždění schvaluje zhotovitele střechy.", "2. řádek");
+    // 10 ANO = 5359, 2 NE = 1238 z 6597 přítomných
+    eq(r[2], "PRO 10 (81,2 %) · PROTI 2 (18,8 %) · ZDRŽEL SE 0", "3. řádek");
+    // 6597 z 13193 = 50,004 %
+    eq(r[3], "prostá většina přítomných · usnášeníschopné (50 %) · " + time, "4. řádek");
   });
 });
-test("blok usnesení: většina všech, nepřijato s důvodem, 1 jednotka", () => {
+test("blok usnesení: většina všech, neusnášeníschopné – nepřijato", () => {
   const a = app(); a.open(); a.present(SET_6597);
   a.startVote("Volba člena výboru", "nadpvse", "p1"); a.cast(["2553/04"], "ZDR"); a.absent([GARAZ]); a.closeVote();
-  const el = usnEls(a.proto(OPEN_ID))[0];
-  eq(el.querySelector(".ub").textContent, "✗ NEPŘIJATO", "štítek výsledku");
-  eq(cells(el.querySelectorAll("table.uvt tbody tr")[0]).join("|"), "1 jednotka|0 jednotek|10 jednotek", "počty jednotek");
-  eq(el.querySelector("table.uvt").nextElementSibling.textContent, "% z hlasů všech vlastníků", "základ procent");
-  const p = pairs(el);
-  has(p.join(" / "), "Přítomno: 44,6 % hlasů – neusnášeníschopné"); eq(p[p.length - 1], "Důvod nepřijetí: shromáždění nebylo usnášeníschopné", "důvod");
+  const el = usnEls(a.proto(OPEN_ID))[0], r = rowsOf(el), time = a.lastVote().time;
+  eq(el.querySelector(".uh .ub").textContent, "✗ NEPŘIJATO", "výsledek");
+  // ze všech hlasů: ANO 685/13193, ZDRŽEL SE 5199/13193
+  eq(r[2], "PRO 1 (5,2 %) · PROTI 0 · ZDRŽEL SE 10 (39,4 %)", "3. řádek");
+  eq(r[3], "většina všech vlastníků · neusnášeníschopné – nepřijato · " + time, "4. řádek");
 });
-test("blok usnesení: starší usnesení bez bodu programu – řádek bodu chybí", () => {
-  const a = app();
-  usnEls(a.proto(CLOSED_ID)).forEach((el) => { const n = el.querySelector(".uh").nextElementSibling; ok(n.matches("blockquote.ut"), "po záhlaví hned znění"); });
+test("blok usnesení: starší usnesení ze svjdemo.json (bez bodu programu)", () => {
+  const a = app(), b = usnEls(a.proto(CLOSED_ID)).map(rowsOf);
+  eq(b.length, 5, "počet usnesení");
+  eq(b[0][0], "Usnesení č. 1 ✓ PŘIJATO", "1. řádek");
+  // 19 ANO = 10250, 1 ZDRŽEL SE = 508 z 10758 přítomných
+  eq(b[0][2], "PRO 19 (95,3 %) · PROTI 0 · ZDRŽEL SE 1 (4,7 %)", "3. řádek");
+  eq(b[0][3], "prostá většina přítomných · usnášeníschopné (81,5 %) · 18:07", "4. řádek");
+  eq(b[2][3], "tříčtvrtinová většina přítomných · usnášeníschopné (81,5 %) · 18:51", "4. řádek ¾");
+  eq(b[3][3], "většina všech vlastníků · usnášeníschopné (81,5 %) · 19:12", "4. řádek většina všech");
+  eq(b[4][0], "Usnesení č. 5 ✗ NEPŘIJATO", "nepřijaté usnesení");
 });
 
 // ---------- běh ----------
