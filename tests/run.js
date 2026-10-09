@@ -33,7 +33,8 @@ function app(modify) {
   const data = JSON.parse(DEMO);
   if (modify) modify(data);
   const vc = new VirtualConsole(), errors = [];
-  vc.on("jsdomError", (e) => { if (!/Not implemented/.test(e.message)) errors.push(e.message); });
+  // jsdom neumí okraje stránky (@page { @bottom-center }) – chybu parseru jen u stylu zápatí zápisu ignorujeme, Chrome je zná
+  vc.on("jsdomError", (e) => { if (/Not implemented/.test(e.message)) return; if (/Could not parse CSS/.test(e.message) && /@bottom-center/.test(String(e.detail || ""))) return; errors.push(e.message); });
   const dom = new JSDOM(HTML, {
     runScripts: "dangerously", pretendToBeVisual: true, url: "http://localhost/", virtualConsole: vc,
     beforeParse(w) {
@@ -170,7 +171,7 @@ test("protokol ukončené schůze 16. 4. 2026 (zjednodušený i kompletní)", ()
   const a = app();
   a.ev(`openProtokolFor(${CLOSED_ID})`);
   const simple = a.view();
-  has(simple, "IČO 26781816"); has(simple, "Přítomno 20 z 25 jednotek s 10758 z 13193 hlasů"); has(simple, "Usnesení č. 5"); hasNot(simple, "Jmenovité hlasování");
+  has(simple, "IČO 26781816"); has(simple, "přítomno 20 z 25 jednotek s 10758 z 13193 hlasů"); has(simple, "Usnesení č. 5"); hasNot(simple, "Jmenovité hlasování");
   eq((simple.match(/✓ PŘIJATO/g) || []).length, 4, "přijatá usnesení"); eq((simple.match(/✗ NEPŘIJATO/g) || []).length, 1, "nepřijatá usnesení");
   a.ev("setProtoVariant('full')");
   has(a.view(), "Jmenovité hlasování");
@@ -445,6 +446,96 @@ test("černobílý tisk: blok usnesení obsahuje stejné texty a čísla jako ba
   const a = app(), color = usnBlocks(a.proto(CLOSED_ID, true));
   a.ev("state.protoBW=true");
   eq(JSON.stringify(usnBlocks(a.proto(CLOSED_ID, true))), JSON.stringify(color), "texty bloků");
+});
+
+// =============== Zápis ze shromáždění – struktura ===============
+const P = (html) => JSDOM.fragment(html);
+const h2s = (html) => [...P(html).querySelectorAll("h2")].map((h) => h.textContent.trim());
+// tabulky a odstavce jedné sekce zápisu (mezi nadpisem a dalším h2)
+const secRows = (html, title) => { const out = []; let on = false;
+  for (const el of P(html).children[0].children) { if (el.tagName === "H2") on = el.textContent.trim() === title; else if (on) out.push(...(el.tagName === "TABLE" ? rowsText(el) : [el.textContent.replace(/\s+/g, " ").trim()])); }
+  return out; };
+const rowsText = (el) => [...el.querySelectorAll("tr")].map((tr) => [...tr.children].map((c) => c.textContent.replace(/\s+/g, " ").trim()).join(" | ").replace(/\s+/g, " ").trim());
+test("zápis: číslované sekce ve správném pořadí, přílohy na konci", () => {
+  const a = app();
+  const base = ["1. Svolání a orgány schůze", "2. Usnášeníschopnost", "3. Průběh jednání a usnesení", "4. Úkoly", "5. Námitky a nesouhlas", "6. Ukončení a vyhotovení zápisu", "7. Podpisy", "8. Přílohy zápisu", "Příloha – Listina přítomných"];
+  eq(JSON.stringify(h2s(a.proto(CLOSED_ID))), JSON.stringify(base), "zjednodušená");
+  eq(JSON.stringify(h2s(a.proto(CLOSED_ID, true))), JSON.stringify(base.concat(["Příloha – Jmenovité hlasování"])), "kompletní");
+  const f = P(a.proto(CLOSED_ID));
+  eq([...f.querySelectorAll("h2.appx")].length, 1, "příloha začíná na nové stránce (h2.appx)");
+});
+test("zápis: hlavička – SVJ, IČO, sídlo, spisová značka, nadpis, datum, čas, místo, druh", () => {
+  const a = app(), f = P(a.proto(CLOSED_ID)), t = f.textContent.replace(/\s+/g, " ");
+  has(t, "Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3"); has(t, "IČO 26781816"); has(t, "sídlo Buková 2553/4, 130 00 Praha 3"); has(t, "spisová značka S 3907 vedená u Městského soudu v Praze");
+  eq(f.querySelector("h1").textContent, "Zápis ze shromáždění vlastníků jednotek", "nadpis");
+  eq(JSON.stringify(rowsText(f.querySelector("table.pinfo"))), JSON.stringify(["Datum | 16. 4. 2026", "Čas | zahájení 18:00 · ukončení 19:55", "Místo | velká sušárna", "Druh | Řádné shromáždění"]), "údaje");
+});
+test("zápis: přehled na první pohled – usnášeníschopnost, počty usnesení, tabulka usnesení", () => {
+  const a = app(), box = P(a.proto(CLOSED_ID)).querySelector(".pbox");
+  ok(box, "box přehledu"); const t = box.textContent.replace(/\s+/g, " ");
+  has(t, "přítomno 10758 z 13193 hlasů = 81,54 % (při zahájení) – usnášeníschopné");
+  has(t, "5 usnesení: 4 přijato, 1 nepřijato");
+  const rows = rowsText(box.querySelector("table"));
+  eq(rows[0], "Č. | Bod programu | Znění | Výsledek", "záhlaví");
+  eq(rows.length, 6, "řádky");
+  ok(/^1 \| — \| Shromáždění volí předsedajícím Jana Nováka/.test(rows[1]) && rows[1].endsWith("| ✓ přijato"), "usnesení č. 1: " + rows[1]);
+  ok(rows[5].startsWith("5 | — | Shromáždění schvaluje instalaci kamerového systému") && rows[5].endsWith("| ✗ nepřijato"), "usnesení č. 5: " + rows[5]);
+});
+test("zápis: při zahájení = stav při 1. hlasování, na konci = stav prezence; plné moci", () => {
+  const a = app(); a.open(); a.present(SET_6597);
+  a.startVote("Volba orgánů", "prosta", "p1"); a.cast(SET_6597, "NE"); a.closeVote();
+  a.present(["2553/01"]); // přišla později: 6597 + 529 = 7126
+  const f = P(a.proto(OPEN_ID)), box = f.querySelector(".pbox").textContent.replace(/\s+/g, " ");
+  has(box, "přítomno 6597 z 13193 hlasů = 50,0 % (při zahájení) – usnášeníschopné");
+  has(rowsText(f.querySelector(".pbox table"))[1], "1 | 1. Volba orgánů schůze | Volba orgánů | ✓ přijato");
+  const sec = f.textContent.replace(/\s+/g, " ").split("2. Usnášeníschopnost")[1].split("3. Průběh")[0];
+  has(sec, "Při zahájení (při hlasování o usnesení č. 1): přítomno 12 jednotek s 6597 z 13193 hlasů (50,0 %)");
+  has(sec, "Na konci: přítomno 13 z 25 jednotek s 7126 z 13193 hlasů, tj. 54,01 % všech hlasů");
+  has(sec, "na základě plné moci 0 jednotek"); has(sec, "§ 1206 odst. 1 OZ");
+});
+test("zápis: bez hlasování – přehled uvádí stav na konci", () => {
+  const a = app(); a.open(); a.present(SET_6596);
+  const box = P(a.proto(OPEN_ID)).querySelector(".pbox").textContent.replace(/\s+/g, " ");
+  has(box, "přítomno 6596 z 13193 hlasů = 50,0 % (na konci) – neusnášeníschopné"); has(box, "Na shromáždění se nehlasovalo.");
+});
+test("zápis: usnášeníschopnost – plné moci ze svjdemo.json", () => {
+  const a = app(), t = P(a.proto(CLOSED_ID)).textContent.replace(/\s+/g, " ");
+  has(t, "z toho na základě plné moci 1 jednotka");
+});
+test("zápis: svolání – lhůta 15 dnů dodržena / nedodržena", () => {
+  const a = app(), t = P(a.proto(CLOSED_ID)).textContent.replace(/\s+/g, " ");
+  has(t, "pozvánkou ze dne 27. 3. 2026, e-mailem, vyvěšením na nástěnce a eDomovníkem – lhůta 15 dnů dodržena (20 dnů před zasedáním, čl. VI C odst. 1 stanov)");
+  const b = app((d) => { d.meetings.find((m) => m.id === CLOSED_ID).zapis.invDate = "2026-04-06"; });
+  has(P(b.proto(CLOSED_ID)).textContent.replace(/\s+/g, " "), "– lhůta 15 dnů nedodržena (10 dnů před zasedáním, čl. VI C odst. 1 stanov)");
+});
+test("zápis: průběh jednání je před usneseními", () => {
+  const a = app(), f = P(a.proto(CLOSED_ID)), all = [...f.querySelectorAll(".znotes, .usn")];
+  ok(all[0].classList.contains("znotes"), "nejdřív průběh"); ok(all[1].classList.contains("usn"), "pak usnesení");
+});
+test("zápis: úkoly – tabulka úkol · odpovědná osoba · termín", () => {
+  const a = app(), rows = secRows(a.proto(CLOSED_ID), "4. Úkoly");
+  eq(rows[0], "Úkol | Odpovědná osoba | Termín", "záhlaví");
+  eq(rows[1], "Objednat výměnu vchodových dveří a dohodnout termín montáže (usnesení č. 3) | Filip Urban | 30. 6. 2026", "úkol z usnesení");
+  eq(rows[5], "Prověřit zatékání v suterénu u 2. vchodu | Eva Černá | 30. 11. 2026", "úkol mimo usnesení");
+  eq(rows.length, 6, "bez kontroly plnění úkolů");
+});
+test("zápis: úkoly – bez úkolů věta, kontrola plnění jen pokud existuje snímek", () => {
+  const a = app((d) => { d.tasks = []; d.meetings.find((m) => m.id === CLOSED_ID).taskCheck = [{ text: "Opravit zvonek", owner: "Jan Novák", due: "2026-03-31", state: "overdue" }]; });
+  eq(JSON.stringify(secRows(a.proto(CLOSED_ID), "4. Úkoly")), JSON.stringify(["Na shromáždění nebyly uloženy žádné úkoly.", "Kontrola plnění úkolů", "Úkol | Odpovědná osoba | Termín | Stav", "Opravit zvonek | Jan Novák | 31. 3. 2026 | Po termínu"]), "sekce Úkoly");
+});
+test("zápis: námitky – text, nebo „Námitky nebyly vzneseny.“", () => {
+  const a = app(); has(P(a.proto(CLOSED_ID)).textContent, "Vlastník jednotky 2553/07 nesouhlasí s usnesením č. 3");
+  const b = app((d) => { d.meetings.find((m) => m.id === CLOSED_ID).zapis.objections = ""; });
+  has(P(b.proto(CLOSED_ID)).textContent.split("5. Námitky a nesouhlas")[1], "Námitky nebyly vzneseny.");
+});
+test("zápis: podpisy – funkce, jméno, místo pro podpis a datum", () => {
+  const a = app(), t = P(a.proto(CLOSED_ID)).querySelector("table.psig");
+  ok(t, "tabulka podpisů");
+  eq(JSON.stringify(rowsText(t)), JSON.stringify(["Funkce | Jméno | Podpis | Datum", "Předsedající | Jan Novák (předseda výboru) | |", "Zapisovatel | Eva Černá (členka výboru) | |", "Ověřovatel | Petra Svobodová (2553/02) | |"]), "řádky");
+});
+test("zápis: zápatí stránky „Zápis ze shromáždění dne … · strana x / y“", () => {
+  const a = app(), st = P(a.proto(CLOSED_ID)).querySelector("style");
+  ok(st, "styl zápatí"); has(st.textContent, '@bottom-center'); has(st.textContent, '"Zápis ze shromáždění dne 16. 4. 2026 · strana " counter(page) " / " counter(pages)');
 });
 
 // ---------- běh ----------

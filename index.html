@@ -612,6 +612,22 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 #protokol .sig{margin-top:44px}
 #protokol .plist{list-style:none;margin:4px 0 8px;padding:0}
 #protokol .pfoot{margin-top:24px;font-size:.72rem;color:#666;text-align:right}
+#protokol .phd{text-align:center;padding-bottom:9px;border-bottom:1px solid #dfe3ea;margin-bottom:14px}
+#protokol .phd .org{font-weight:700;font-size:.95rem;color:var(--primary)}
+#protokol .phd .orgs{font-size:.74rem;color:#666;margin-top:2px}
+#protokol h1{color:var(--primary)}
+#protokol .psub{text-align:center;font-size:.76rem;color:#666;margin:0 0 4px}
+#protokol .pbox{border:1px solid #d9dee6;border-radius:6px;background:#f7f9fc;padding:10px 14px 6px;margin:16px 0 6px}
+#protokol .pbox .pbt{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);margin:0 0 4px}
+#protokol .pbox p{margin:2px 0;font-size:.86rem}
+#protokol .pbox table.lp{margin:8px 0 2px}
+#protokol .pbox table.lp tbody tr:nth-child(even) td{background:#fff}
+#protokol .pbox td.zn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal}
+#protokol .pbox td.ok{color:var(--success);font-weight:700}#protokol .pbox td.ko{color:var(--danger);font-weight:700}
+#protokol table.porg{width:auto;margin:4px 0}#protokol table.porg td{border:none;padding:2px 14px 2px 0;font-size:.86rem;vertical-align:top}
+#protokol table.psig{table-layout:fixed;margin:8px 0}#protokol table.psig th{border:0;border-bottom:1px solid #b9c3d3;font-size:.74rem;color:#333;background:none}
+#protokol table.psig td{border:0;border-bottom:1px solid #9aa3b0;height:34px;vertical-align:bottom;padding:4px 8px}
+#protokol.bw h1,#protokol.bw .phd .org,#protokol.bw .pbox .pbt,#protokol.bw .pbox td.ok,#protokol.bw .pbox td.ko{color:#111}
 #usnprint,#printbox{display:none}
 
 /* =====================================================================
@@ -1615,30 +1631,56 @@ function protoDoc(m,full){
   var z=zOf(m),tot=totalPodil(m),pp=presentPodil(m),q=isQuorate(m),pres=presentUnits(m),n=0;
   function sec(t){n++;return '<h2>'+n+'. '+t+'</h2>';}
   function row(l,v){return '<tr><td class="pl">'+l+'</td><td>'+v+'</td></tr>';}
-  var dots='………………………';
-  var H='<h1>Protokol ze shromáždění vlastníků jednotek</h1><p class="center">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p><p class="center muted">IČO 26781816 · sídlo Buková 2553/4, 130 00 Praha 3 · spisová značka S 3907 vedená u Městského soudu v Praze<br>zápis ze zasedání shromáždění podle § 254 a § 1221 OZ a čl. VI D odst. 3 stanov</p>'+
-    '<table class="pinfo">'+row("Datum a čas",dateCz(m.date)+(m.time?', '+esc(m.time):'')+(m.endTime?' – ukončeno '+esc(m.endTime):''))+row("Druh",esc(m.type||''))+(z.place?row("Místo",esc(z.place)):'')+row("Svolavatel",esc(convText(z)))+row("Svolání",(z.invDate?'pozvánkou ze dne '+dateCz(z.invDate):'pozvánkou ze dne '+dots)+(waysText(z)?', '+esc(waysText(z)):''))+(z.opener?row("Zahájil(a)",pLabel(m,z.opener)):'')+row("Předsedající",pLabel(m,z.chair)||dots)+row("Zapisovatel",pLabel(m,m.zapisovatel)||dots)+row("Ověřovatel",pLabel(m,z.verifier)||dots)+
-    (committeeOf(m).length?row("Výbor SVJ",committeeOf(m).map(function(c){return esc(String(c.name).trim())+' ('+esc(c.role||'člen výboru')+')';}).join(', ')):'')+'</table>'+
-    (m.reopened?'<p class="rd">Pozn.: protokol byl po ukončení schůze opraven ('+esc(m.reopened)+').</p>':'');
-  H+=sec("Prezence a usnášeníschopnost")+'<p>Přítomno <b>'+pres.length+' z '+m.roster.length+'</b> jednotek s <b>'+Math.round(tot>0?pp/tot*JMEN:0)+' z '+JMEN+'</b> hlasů, tj. <b>'+fmt(tot>0?pp/tot*100:0)+' %</b> všech hlasů (podílů). Shromáždění <b>'+(q?'bylo usnášeníschopné':'nebylo usnášeníschopné')+'</b> (potřeba přítomnost vlastníků s většinou všech hlasů – § 1206 odst. 1 OZ, čl. VI A odst. 3 stanov). Hlasuje se podle velikosti podílů na společných částech; spoluvlastníci a manželé hlasují jedním společným zástupcem (čl. VI A odst. 2 stanov). Listina přítomných je na konci protokolu.</p>';
-  var nh=notesHtml(z.notes,false);if(nh)H+=sec("Průběh jednání")+'<div class="znotes">'+nh+'</div>';
-  H+=sec("Usnesení a výsledky hlasování")+(m.votes.length?m.votes.map(protoUsn).join(''):'<p>Na shromáždění se nehlasovalo.</p>');
+  function nj(k){return k+' '+pl(k,'jednotka','jednotky','jednotek');}
+  var dots='………………………',v1=m.votes[0],s1=v1&&v1.snap,nA=m.votes.filter(function(v){return v.result;}).length;
+  // hlavička
+  var H='<style>@page{@bottom-center{content:"Zápis ze shromáždění dne '+dateCz(m.date)+' · strana " counter(page) " / " counter(pages);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;font-size:8.5pt;color:#666}}</style>'+
+    '<div class="phd"><div class="org">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</div><div class="orgs">IČO 26781816 · sídlo Buková 2553/4, 130 00 Praha 3 · spisová značka S 3907 vedená u Městského soudu v Praze</div></div>'+
+    '<h1>Zápis ze shromáždění vlastníků jednotek</h1><p class="psub">podle § 254 a § 1221 OZ a čl. VI D odst. 3 stanov</p>'+
+    '<table class="pinfo">'+row("Datum",dateCz(m.date))+row("Čas",'zahájení '+(m.time?esc(m.time):dots)+' · ukončení '+(m.endTime?esc(m.endTime):dots))+(z.place?row("Místo",esc(z.place)):'')+row("Druh",esc(m.type||''))+'</table>'+
+    (m.reopened?'<p class="rd center">Pozn.: zápis byl po ukončení schůze opraven ('+esc(m.reopened)+').</p>':'');
+  // přehled na první pohled
+  var qs=s1?{pres:Math.round(s1.tot>0?s1.pres/s1.tot*JMEN:0),pct:s1.tot>0?s1.pres/s1.tot*100:0,q:voteQuorate(v1),when:'při zahájení'}:{pres:Math.round(tot>0?pp/tot*JMEN:0),pct:tot>0?pp/tot*100:0,q:q,when:'na konci'};
+  H+='<div class="pbox keep"><p class="pbt">Přehled</p><p><b>Usnášeníschopnost:</b> přítomno '+qs.pres+' z '+JMEN+' hlasů = '+fmt(qs.pct)+' % ('+qs.when+') – '+(qs.q?'usnášeníschopné':'neusnášeníschopné')+'</p>'+
+    '<p><b>Usnesení:</b> '+(m.votes.length?m.votes.length+' '+pl(m.votes.length,'usnesení','usnesení','usnesení')+': '+nA+' přijato, '+(m.votes.length-nA)+' nepřijato':'Na shromáždění se nehlasovalo.')+'</p>'+
+    (m.votes.length?'<table class="ptab lp"><colgroup><col style="width:7%"><col style="width:27%"><col><col style="width:15%"></colgroup><thead><tr><th>Č.</th><th>Bod programu</th><th>Znění</th><th>Výsledek</th></tr></thead><tbody>'+
+      m.votes.map(function(v){var p=v.snap&&v.snap.prog,b=!p?'—':p.off?'Mimo program':p.elect?'Volba orgánů schůze':p.num+'. '+esc(p.text||'');
+        return '<tr><td>'+v.num+'</td><td>'+b+'</td><td class="zn">'+esc(clip(v.text||'',110))+'</td><td class="nw '+(v.result?'ok':'ko')+'">'+(v.result?'✓ přijato':'✗ nepřijato')+'</td></tr>';}).join("")+'</tbody></table>':'')+'</div>';
+  // 1. svolání a orgány schůze
+  var days=z.invDate&&m.date?Math.round((Date.parse(m.date)-Date.parse(z.invDate))/86400000):null;
+  H+=sec("Svolání a orgány schůze")+'<table class="porg">'+row("Svolavatel",esc(convText(z)))+
+    row("Svolání",(z.invDate?'pozvánkou ze dne '+dateCz(z.invDate):'pozvánkou ze dne '+dots)+(waysText(z)?', '+esc(waysText(z)):'')+(days!==null?' – lhůta 15 dnů '+(days>=15?'dodržena':'nedodržena')+' ('+days+' '+pl(days,'den','dny','dnů')+' před zasedáním, čl. VI C odst. 1 stanov)':''))+
+    (z.opener?row("Zahájil(a)",pLabel(m,z.opener)):'')+row("Předsedající",pLabel(m,z.chair)||dots)+row("Zapisovatel",pLabel(m,m.zapisovatel)||dots)+row("Ověřovatel",pLabel(m,z.verifier)||dots)+
+    (committeeOf(m).length?row("Výbor SVJ",committeeOf(m).map(function(c){return esc(String(c.name).trim())+' ('+esc(c.role||'člen výboru')+')';}).join(', ')):'')+'</table>';
+  // 2. usnášeníschopnost
+  var npm=pres.filter(function(u){var a=m.att[u.id];return a&&a.pm;}).length;
+  H+=sec("Usnášeníschopnost")+
+    (s1?'<p>Při zahájení (při hlasování o usnesení č. '+v1.num+'): přítomno <b>'+nj((s1.units||[]).length)+'</b> s <b>'+qs.pres+' z '+JMEN+'</b> hlasů (<b>'+fmt(qs.pct)+' %</b>).</p>':'')+
+    '<p>Na konci: přítomno <b>'+pres.length+' z '+m.roster.length+'</b> jednotek s <b>'+Math.round(tot>0?pp/tot*JMEN:0)+' z '+JMEN+'</b> hlasů, tj. <b>'+fmt(tot>0?pp/tot*100:0)+' %</b> všech hlasů (podílů); z toho na základě plné moci '+nj(npm)+'. Shromáždění <b>'+(q?'bylo usnášeníschopné':'nebylo usnášeníschopné')+'</b> (potřeba přítomnost vlastníků s většinou všech hlasů – § 1206 odst. 1 OZ, čl. VI A odst. 3 stanov). Hlasuje se podle velikosti podílů na společných částech; spoluvlastníci a manželé hlasují jedním společným zástupcem (čl. VI A odst. 2 stanov). Listina přítomných je přílohou zápisu.</p>';
+  // 3. průběh a usnesení
+  var nh=notesHtml(z.notes,false);
+  H+=sec("Průběh jednání a usnesení")+(nh?'<div class="znotes">'+nh+'</div>':'')+(m.votes.length?m.votes.map(protoUsn).join(''):'<p>Na shromáždění se nehlasovalo.</p>');
+  // 4. úkoly
   var tasks=state.tasks.filter(function(t){return t.meetingId===m.id;});
-  if(tasks.length)H+=sec("Nové úkoly ze shromáždění")+'<table class="ptab lp"><colgroup><col><col style="width:24%"><col style="width:16%"></colgroup><thead><tr><th>Úkol</th><th>Odpovídá</th><th>Termín</th></tr></thead><tbody>'+tasks.map(function(t){return '<tr><td>'+esc(t.text)+(t.voteNum?' <span class="pc2 nw">(usnesení č. '+t.voteNum+')</span>':'')+'</td><td class="nw">'+esc(t.owner||'—')+'</td><td class="nw">'+(t.due?dateCz(t.due):'—')+'</td></tr>';}).join("")+'</tbody></table>';
-  if(z.objections.trim())H+=sec("Námitky a nesouhlas zaprotokolované na žádost")+'<p>'+esc(z.objections).replace(/\n/g,'<br>')+'</p>';
+  H+=sec("Úkoly")+(tasks.length?'<table class="ptab lp keep"><colgroup><col><col style="width:24%"><col style="width:16%"></colgroup><thead><tr><th>Úkol</th><th>Odpovědná osoba</th><th>Termín</th></tr></thead><tbody>'+tasks.map(function(t){return '<tr><td>'+esc(t.text)+(t.voteNum?' <span class="pc2 nw">(usnesení č. '+t.voteNum+')</span>':'')+'</td><td class="nw">'+esc(t.owner||'—')+'</td><td class="nw">'+(t.due?dateCz(t.due):'—')+'</td></tr>';}).join("")+'</tbody></table>':'<p>Na shromáždění nebyly uloženy žádné úkoly.</p>')+
+    (Array.isArray(m.taskCheck)?'<h3>Kontrola plnění úkolů</h3>'+(m.taskCheck.length?'<table class="ptab lp keep"><colgroup><col><col style="width:22%"><col style="width:14%"><col style="width:14%"></colgroup><thead><tr><th>Úkol</th><th>Odpovědná osoba</th><th>Termín</th><th>Stav</th></tr></thead><tbody>'+
+      m.taskCheck.map(function(t){return '<tr><td>'+esc(t.text)+'</td><td class="nw">'+esc(t.owner||'—')+'</td><td class="nw">'+(t.due?dateCz(t.due):'—')+'</td><td class="nw">'+(t.state==="overdue"?'Po termínu':'V řešení')+'</td></tr>';}).join("")+'</tbody></table>':'<p>Žádné otevřené úkoly.</p>'):'');
+  // 5.–8.
+  H+=sec("Námitky a nesouhlas")+'<p>'+(z.objections.trim()?esc(z.objections).replace(/\n/g,'<br>'):'Námitky nebyly vzneseny.')+'</p>';
   H+=sec("Ukončení a vyhotovení zápisu")+'<p>Zasedání bylo ukončeno'+(m.endTime?' v '+esc(m.endTime):(m.status==="open"?' v '+dots:''))+'. Zápis bude vyhotoven a rozeslán vlastníkům do 30 dnů od zasedání (§ 254 odst. 1 OZ); s přílohami se ukládá u výboru (čl. VI D odst. 4 stanov) a zveřejňuje na portálu eDomovník (bdzizkov.edomovnik.cz/SVJ029).</p>';
+  H+=sec("Podpisy")+'<table class="psig keep"><colgroup><col style="width:18%"><col style="width:38%"><col><col style="width:18%"></colgroup><thead><tr><th>Funkce</th><th>Jméno</th><th>Podpis</th><th>Datum</th></tr></thead><tbody>'+
+    [["Předsedající",z.chair],["Zapisovatel",m.zapisovatel],["Ověřovatel",z.verifier]].map(function(x){return '<tr><td>'+x[0]+'</td><td>'+(pLabel(m,x[1]||'')||esc(x[1]||'')||dots)+'</td><td></td><td></td></tr>';}).join("")+'</tbody></table>';
   var att=ATTS.filter(function(a,i){return attSel(z).indexOf(i)>=0;}).concat(z.attachments.split("\n")).map(function(s){return s.trim();}).filter(Boolean);
   H+=sec("Přílohy zápisu")+(att.length?'<ul class="plist">'+att.map(function(a,i){return '<li>Příloha č. '+(i+1)+' – '+esc(a)+'</li>';}).join("")+'</ul>':'<p>Bez příloh.</p>');
-  H+='<div class="sig"><div>Zapisovatel<br><b>'+esc(m.zapisovatel||'')+'</b></div><div>Předsedající<br><b>'+esc(z.chair)+'</b></div><div>Ověřovatel<br><b>'+esc(z.verifier)+'</b></div></div>';
-  // listina přítomných
+  // přílohy na nové stránce: listina přítomných, jmenovité hlasování
   var lst=pres,legacy=!m.roster.some(function(u){var a=m.att[u.id];return a&&a.who!==undefined;});
-  H+='<h2 class="appx">Listina přítomných</h2><table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:21%"><col style="width:28%"></colgroup>'+
+  H+='<h2 class="appx">Příloha – Listina přítomných</h2><table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:21%"><col style="width:28%"></colgroup>'+
     '<thead><tr><th>Jednotka</th><th>Vlastníci</th><th>Podíl</th><th>Hlasoval(a)</th></tr></thead><tbody>'+
     lst.map(function(u){var a=m.att[u.id]||{},w=a.present?String(a.who||"").trim()||(legacy?u.owner||'':''):'';
       return '<tr'+(a.present?'':' class="abs"')+'><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td>'+ownersHtml(u)+'</td><td class="nw">'+podilFr(u.podil)+' <span class="pc2">('+fmtP(u.podil)+' %)</span></td>'+
         '<td>'+esc(w)+(a.present&&a.pm&&w?' <span class="pc2">(plná moc)</span>':'')+(a.note?(w?' · ':'')+'<span class="pc2">'+esc(a.note)+'</span>':'')+'</td></tr>';}).join("")+
     '<tr class="tot"><td colspan="2">Přítomno '+pres.length+' z '+m.roster.length+' jednotek</td><td class="nw">'+podilFr(tot>0?pp/tot*100:0)+' <span class="pc2">('+fmtP(tot>0?pp/tot*100:0)+' %)</span></td><td></td></tr></tbody></table>';
-  if(full&&m.votes.length){H+='<h2 class="appx">Jmenovité hlasování</h2>';
+  if(full&&m.votes.length){H+='<h2 class="appx">Příloha – Jmenovité hlasování</h2>';
     m.votes.forEach(function(v){H+=protoUsn(v)+'<table class="ptab lp"><colgroup><col style="width:15%"><col><col style="width:24%"><col style="width:14%"></colgroup><thead><tr><th>Jednotka</th><th>Hlasoval(a)</th><th>Podíl</th><th>Hlas</th></tr></thead><tbody>'+v.snap.units.map(function(u){var w=String(u.who||"").trim();return '<tr><td class="u">'+esc(u.unit).replace(/ – (.+)$/,' <span class="pc2">$1</span>')+'</td><td>'+(w?esc(w)+(u.pm?' <span class="pc2">(plná moc)</span>':''):(esc(u.owner)||unitLabel(u)))+'</td><td class="nw">'+podilFr(u.podil)+' <span class="pc2">('+fmtP(u.podil)+' %)</span></td><td>'+protoVote(u.vote)+'</td></tr>';}).join("")+'</tbody></table>';});}
   H+='<div class="pfoot">Vygenerováno '+new Date().toLocaleString('cs-CZ')+'.</div>';
   return '<div id="protokol"'+(state.protoBW?' class="bw"':'')+'>'+H+'</div>';
