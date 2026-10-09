@@ -1623,24 +1623,11 @@ function protoDoc(m,full){
   var dots='………………………',v1=m.votes[0],s1=v1&&v1.snap;
   // hlavička
   var H='<style>@page{@bottom-center{content:"Zápis ze shromáždění dne '+dateCz(m.date)+' · strana " counter(page) " / " counter(pages);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;font-size:8.5pt;color:#666}}</style>'+
-    '<h1>Protokol ze shromáždění vlastníků jednotek</h1><p class="center">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p><p class="center muted">IČO 26781816 · sídlo Buková 2553/4, 130 00 Praha 3 · spisová značka S 3907 vedená u Městského soudu v Praze</p>'+
-    '<table class="porg">'+row("Datum",dateCz(m.date))+row("Čas",'zahájení '+(m.time?esc(m.time):dots)+' · ukončení '+(m.endTime?esc(m.endTime):dots))+(z.place?row("Místo",esc(z.place)):'')+row("Druh",esc(m.type||''))+'</table>'+
-    (m.reopened?'<p class="rd center">Pozn.: zápis byl po ukončení schůze opraven ('+esc(m.reopened)+').</p>':'');
-  // usnášeníschopnost při zahájení = snímek prvního hlasování
-  var qs=s1?{pres:Math.round(s1.tot>0?s1.pres/s1.tot*JMEN:0),pct:s1.tot>0?s1.pres/s1.tot*100:0,q:voteQuorate(v1),when:'při zahájení'}:{pres:Math.round(tot>0?pp/tot*JMEN:0),pct:tot>0?pp/tot*100:0,q:q,when:'na konci'};
-  // 1. svolání a orgány schůze
-  var ways=WAYS.filter(function(w){return (z.invWays||[]).indexOf(w[0])>=0;}).map(function(w){return WSHORT[w[0]];});if(String(z.invHow||"").trim())ways.push(esc(String(z.invHow).trim()));
-  H+=sec("Svolání a orgány schůze")+'<table class="porg">'+row("Svolavatel",esc(convText(z)))+
-    row("Svolání",'pozvánkou ze dne '+(z.invDate?dateCz(z.invDate):dots)+(ways.length?' ('+ways.join(', ')+')':''))+
-    (z.opener?row("Zahájil(a)",pLabel(m,z.opener)):'')+row("Předsedající",pLabel(m,z.chair)||dots)+row("Zapisovatel",pLabel(m,m.zapisovatel)||dots)+row("Ověřovatel",pLabel(m,z.verifier)||dots)+
-    (committeeOf(m).length?row("Výbor SVJ",committeeOf(m).map(function(c){return esc(String(c.name).trim())+' ('+esc(c.role||'člen výboru')+')';}).join(', ')):'')+'</table>';
-  // 2. usnášeníschopnost
-  var npm=pres.filter(function(u){var a=m.att[u.id];return a&&a.pm;}).length;
-  function nf(x){return Math.round(x).toLocaleString("cs-CZ");}
-  H+=sec("Usnášeníschopnost")+'<table class="porg">'+
-    (s1?row("Při zahájení",(s1.units||[]).length+' z '+m.roster.length+' jednotek, '+nf(qs.pres)+' z '+nf(JMEN)+' hlasů ('+fmt(qs.pct)+' %) – '+(qs.q?'usnášeníschopné':'neusnášeníschopné')):'')+
-    row("Na konci",pres.length+' z '+m.roster.length+' jednotek, '+nf(tot>0?pp/tot*JMEN:0)+' z '+nf(JMEN)+' hlasů ('+fmt(tot>0?pp/tot*100:0)+' %), z toho '+npm+' na plnou moc'+(s1?'':' – '+(q?'usnášeníschopné':'neusnášeníschopné')))+'</table>'+
-    '<p class="muted">Usnášeníschopnost podle § 1206 odst. 1 OZ; hlasuje se podle podílů (čl. VI A odst. 3 stanov); listina přítomných je přílohou zápisu.</p>';
+    '<h1>Protokol ze shromáždění vlastníků jednotek</h1><p class="center">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p><p class="center muted">IČO 26781816 · sídlo Buková 2553/4, 130 00 Praha 3 · spisová značka S 3907 vedená u Městského soudu v Praze<br>zápis ze zasedání shromáždění podle § 254 a § 1221 OZ a čl. VI D odst. 3 stanov</p>'+
+    '<table class="pinfo">'+row("Datum a čas",dateCz(m.date)+(m.time?', '+esc(m.time):'')+(m.endTime?' – ukončeno '+esc(m.endTime):''))+row("Druh",esc(m.type||''))+(z.place?row("Místo",esc(z.place)):'')+row("Svolavatel",esc(convText(z)))+row("Svolání",(z.invDate?'pozvánkou ze dne '+dateCz(z.invDate):'pozvánkou ze dne '+dots)+(waysText(z)?', '+esc(waysText(z)):''))+(z.opener?row("Zahájil(a)",pLabel(m,z.opener)):'')+row("Předsedající",pLabel(m,z.chair)||dots)+row("Zapisovatel",pLabel(m,m.zapisovatel)||dots)+row("Ověřovatel",pLabel(m,z.verifier)||dots)+
+    (committeeOf(m).length?row("Výbor SVJ",committeeOf(m).map(function(c){return esc(String(c.name).trim())+' ('+esc(c.role||'člen výboru')+')';}).join(', ')):'')+'</table>'+
+    (m.reopened?'<p class="rd">Pozn.: protokol byl po ukončení schůze opraven ('+esc(m.reopened)+').</p>':'');
+  H+=sec("Prezence a usnášeníschopnost")+'<p>Přítomno <b>'+pres.length+' z '+m.roster.length+'</b> jednotek s <b>'+Math.round(tot>0?pp/tot*JMEN:0)+' z '+JMEN+'</b> hlasů, tj. <b>'+fmt(tot>0?pp/tot*100:0)+' %</b> všech hlasů (podílů). Shromáždění <b>'+(q?'bylo usnášeníschopné':'nebylo usnášeníschopné')+'</b> (potřeba přítomnost vlastníků s většinou všech hlasů – § 1206 odst. 1 OZ, čl. VI A odst. 3 stanov). Hlasuje se podle velikosti podílů na společných částech; spoluvlastníci a manželé hlasují jedním společným zástupcem (čl. VI A odst. 2 stanov). Listina přítomných je na konci protokolu.</p>';
   // 3. průběh a usnesení
   var nh=notesHtml(z.notes,false);
   H+=sec("Průběh jednání a usnesení")+(nh?'<div class="znotes">'+nh+'</div>':'')+(m.votes.length?m.votes.map(protoUsn).join(''):'<p>Na shromáždění se nehlasovalo.</p>');
