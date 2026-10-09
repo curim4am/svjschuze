@@ -96,12 +96,12 @@ const usnBlocks = (html) => usnEls(html).map((e) => e.textContent.replace(/\s+/g
 test("usnášeníschopnost: 6596 z 13193 podílů nestačí", () => {
   const a = app(); a.open(); a.present(SET_6596);
   eq(a.ev("isQuorate(M())"), false, "isQuorate");
-  has(text(a.proto(OPEN_ID)), "6596 z 13193 hlasů"); has(text(a.proto(OPEN_ID)), "nebylo usnášeníschopné");
+  has(text(a.proto(OPEN_ID)), "Na konci 13 z 25 jednotek, 6 596 z 13 193 hlasů (50,0 %), z toho 0 na plnou moc – neusnášeníschopné");
 });
 test("usnášeníschopnost: 6597 z 13193 podílů stačí", () => {
   const a = app(); a.open(); a.present(SET_6597);
   eq(a.ev("isQuorate(M())"), true, "isQuorate");
-  has(text(a.proto(OPEN_ID)), "6597 z 13193 hlasů"); has(text(a.proto(OPEN_ID)), "bylo usnášeníschopné"); hasNot(text(a.proto(OPEN_ID)), "nebylo usnášeníschopné");
+  has(text(a.proto(OPEN_ID)), "Na konci 12 z 25 jednotek, 6 597 z 13 193 hlasů (50,0 %), z toho 0 na plnou moc – usnášeníschopné");
 });
 
 test("prostá většina přítomných: 6597 ANO z 13193 přítomných = přijato", () => {
@@ -171,7 +171,7 @@ test("protokol ukončené schůze 16. 4. 2026 (zjednodušený i kompletní)", ()
   const a = app();
   a.ev(`openProtokolFor(${CLOSED_ID})`);
   const simple = a.view();
-  has(simple, "IČO 26781816"); has(simple, "přítomno 20 z 25 jednotek s 10758 z 13193 hlasů"); has(simple, "Usnesení č. 5"); hasNot(simple, "Jmenovité hlasování");
+  has(simple, "IČO 26781816"); has(simple, "20 z 25 jednotek, 10 758 z 13 193 hlasů (81,54 %), z toho 1 na plnou moc"); has(simple, "Usnesení č. 5"); hasNot(simple, "Jmenovité hlasování");
   eq((simple.match(/✓ PŘIJATO/g) || []).length, 4, "přijatá usnesení"); eq((simple.match(/✗ NEPŘIJATO/g) || []).length, 1, "nepřijatá usnesení");
   a.ev("setProtoVariant('full')");
   has(a.view(), "Jmenovité hlasování");
@@ -465,35 +465,40 @@ test("zápis: číslované sekce ve správném pořadí, přílohy na konci", ()
   eq([...f.querySelectorAll("h2.appx")].length, 1, "příloha začíná na nové stránce (h2.appx)");
 });
 test("zápis: po hlavičce hned 1. sekce (bez boxu Přehled)", () => {
-  const a = app(), f = P(a.proto(CLOSED_ID)), t = f.querySelector("table.pinfo");
+  const a = app(), f = P(a.proto(CLOSED_ID)), t = f.querySelector("table.porg");
   let n = t.nextElementSibling; while (n && n.tagName === "P") n = n.nextElementSibling;
   eq(n && n.textContent.trim(), "1. Svolání a orgány schůze", "prvek po hlavičce");
 });
-test("zápis: hlavička – SVJ, IČO, sídlo, spisová značka, nadpis, datum, čas, místo, druh", () => {
-  const a = app(), f = P(a.proto(CLOSED_ID)), t = f.textContent.replace(/\s+/g, " ");
-  has(t, "Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3"); has(t, "IČO 26781816"); has(t, "sídlo Buková 2553/4, 130 00 Praha 3"); has(t, "spisová značka S 3907 vedená u Městského soudu v Praze");
-  eq(f.querySelector("h1").textContent, "Zápis ze shromáždění vlastníků jednotek", "nadpis");
-  eq(JSON.stringify(rowsText(f.querySelector("table.pinfo"))), JSON.stringify(["Datum | 16. 4. 2026", "Čas | zahájení 18:00 · ukončení 19:55", "Místo | velká sušárna", "Druh | Řádné shromáždění"]), "údaje");
+test("zápis: hlavička jako před redesignem, bez podtitulu, údaje zarovnané vlevo", () => {
+  const a = app(), f = P(a.proto(CLOSED_ID)), root = f.children[0];
+  eq(root.querySelector("h1").textContent, "Protokol ze shromáždění vlastníků jednotek", "nadpis");
+  ok(root.querySelector("h1") === root.querySelector("h1, p, table, div"), "nadpis je první");
+  const ps = [...root.querySelectorAll("h1 ~ p")].slice(0, 2).map((p) => p.className + ": " + p.textContent);
+  eq(JSON.stringify(ps), JSON.stringify(["center: Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3", "center muted: IČO 26781816 · sídlo Buková 2553/4, 130 00 Praha 3 · spisová značka S 3907 vedená u Městského soudu v Praze"]), "podnadpis SVJ a IČO");
+  hasNot(f.textContent, "podle § 254 a § 1221 OZ");
+  const t = root.querySelector("table"); ok(t.classList.contains("porg"), "údaje ve stylu Svolání (vlevo, popisek šedě)");
+  eq(JSON.stringify(rowsText(t)), JSON.stringify(["Datum | 16. 4. 2026", "Čas | zahájení 18:00 · ukončení 19:55", "Místo | velká sušárna", "Druh | Řádné shromáždění"]), "údaje");
 });
 test("zápis: při zahájení = stav při 1. hlasování, na konci = stav prezence; plné moci", () => {
   const a = app(); a.open(); a.present(SET_6597);
   a.startVote("Volba orgánů", "prosta", "p1"); a.cast(SET_6597, "NE"); a.closeVote();
   a.present(["2553/01"]); // přišla později: 6597 + 529 = 7126
   const f = P(a.proto(OPEN_ID));
-  const sec = f.textContent.replace(/\s+/g, " ").split("2. Usnášeníschopnost")[1].split("3. Průběh")[0];
-  has(sec, "Při zahájení (při hlasování o usnesení č. 1): přítomno 12 jednotek s 6597 z 13193 hlasů (50,0 %)");
-  has(sec, "Na konci: přítomno 13 z 25 jednotek s 7126 z 13193 hlasů, tj. 54,01 % všech hlasů");
-  has(sec, "na základě plné moci 0 jednotek"); has(sec, "§ 1206 odst. 1 OZ");
+  eq(JSON.stringify(secRows(a.proto(OPEN_ID), "2. Usnášeníschopnost")), JSON.stringify([
+    "Při zahájení | 12 z 25 jednotek, 6 597 z 13 193 hlasů (50,0 %) – usnášeníschopné",
+    "Na konci | 13 z 25 jednotek, 7 126 z 13 193 hlasů (54,01 %), z toho 0 na plnou moc",
+    "Usnášeníschopnost podle § 1206 odst. 1 OZ; hlasuje se podle podílů (čl. VI A odst. 3 stanov); listina přítomných je přílohou zápisu.",
+  ]), "sekce Usnášeníschopnost");
 });
 test("zápis: usnášeníschopnost – plné moci ze svjdemo.json", () => {
-  const a = app(), t = P(a.proto(CLOSED_ID)).textContent.replace(/\s+/g, " ");
-  has(t, "z toho na základě plné moci 1 jednotka");
+  const a = app(), rows = secRows(a.proto(CLOSED_ID), "2. Usnášeníschopnost");
+  eq(rows[0], "Při zahájení | 20 z 25 jednotek, 10 758 z 13 193 hlasů (81,54 %) – usnášeníschopné", "při zahájení");
+  eq(rows[1], "Na konci | 20 z 25 jednotek, 10 758 z 13 193 hlasů (81,54 %), z toho 1 na plnou moc", "na konci");
 });
-test("zápis: svolání – lhůta 15 dnů dodržena / nedodržena", () => {
-  const a = app(), t = P(a.proto(CLOSED_ID)).textContent.replace(/\s+/g, " ");
-  has(t, "pozvánkou ze dne 27. 3. 2026, e-mailem, vyvěšením na nástěnce a eDomovníkem – lhůta 15 dnů dodržena (20 dnů před zasedáním, čl. VI C odst. 1 stanov)");
-  const b = app((d) => { d.meetings.find((m) => m.id === CLOSED_ID).zapis.invDate = "2026-04-06"; });
-  has(P(b.proto(CLOSED_ID)).textContent.replace(/\s+/g, " "), "– lhůta 15 dnů nedodržena (10 dnů před zasedáním, čl. VI C odst. 1 stanov)");
+test("zápis: svolání – jen datum pozvánky a způsoby v závorce", () => {
+  const a = app(), rows = rowsText(P(a.proto(CLOSED_ID)).querySelectorAll("table.porg")[1]);
+  eq(rows[1], "Svolání | pozvánkou ze dne 27. 3. 2026 (e-mail, nástěnka, eDomovník)", "svolání");
+  hasNot(P(a.proto(CLOSED_ID)).textContent, "lhůta 15 dnů");
 });
 test("zápis: průběh jednání je před usneseními", () => {
   const a = app(), f = P(a.proto(CLOSED_ID)), all = [...f.querySelectorAll(".znotes, .usn")];
