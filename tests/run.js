@@ -572,6 +572,30 @@ test("historie úkolu: starší záznamy zůstávají beze změny", () => {
   ok(items[0].includes("Úkol založen") && !items[0].includes("odpovídá"), "u starého úkolu bez výchozích údajů");
 });
 
+// =============== Odemčení schůze s důvodem ===============
+test("odemčení: dialog vyžaduje důvod, uloží ho a protokol ho uvede", () => {
+  const a = app(); a.ev(`openMeeting(${CLOSED_ID})`); a.ev("reopenMeeting()");
+  const inp = a.d.getElementById("reopenWhy"), okb = () => a.d.querySelector('.modal [data-a="ok"]');
+  ok(inp, "pole pro důvod"); ok(okb().disabled, "bez důvodu nelze odemknout");
+  inp.value = "doplnění informace o dveřích do zápisu"; inp.dispatchEvent(new a.w.Event("input", { bubbles: true }));
+  ok(!okb().disabled, "s důvodem lze odemknout"); okb().click();
+  const m = a.state().meetings.find((x) => x.id === CLOSED_ID);
+  eq(m.status, "open", "stav"); eq(m.reopenReason, "doplnění informace o dveřích do zápisu", "uložený důvod");
+  const note = P(a.proto(CLOSED_ID)).querySelector("p.rd").textContent;
+  eq(note, "Pozn.: protokol byl po ukončení schůze opraven (" + m.reopened + ") z důvodu doplnění informace o dveřích do zápisu.", "poznámka v protokolu");
+  has(a.view(), "z důvodu doplnění informace o dveřích do zápisu");
+});
+test("odemčení: jen mezery jako důvod nestačí", () => {
+  const a = app(); a.ev(`openMeeting(${CLOSED_ID})`); a.ev("reopenMeeting()");
+  const inp = a.d.getElementById("reopenWhy"); inp.value = "   "; inp.dispatchEvent(new a.w.Event("input", { bubbles: true }));
+  ok(a.d.querySelector('.modal [data-a="ok"]').disabled, "jen mezery");
+  eq(a.state().meetings.find((x) => x.id === CLOSED_ID).status, "closed", "schůze zůstává ukončená");
+});
+test("odemčení: starší odemčení bez důvodu – poznámka jako dosud", () => {
+  const a = app((d) => { const m = d.meetings.find((x) => x.id === CLOSED_ID); m.status = "open"; m.reopened = "2. 10. 2026 18:00:00"; });
+  eq(P(a.proto(CLOSED_ID)).querySelector("p.rd").textContent, "Pozn.: protokol byl po ukončení schůze opraven (2. 10. 2026 18:00:00).", "poznámka");
+});
+
 // ---------- běh ----------
 let failed = 0;
 for (const t of tests) {

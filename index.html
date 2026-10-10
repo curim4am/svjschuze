@@ -1395,7 +1395,7 @@ function viewMeeting(){
   if(ph==="planned"){var d=daysTo(m.date);h+='<div class="mhead-note">'+ic('info')+'<span>'+(d>0?'Schůze je naplánovaná '+(d===1?'na zítra':'za '+d+' '+pl(d,'den','dny','dní'))+'. ':'Schůze je v přípravě. ')+'Zkontrolujte datum, osoby a program – v den jednání pokračujte prezencí.</span></div>';}
   else h+='<div class="mhead-stats">'+quorumMeter(m)+statMini("Usnesení",m.votes.length,m.votes.length?nA+' schv.':'')+statMini("Úkoly",tN,'')+'</div>';
   h+='</div>';
-  if(m.reopened)h+=callout("warning","unlock",'Schůze byla po ukončení odemčena pro opravu ('+esc(m.reopened)+'). V protokolu je to uvedeno.');
+  if(m.reopened)h+=callout("warning","unlock",'Schůze byla po ukončení odemčena pro opravu '+reopenNote(m)+'. V protokolu je to uvedeno.');
   h+='<div class="tabs" role="tablist" aria-label="Části schůze">'+tabs.map(function(t){
     var ex="";
     if(t[0]==="prezence")ex='<span class="tab-n">'+presentUnits(m).length+'/'+m.roster.length+'</span>';
@@ -1627,7 +1627,7 @@ function protoDoc(m,full){
     '<h1>Protokol ze shromáždění vlastníků jednotek</h1><p class="center">Společenství vlastníků jednotek v domě č.p. 2553 a 2554, Praha 3</p><p class="center muted">IČO 26781816 · sídlo Buková 2553/4, 130 00 Praha 3 · spisová značka S 3907 vedená u Městského soudu v Praze<br>zápis ze zasedání shromáždění podle § 254 a § 1221 OZ a čl. VI D odst. 3 stanov</p>'+
     '<table class="pinfo">'+row("Datum a čas",dateCz(m.date)+(m.time?', '+esc(m.time):'')+(m.endTime?' – ukončeno '+esc(m.endTime):''))+row("Druh",esc(m.type||''))+(z.place?row("Místo",esc(z.place)):'')+row("Svolavatel",esc(convText(z)))+row("Svolání",(z.invDate?'pozvánkou ze dne '+dateCz(z.invDate):'pozvánkou ze dne '+dots)+(waysText(z)?', '+esc(waysText(z)):''))+(z.opener?row("Zahájil(a)",pLabel(m,z.opener)):'')+row("Předsedající",pLabel(m,z.chair)||dots)+row("Zapisovatel",pLabel(m,m.zapisovatel)||dots)+row("Ověřovatel",pLabel(m,z.verifier)||dots)+
     (committeeOf(m).length?row("Výbor SVJ",committeeOf(m).map(function(c){return esc(String(c.name).trim())+' ('+esc(c.role||'člen výboru')+')';}).join(', ')):'')+'</table>'+
-    (m.reopened?'<p class="rd">Pozn.: protokol byl po ukončení schůze opraven ('+esc(m.reopened)+').</p>':'');
+    (m.reopened?'<p class="rd">Pozn.: protokol byl po ukončení schůze opraven '+reopenNote(m)+'.</p>':'');
   H+=sec("Prezence a usnášeníschopnost")+'<p>Přítomno <b>'+pres.length+' z '+m.roster.length+'</b> jednotek s <b>'+Math.round(tot>0?pp/tot*JMEN:0)+' z '+JMEN+'</b> hlasů, tj. <b>'+fmt(tot>0?pp/tot*100:0)+' %</b> všech hlasů (podílů). Shromáždění <b>'+(q?'bylo usnášeníschopné':'nebylo usnášeníschopné')+'</b> (potřeba přítomnost vlastníků s většinou všech hlasů – § 1206 odst. 2 OZ, čl. VI A odst. 3 stanov). Hlasuje se podle velikosti podílů na společných částech; spoluvlastníci a manželé hlasují jedním zmocněncem z jejich středu (čl. VI A odst. 2 stanov). Listina přítomných je přílohou zápisu.</p>';
   // 3. průběh a usnesení
   var nh=notesHtml(z.notes,false);
@@ -1789,11 +1789,18 @@ function endMeeting(){
       m.status="closed";state.subtab="vysledky";save();render();scrollTop();backup("Schůze ukončena · záloha stažena");
     }});
 }
+// odemčení pro opravu: důvod je povinný a uvede se v poznámce protokolu
+var reopenTxt="";
+function reopenCheck(v){reopenTxt=v;var b=dlg&&dlg.el.querySelector('[data-a="ok"]');if(b)b.disabled=!reopenTxt.trim();}
 function reopenMeeting(){
-  var m=M();if(!m)return;
-  ask({title:"Odemknout schůzi pro opravu?",icon:"unlock",tone:"warning",text:"Prezenci a hlasování půjde znovu upravit. V protokolu bude uvedeno, že byl dodatečně opraven.",ok:"Odemknout",
-    onOk:function(){m.status="open";m.reopened=new Date().toLocaleString("cs-CZ");save();toast("Schůze odemčena pro opravu","info");render();}});
+  var m=M();if(!m)return;reopenTxt="";
+  ask({title:"Odemknout schůzi pro opravu?",icon:"unlock",tone:"warning",ok:"Odemknout",
+    text:'<p>Prezenci a hlasování půjde znovu upravit. V protokolu bude uvedeno, že byl dodatečně opraven, i s důvodem.</p>'+
+      '<label class="field" style="margin:14px 0 0"><span class="lbl">Důvod opravy</span><input type="text" id="reopenWhy" autocomplete="off" placeholder="např. doplnění informace o dveřích do zápisu" oninput="reopenCheck(this.value)"></label>',
+    onOk:function(){var why=reopenTxt.trim();if(!why)return;m.status="open";m.reopened=new Date().toLocaleString("cs-CZ");m.reopenReason=why;save();toast("Schůze odemčena pro opravu","info");render();}});
+  var b=dlg&&dlg.el.querySelector('[data-a="ok"]');if(b)b.disabled=true;focusEl("reopenWhy");
 }
+function reopenNote(m){return '('+esc(m.reopened)+')'+(m.reopenReason?' z důvodu '+esc(m.reopenReason):'');}
 function deleteMeeting(){
   var m=M();if(!m||m.votes.length||m.current)return;
   ask({title:"Smazat tuto schůzi?",icon:"trash",tone:"danger",text:"Na schůzi neproběhlo žádné hlasování. Případné úkoly zůstanou zachované, jen ztratí vazbu na schůzi. Akci nelze vrátit.",ok:"Smazat schůzi",danger:true,
