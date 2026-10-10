@@ -427,6 +427,7 @@ button.tcheck:focus-visible{outline:none;box-shadow:var(--ring)}
 .hist li::before{content:"";position:absolute;left:1px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--border-strong)}
 .hist li:last-child::before{background:var(--primary)}
 .hist-d{display:block;font-size:12px;color:var(--text-3)}
+.hist-l{display:block}
 .locked{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--text-3)}
 .kvs{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
 .kvs dt{color:var(--text-3)}
@@ -1873,7 +1874,8 @@ function saveNewTask(mid){
   var vn=(mid&&ui.mtForm)?ui.mtForm.voteNum:null;
   if(vn&&!gv("tOwner").trim()){setErr("tOErr","U úkolu z usnesení vyplňte, kdo odpovídá.","tOwner");focusEl("tOwner");return;}
   if(vn&&!gv("tDue")){setErr("tDErr","U úkolu z usnesení vyplňte termín.","tDue");focusEl("tDue");return;}
-  state.tasks.push({id:Date.now(),text:text,source:vn?"usneseni":(gv("tSrc")||"jine"),owner:gv("tOwner").trim(),due:gv("tDue"),note:gv("tNote").trim(),
+  var own=gv("tOwner").trim(),due0=gv("tDue");
+  state.tasks.push({id:Date.now(),text:text,source:vn?"usneseni":(gv("tSrc")||"jine"),owner:own,due:due0,note:gv("tNote").trim(),init:{owner:own,due:due0},
     status:"open",created:todayISO(),meetingId:mid||null,voteNum:vn||null});
   var fm=ui.mtForm;
   if(fm&&fm.back==="zapis"){var mm=byId(mid);if(mm){var z=zOf(mm),L=z.notes.replace(/\r/g,"").split("\n");if(L[fm.fromLine]!==undefined&&L[fm.fromLine].indexOf("→ úkol")<0){L[fm.fromLine]=L[fm.fromLine].replace(/\s+$/,"")+" → úkol";z.notes=L.join("\n");}}state.subtab="zapis";}
@@ -1891,10 +1893,10 @@ function taskItem(t,inMeeting){
       '<span class="trow-s">'+taskBadge(st)+ic(open?'chevD':'chevR','chev')+'</span></button></div>'+(open?taskDetail(t,m):'')+'</div>';
 }
 function historyHtml(t){
-  var L=[{at:t.created||"",t:"Úkol založen"}].concat(Array.isArray(t.log)?t.log:[]);
+  var ini=t.init||{},L=[{at:t.created||"",t:"Úkol založen"+(ini.owner?" · odpovídá "+ini.owner:"")+(ini.due?" · termín "+dateCz(ini.due):"")}].concat(Array.isArray(t.log)?t.log:[]);
   if(t.doneAt&&!(t.log||[]).some(function(e){return /Splněno/.test(e.t);}))L.push({at:t.doneAt,t:"Splněno"});
   L=L.map(function(e,i){return {e:e,i:i};}).sort(function(x,y){var a=String(x.e.at||""),b=String(y.e.at||"");return a<b?-1:a>b?1:x.i-y.i;}).map(function(x){return x.e;});
-  return '<div class="ctx"><span class="lbl">Historie</span><ol class="hist">'+L.map(function(e){return '<li><span class="hist-d">'+stampCz(e.at)+'</span>'+esc(e.t)+'</li>';}).join("")+'</ol></div>';
+  return '<div class="ctx"><span class="lbl">Historie</span><ol class="hist">'+L.map(function(e){return '<li><span class="hist-d">'+stampCz(e.at)+'</span>'+String(e.t).split("\n").map(function(x){return '<span class="hist-l">'+esc(x)+'</span>';}).join("")+'</li>';}).join("")+'</ol></div>';
 }
 function logTask(t,txt){if(!Array.isArray(t.log))t.log=[];t.log.push({at:nowStamp(),t:txt});}
 function taskDetail(t,m){
@@ -1925,19 +1927,24 @@ function setDraftStatus(s){if(ui.draft){ui.draft.status=s;render();}}
 function addDoneNote(id){var t=taskById(id);if(!t||t.status!=="done")return;var v=gv("dAdd").trim();
   if(!v){setErr("dAddErr","Napište text poznámky.","dAdd");focusEl("dAdd");return;}
   t.note=(t.note?t.note+"\n":"")+dateCz(todayISO())+": "+v;logTask(t,"Doplněna poznámka: "+clip(v,80));save();toast("Poznámka doplněna");render();}
+// poznámka v historii: doplnění na konec ukáže přidaný text, jinak jen „Upravena / Smazána poznámka“
+function noteChange(old,nw){old=String(old).trim();if(!nw)return "Smazána poznámka";
+  if(!old)return "Doplněna poznámka: „"+clip(nw,80)+"“";
+  if(nw.indexOf(old)===0){var add=nw.slice(old.length).trim();if(add)return "Doplněna poznámka: „"+clip(add,80)+"“";}
+  return "Upravena poznámka";}
 function saveTask(id){
   var t=taskById(id);if(!t||!ui.draft||t.status==="done")return;
   var d=ui.draft,text=(d.text||"").trim();
   if(!text){setErr("dErr","Popis úkolu nemůže být prázdný.","dText");return;}
   var ch=[],was=t.status,owner=(d.owner||"").trim(),note=(d.note||"").trim();
   if(t.source==="usneseni"&&t.voteNum&&(!owner||!d.due)){setErr("dErr","U úkolu z usnesení musí být vyplněno, kdo odpovídá, i termín.");return;}
-  if(text!==t.text){ch.push("upraven popis");t.text=text;}
-  if(owner!==(t.owner||"")){ch.push("odpovídá: "+(owner||"nikdo"));t.owner=owner;}
-  if((d.due||"")!==(t.due||"")){ch.push("termín: "+(d.due?dateCz(d.due):"bez termínu"));t.due=d.due||"";}
-  if(note!==(t.note||"")){ch.push("upravena poznámka");t.note=note;}
-  if(d.status!==was){ch.push("stav: "+TSTAT[was]+" → "+TSTAT[d.status]);t.status=d.status;}
+  if(text!==t.text){ch.push("Upraven popis");t.text=text;}
+  if(owner!==(t.owner||"")){ch.push("Odpovídá: "+(t.owner||"nikdo")+" → "+(owner||"nikdo"));t.owner=owner;}
+  if((d.due||"")!==(t.due||"")){ch.push("Termín: "+(t.due?dateCz(t.due):"bez termínu")+" → "+(d.due?dateCz(d.due):"bez termínu"));t.due=d.due||"";}
+  if(note!==(t.note||"")){ch.push(noteChange(t.note||"",note));t.note=note;}
+  if(d.status!==was){ch.push("Stav: "+TSTAT[was]+" → "+TSTAT[d.status]);t.status=d.status;}
   if(t.status==="done"&&was!=="done")t.doneAt=todayISO();
-  if(ch.length)logTask(t,ch.join(" · ").replace(/^./,function(c){return c.toUpperCase();}));
+  if(ch.length)logTask(t,ch.join("\n"));
   ui.openTask=null;ui.draft=null;save();
   toast(!ch.length?"Beze změn":t.status==="done"&&was!=="done"?"Úkol je splněný":t.status==="cancelled"&&was!=="cancelled"?"Úkol zrušen":"Změny uloženy",ch.length?"success":"info");render();
 }

@@ -520,6 +520,58 @@ test("zápis: zápatí stránky „Zápis ze shromáždění dne … · strana x
   ok(st, "styl zápatí"); has(st.textContent, '@bottom-center'); has(st.textContent, '"Zápis ze shromáždění dne 16. 4. 2026 · strana " counter(page) " / " counter(pages)');
 });
 
+// =============== Historie úkolu ===============
+const T2 = 1776300000002; // usnesení č. 3, Filip Urban, 30. 9. 2026, poznámka „Montáž proběhla, chybí předání klíčů ke 2. vchodu.“
+const T5 = 1776300000005; // podnět, Eva Černá, 30. 11. 2026, bez poznámky
+const editTask = (a, id, change) => { a.ev("go('ukoly')"); a.ev(`toggleTask(${id})`); Object.assign(a.ev("ui.draft"), change); a.ev(`saveTask(${id})`); };
+const lastLog = (a, id) => { const l = a.state().tasks.find((t) => t.id === id).log; return l[l.length - 1].t; };
+test("historie úkolu: posun termínu z čeho na co", () => {
+  const a = app(); editTask(a, T2, { due: "2026-12-15" });
+  eq(lastLog(a, T2), "Termín: 30. 9. 2026 → 15. 12. 2026", "záznam");
+  editTask(a, T5, { due: "" }); eq(lastLog(a, T5), "Termín: 30. 11. 2026 → bez termínu", "smazaný termín");
+  editTask(a, T5, { due: "2027-01-31" }); eq(lastLog(a, T5), "Termín: bez termínu → 31. 1. 2027", "nový termín");
+});
+test("historie úkolu: změna odpovědné osoby z koho na koho", () => {
+  const a = app(); editTask(a, T2, { owner: "Eva Černá" });
+  eq(lastLog(a, T2), "Odpovídá: Filip Urban → Eva Černá", "záznam");
+  editTask(a, T5, { owner: "" }); eq(lastLog(a, T5), "Odpovídá: Eva Černá → nikdo", "bez odpovědné osoby");
+  editTask(a, T5, { owner: "Jan Novák" }); eq(lastLog(a, T5), "Odpovídá: nikdo → Jan Novák", "nová odpovědná osoba");
+});
+test("historie úkolu: popis jen „Upraven popis“", () => {
+  const a = app(); editTask(a, T5, { text: "Prověřit a opravit zatékání v suterénu u 2. vchodu" });
+  eq(lastLog(a, T5), "Upraven popis", "záznam");
+});
+test("historie úkolu: poznámka – doplnění, úprava, smazání", () => {
+  const a = app();
+  editTask(a, T5, { note: "Objednán klempíř." }); eq(lastLog(a, T5), "Doplněna poznámka: „Objednán klempíř.“", "první poznámka");
+  editTask(a, T2, { note: "Montáž proběhla, chybí předání klíčů ke 2. vchodu.\nKlíče předány 5. 10." }); eq(lastLog(a, T2), "Doplněna poznámka: „Klíče předány 5. 10.“", "doplnění na konec");
+  editTask(a, T2, { note: "Montáž proběhla, klíče předány." }); eq(lastLog(a, T2), "Upravena poznámka", "přepsání");
+  editTask(a, T2, { note: "" }); eq(lastLog(a, T2), "Smazána poznámka", "smazání");
+  editTask(a, T5, { note: "Objednán klempíř. " + "x".repeat(120) });
+  ok(lastLog(a, T5).length < 110 && lastLog(a, T5).endsWith("…“"), "dlouhé doplnění se zkrátí: " + lastLog(a, T5));
+});
+test("historie úkolu: víc změn najednou – každá na vlastním řádku", () => {
+  const a = app(); editTask(a, T5, { owner: "Jan Novák", due: "2026-12-31", status: "cancelled" });
+  eq(lastLog(a, T5), "Odpovídá: Eva Černá → Jan Novák\nTermín: 30. 11. 2026 → 31. 12. 2026\nStav: V řešení → Zrušeno", "záznam");
+  a.ev(`openTaskGlobal(${T5})`);
+  const li = [...a.d.querySelectorAll(".hist li")].pop();
+  eq([...li.querySelectorAll(".hist-l")].map((x) => x.textContent).join(" | "), "Odpovídá: Eva Černá → Jan Novák | Termín: 30. 11. 2026 → 31. 12. 2026 | Stav: V řešení → Zrušeno", "řádky v historii");
+});
+test("historie úkolu: „Úkol založen“ s výchozí odpovědnou osobou a termínem", () => {
+  const a = app(); a.ev("go('ukoly')"); a.ev("ui.newTask=true;render()");
+  a.d.getElementById("tText").value = "Objednat čištění okapů"; a.d.getElementById("tOwner").value = "Eva Černá"; a.d.getElementById("tDue").value = "2026-11-20";
+  a.button(/Přidat úkol/).click();
+  const t = a.state().tasks[a.state().tasks.length - 1]; a.ev(`openTaskGlobal(${t.id})`);
+  const first = a.d.querySelector(".hist li").textContent.replace(/\s+/g, " ");
+  has(first, "Úkol založen · odpovídá Eva Černá · termín 20. 11. 2026");
+});
+test("historie úkolu: starší záznamy zůstávají beze změny", () => {
+  const a = app(); a.ev("openTaskGlobal(1776300000001)");
+  const items = [...a.d.querySelectorAll(".hist li")].map((x) => x.textContent.replace(/\s+/g, " "));
+  ok(items.some((x) => x.includes("Upravena poznámka · Stav: V řešení → Splněno")), "starý záznam");
+  ok(items[0].includes("Úkol založen") && !items[0].includes("odpovídá"), "u starého úkolu bez výchozích údajů");
+});
+
 // ---------- běh ----------
 let failed = 0;
 for (const t of tests) {
